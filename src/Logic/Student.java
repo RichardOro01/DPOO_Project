@@ -21,4 +21,12 @@ public class Student extends Person{
 	public void setGroup(String group) {
 		this.group = group;
 	}
+	
+	//constructor
+	public Student(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson,
+			String year, String group) {
+		super(name, lastName, iDNumber, isInfo, access, kindOfPerson);
+		this.year = year;
+		this.group = group;
+	}
 }

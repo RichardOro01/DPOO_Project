@@ -14,4 +14,11 @@ public class Administrative extends Person {
 	public void setJob(String job) {
 		this.job = job;
 	}
+
+	
+	//constructor
+	public Administrative(String job, String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson) {
+		super(name,lastName,iDNumber,isInfo,access,kindOfPerson);
+		this.job = job;
+	}
 }

@@ -22,5 +22,11 @@ public class Access {
 	public void setHour(String hour) {
 		this.hour = hour;
 	}
+		
+	//constructor
+	public Access(String office, String hour) {
+		this.office = office;
+		this.hour = hour;
+	}
 	
 }

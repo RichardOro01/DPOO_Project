@@ -1,11 +1,18 @@
 package Logic;
 
+import java.util.ArrayList;
+
 public class Faculty {
 	//attributes
-	private Office offices;
+	private ArrayList<Office> offices;
 
 	//getters
-	public Office getOffices() {
+	public ArrayList<Office> getOffices() {
 		return offices;
+	}
+	
+	//constructor
+	public Faculty(ArrayList<Office> offices) {
+		this.offices = offices;
 	}
 }
