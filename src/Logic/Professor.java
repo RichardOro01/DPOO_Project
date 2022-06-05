@@ -1,6 +1,6 @@
 package Logic;
 
-public class Professor extends Person {
+public class Professor extends Person {	
 	//attributes
 	private String department;
 	private String teachingCategory;
@@ -29,5 +29,15 @@ public class Professor extends Person {
 	}	
 	public void setScientificCategory(String scientificCategory) {
 		this.scientificCategory = scientificCategory;
+	}
+		
+	//constructor
+	public Professor(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson,
+			String department, String teachingCategory, String scientificCategory, String typeOfContract) {
+		super(name, lastName, iDNumber, isInfo, access, kindOfPerson);
+		this.department = department;
+		this.teachingCategory = teachingCategory;
+		this.scientificCategory = scientificCategory;
+		this.typeOfContract = typeOfContract;
 	}
 }

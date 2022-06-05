@@ -24,5 +24,12 @@ public class Fact {
 	
 	public void setCheckOutDate(Fact checkOutDate) {
 		this.checkOutDate = checkOutDate;
-	}	
+	}
+		
+	//constructor
+	public Fact(Fact checkInDate, Fact checkOutDate, Person person) {
+		this.checkInDate = checkInDate;
+		this.checkOutDate = checkOutDate;
+		this.person = person;
+	}
 }

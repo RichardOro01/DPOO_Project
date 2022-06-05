@@ -18,10 +18,9 @@ public class Office {
 		return classification;
 	}
 
-	public String getR() {
+	public String getSupervisor() {
 		return supervisor;
 	}
-
 	
 	public ArrayList<Fact> getData() {
 		return data;
@@ -31,7 +30,16 @@ public class Office {
 	public void setClassification(String classification) {
 		this.classification = classification;
 	}
-	public void setR(String supervisor) {
+	public void setSupervisor(String supervisor) {
 		this.supervisor = supervisor;
 	}
+	
+	//constructor
+	public Office(String iD, String classification, String supervisor, ArrayList<Fact> data) {
+		ID = iD;
+		this.classification = classification;
+		this.supervisor = supervisor;
+		this.data = data;
+	}
+	
 }

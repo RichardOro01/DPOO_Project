@@ -13,4 +13,11 @@ public class Specialist extends Person {
 	public void setProject(String project) {
 		this.project = project;
 	}
+	
+	//constructor
+	public Specialist(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson,
+			String project) {
+		super(name, lastName, iDNumber, isInfo, access, kindOfPerson);
+		this.project = project;
+	}
 }

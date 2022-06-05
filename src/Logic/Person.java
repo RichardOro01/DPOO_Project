@@ -40,7 +40,16 @@ public abstract class Person {
 	public void setInfo(boolean isInfo) {
 		this.isInfo = isInfo;
 	}
-	
+		
+	//constructor
+	public Person(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson) {
+		this.name = name;
+		this.lastName = lastName;
+		this.IDNumber = iDNumber;
+		this.isInfo = isInfo;
+		this.access = access;
+		this.kindOfPerson = kindOfPerson;
+	}
 	
 	
 }
