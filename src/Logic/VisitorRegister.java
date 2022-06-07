@@ -2,7 +2,7 @@ package Logic;
 
 import java.util.Date;
 
-public class VisitorRecord extends Register {
+public class VisitorRegister extends Register {
 	//attributes
 	private String area;
 	private String motive;
@@ -35,7 +35,7 @@ public class VisitorRecord extends Register {
 	}
 	
 	//constructor
-	public VisitorRecord(Date checkInDate, Date checkOutDate, Person person) {
+	public VisitorRegister(Date checkInDate, Date checkOutDate, Person person) {
 		super(checkInDate, checkOutDate, person);
 		
 	}
