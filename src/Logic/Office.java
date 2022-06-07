@@ -22,7 +22,7 @@ public class Office {
 		return supervisor;
 	}
 	
-	public ArrayList<Register> getData() {
+	public ArrayList<Register> getRegister() {
 		return register;
 	}
 
