@@ -23,9 +23,9 @@ public class Student extends Person{
 	}
 	
 	//constructor
-	public Student(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson,
+	public Student(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
 			String year, String group) {
-		super(name, lastName, iDNumber, isInfo, access, kindOfPerson);
+		super(name, lastName, iDNumber, isInfo, kindOfPerson);
 		this.year = year;
 		this.group = group;
 	}

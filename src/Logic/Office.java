@@ -7,7 +7,7 @@ public class Office {
 	private String ID;
 	private String classification;
 	private String supervisor;
-	private ArrayList<Fact> data;
+	private ArrayList<Register> register;
 	
 	//getters
 	public String getID() {
@@ -22,8 +22,8 @@ public class Office {
 		return supervisor;
 	}
 	
-	public ArrayList<Fact> getData() {
-		return data;
+	public ArrayList<Register> getData() {
+		return register;
 	}
 
 	//setters
@@ -35,11 +35,11 @@ public class Office {
 	}
 	
 	//constructor
-	public Office(String iD, String classification, String supervisor, ArrayList<Fact> data) {
+	public Office(String iD, String classification, String supervisor) {
 		ID = iD;
 		this.classification = classification;
 		this.supervisor = supervisor;
-		this.data = data;
+		register = new ArrayList<Register>();
 	}
 	
 }

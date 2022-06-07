@@ -1,16 +1,18 @@
 package Logic;
 
-public class Fact {
+import java.util.Date;
+
+public class Register{
 	//attributes
-	private Fact checkInDate;
-	private Fact checkOutDate;
+	private Date checkInDate;
+	private Date checkOutDate;
 	private Person person;
 	
 	//getters
-	public Fact getCheckInDate() {
+	public Date getCheckInDate() {
 		return checkInDate;
 	}
-	public Fact getCheckOutDate() {
+	public Date getCheckOutDate() {
 		return checkOutDate;
 	}
 	public Person getPerson() {
@@ -18,16 +20,16 @@ public class Fact {
 	}
 	
 	//setters
-	public void setCheckInDate(Fact checkInDate) {
+	public void setCheckInDate(Date checkInDate) {
 		this.checkInDate = checkInDate;
 	}
 	
-	public void setCheckOutDate(Fact checkOutDate) {
+	public void setCheckOutDate(Date checkOutDate) {
 		this.checkOutDate = checkOutDate;
 	}
 		
 	//constructor
-	public Fact(Fact checkInDate, Fact checkOutDate, Person person) {
+	public Register(Date checkInDate, Date checkOutDate, Person person) {
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
 		this.person = person;
