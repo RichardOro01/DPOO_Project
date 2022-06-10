@@ -2,31 +2,33 @@ package Logic;
 
 public class Student extends Person{
 	//attributes
-	private String year;
-	private String group;
+	private int year;
+	private int group;
 	
 	//getters
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
-	public String getGroup() {
+	public int getGroup() {
 		return group;
 	}
 	
 	
 	//setters
-	public void setYear(String year) {
-		this.year = year;
+	public void setYear(int year) {
+		if(year>=1 && year<=4)
+			this.year = year;
 	}
-	public void setGroup(String group) {
+	public void setGroup(int group) {
+		if(group>=1 && group<=4)
 		this.group = group;
 	}
 	
 	//constructor
 	public Student(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
-			String year, String group) {
+			int year, int group) {
 		super(name, lastName, iDNumber, isInfo, kindOfPerson);
-		this.year = year;
-		this.group = group;
+		setYear(year);
+		setGroup(group);
 	}
 }

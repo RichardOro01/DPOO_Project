@@ -25,11 +25,13 @@ public abstract class Person {
 		
 	//setters
 	public void setName(String name) {
-		this.name = name;
+		if(name.length()<=15)
+			this.name = name;
 	}
 	
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		if(lastName.length()<=15)
+			this.lastName = lastName;
 	}
 	
 	public void setIDNumber(String iDNumber) {
@@ -42,8 +44,8 @@ public abstract class Person {
 		
 	//constructor
 	public Person(String name, String lastName, String iDNumber, boolean isInfo,String kindOfPerson) {
-		this.name = name;
-		this.lastName = lastName;
+		setName(name);
+		setLastName(lastName);
 		this.IDNumber = iDNumber;
 		this.isInfo = isInfo;
 		this.kindOfPerson = kindOfPerson;
