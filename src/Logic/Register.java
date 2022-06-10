@@ -21,17 +21,20 @@ public class Register{
 	
 	//setters
 	public void setCheckInDate(Date checkInDate) {
-		this.checkInDate = checkInDate;
+		if(checkInDate.compareTo(checkOutDate)<0) 
+			this.checkInDate=checkInDate;
+		
 	}
 	
 	public void setCheckOutDate(Date checkOutDate) {
-		this.checkOutDate = checkOutDate;
+		if(checkOutDate.compareTo(checkInDate)>0)
+			this.checkOutDate = checkOutDate;
 	}
 		
 	//constructor
 	public Register(Date checkInDate, Date checkOutDate, Person person) {
-		this.checkInDate = checkInDate;
-		this.checkOutDate = checkOutDate;
+		setCheckInDate(checkInDate);
+		setCheckOutDate(checkOutDate);				
 		this.person = person;
 	}
 }
