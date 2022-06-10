@@ -25,11 +25,13 @@ public abstract class Person {
 		
 	//setters
 	public void setName(String name) {
-		this.name = name;
+		if(name.length()<=15)
+			this.name = name;
 	}
 	
 	public void setLastName(String lastName) {
-		this.lastName = lastName;
+		if(lastName.length()<=15)
+			this.lastName = lastName;
 	}
 	
 	public void setIDNumber(String iDNumber) {
