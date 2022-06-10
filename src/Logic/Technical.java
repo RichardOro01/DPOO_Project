@@ -15,9 +15,9 @@ public class Technical extends Person {
 	}
 
 	//constructor
-	public Technical(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson,
+	public Technical(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
 			String job) {
-		super(name, lastName, iDNumber, isInfo, access, kindOfPerson);
+		super(name, lastName, iDNumber, isInfo, kindOfPerson);
 		this.job = job;
 	}		
 }

@@ -6,8 +6,8 @@ public class Office {
 	//attributes
 	private String ID;
 	private String classification;
-	private String supervisor;
-	private ArrayList<Fact> data;
+	private Person supervisor;
+	private ArrayList<Register> register;
 	
 	//getters
 	public String getID() {
@@ -18,28 +18,32 @@ public class Office {
 		return classification;
 	}
 
-	public String getSupervisor() {
+	public Person getSupervisor() {
 		return supervisor;
 	}
 	
-	public ArrayList<Fact> getData() {
-		return data;
+	public ArrayList<Register> getRegister() {
+		return register;
 	}
 
 	//setters
 	public void setClassification(String classification) {
 		this.classification = classification;
 	}
-	public void setSupervisor(String supervisor) {
-		this.supervisor = supervisor;
+	public void setSupervisor(Person supervisor) {
+		if(supervisor.isInfo) { 
+			if(!(supervisor instanceof Student) && !(supervisor instanceof Technical) ) {
+				this.supervisor=supervisor;
+			}
+		}
 	}
 	
 	//constructor
-	public Office(String iD, String classification, String supervisor, ArrayList<Fact> data) {
+	public Office(String iD, String classification, Person supervisor) {
 		ID = iD;
 		this.classification = classification;
 		this.supervisor = supervisor;
-		this.data = data;
+		register = new ArrayList<Register>();
 	}
 	
 }

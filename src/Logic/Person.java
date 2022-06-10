@@ -7,7 +7,6 @@ public abstract class Person {
 	protected String lastName;
 	protected String IDNumber;
 	protected boolean isInfo;
-	protected Access access;
 	protected String kindOfPerson;
 	
 	//getters
@@ -42,12 +41,11 @@ public abstract class Person {
 	}
 		
 	//constructor
-	public Person(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson) {
+	public Person(String name, String lastName, String iDNumber, boolean isInfo,String kindOfPerson) {
 		this.name = name;
 		this.lastName = lastName;
 		this.IDNumber = iDNumber;
 		this.isInfo = isInfo;
-		this.access = access;
 		this.kindOfPerson = kindOfPerson;
 	}
 	

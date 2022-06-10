@@ -14,9 +14,9 @@ public class Executive extends Person{
 	}
 	
 	//constructor
-	public Executive(String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson,
+	public Executive(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
 			String position, String area) {
-		super(name, lastName, iDNumber, isInfo, access, kindOfPerson);
+		super(name, lastName, iDNumber, isInfo,kindOfPerson);
 		this.position = position;
 		this.area = area;
 	}

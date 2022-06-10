@@ -17,8 +17,8 @@ public class Administrative extends Person {
 
 	
 	//constructor
-	public Administrative(String job, String name, String lastName, String iDNumber, boolean isInfo, Access access, String kindOfPerson) {
-		super(name,lastName,iDNumber,isInfo,access,kindOfPerson);
+	public Administrative(String job, String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson) {
+		super(name,lastName,iDNumber,isInfo,kindOfPerson);
 		this.job = job;
 	}
 }
