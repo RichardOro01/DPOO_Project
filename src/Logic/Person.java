@@ -44,8 +44,8 @@ public abstract class Person {
 		
 	//constructor
 	public Person(String name, String lastName, String iDNumber, boolean isInfo,String kindOfPerson) {
-		this.name = name;
-		this.lastName = lastName;
+		setName(name);
+		setLastName(lastName);
 		this.IDNumber = iDNumber;
 		this.isInfo = isInfo;
 		this.kindOfPerson = kindOfPerson;
