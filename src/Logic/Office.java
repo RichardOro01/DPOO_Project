@@ -37,12 +37,16 @@ public class Office {
 			}
 		}
 	}
+	public void setID(String ID) {
+		this.ID = ID;
+	}
+
 	
 	//constructor
-	public Office(String iD, String classification, Person supervisor) {
-		ID = iD;
-		this.classification = classification;
-		this.supervisor = supervisor;
+	public Office(String ID, String classification, Person supervisor) {
+		setID(ID);
+		setClassification(classification);
+		setSupervisor(supervisor);
 		register = new ArrayList<Register>();
 	}
 	

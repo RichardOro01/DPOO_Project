@@ -18,6 +18,6 @@ public class Technical extends Person {
 	public Technical(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
 			String job) {
 		super(name, lastName, iDNumber, isInfo, kindOfPerson);
-		this.job = job;
+		setJob(job);
 	}		
 }

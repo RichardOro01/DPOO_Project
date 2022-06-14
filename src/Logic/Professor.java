@@ -6,6 +6,7 @@ public class Professor extends Person {
 	private String teachingCategory;
 	private String scientificCategory;
 	private String typeOfContract;
+	
 	//getters
 	public String getDepartment() {
 		return department;
@@ -30,14 +31,17 @@ public class Professor extends Person {
 	public void setScientificCategory(String scientificCategory) {
 		this.scientificCategory = scientificCategory;
 	}
+	public void setTypeOfContract(String typeOfContract) {
+		this.typeOfContract = typeOfContract;
+	}
 		
 	//constructor
 	public Professor(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
 			String department, String teachingCategory, String scientificCategory, String typeOfContract) {
 		super(name, lastName, iDNumber, isInfo, kindOfPerson);
-		this.department = department;
-		this.teachingCategory = teachingCategory;
-		this.scientificCategory = scientificCategory;
-		this.typeOfContract = typeOfContract;
+		setDepartment(department);
+		setTeachingCategory(teachingCategory);
+		setScientificCategory(scientificCategory);
+		setTypeOfContract(typeOfContract);
 	}
 }

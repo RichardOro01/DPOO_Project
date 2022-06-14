@@ -12,7 +12,7 @@ public class Faculty {
 	}
 	
 	//constructor
-	public Faculty(ArrayList<Office> offices) {
-		this.offices = offices;
+	public Faculty() {
+		offices = new ArrayList<Office>();
 	}
 }
