@@ -18,6 +18,6 @@ public class Specialist extends Person {
 	public Specialist(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
 			String project) {
 		super(name, lastName, iDNumber, isInfo, kindOfPerson);
-		this.project = project;
+		setProject(project);
 	}
 }

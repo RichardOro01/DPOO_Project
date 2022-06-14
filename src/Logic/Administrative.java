@@ -19,6 +19,6 @@ public class Administrative extends Person {
 	//constructor
 	public Administrative(String job, String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson) {
 		super(name,lastName,iDNumber,isInfo,kindOfPerson);
-		this.job = job;
+		setJob(job);
 	}
 }
