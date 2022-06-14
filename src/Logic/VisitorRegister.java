@@ -30,13 +30,15 @@ public class VisitorRegister extends Register {
 		this.area = area;
 	}
 
-	public void setID(String iD) {
-		ID = iD;
+	public void setID(String ID) {
+		this.ID = ID;
 	}
 	
 	//constructor
-	public VisitorRegister(Date checkInDate, Date checkOutDate, Person person) {
+	public VisitorRegister(Date checkInDate, Date checkOutDate, Person person, String area, String motive, String ID) {
 		super(checkInDate, checkOutDate, person);
-		
+		setMotive(motive);
+		setArea(area);
+		setID(ID);
 	}
 }

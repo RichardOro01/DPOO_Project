@@ -30,11 +30,15 @@ public class Register{
 		if(checkOutDate.compareTo(checkInDate)>0)
 			this.checkOutDate = checkOutDate;
 	}
+	
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 		
 	//constructor
 	public Register(Date checkInDate, Date checkOutDate, Person person) {
 		setCheckInDate(checkInDate);
 		setCheckOutDate(checkOutDate);				
-		this.person = person;
+		setPerson(person);
 	}
 }
