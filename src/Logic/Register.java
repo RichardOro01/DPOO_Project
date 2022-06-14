@@ -20,10 +20,8 @@ public class Register{
 	}
 	
 	//setters
-	public void setCheckInDate(Date checkInDate) {
-		if(checkInDate.compareTo(checkOutDate)<0) 
-			this.checkInDate=checkInDate;
-		
+	public void setCheckInDate(Date checkInDate) { 
+		this.checkInDate=checkInDate;
 	}
 	
 	public void setCheckOutDate(Date checkOutDate) {
