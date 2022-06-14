@@ -10,7 +10,7 @@ public class Main {
 		University u=new University();
 		
 		//persona prueba
-		Professor p=new Professor("Pepe", "Antonio", "0102068706", true, null, null, null, null, null);
+		Professor p=new Professor("Pepe", "Antonio", "0102068706", true, null, null, null,  null);
 		//oficinas de pruebas
 		Office of1=new Office("1", null, p);
 		Office of2=new Office("2", null, p);

@@ -15,9 +15,9 @@ public class Specialist extends Person {
 	}
 	
 	//constructor
-	public Specialist(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
+	public Specialist(String name, String lastName, String iDNumber, boolean isInfo,
 			String project) {
-		super(name, lastName, iDNumber, isInfo, kindOfPerson);
+		super(name, lastName, iDNumber, isInfo);
 		setProject(project);
 	}
 }
