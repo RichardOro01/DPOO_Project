@@ -36,9 +36,9 @@ public class Professor extends Person {
 	}
 		
 	//constructor
-	public Professor(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
+	public Professor(String name, String lastName, String iDNumber, boolean isInfo, 
 			String department, String teachingCategory, String scientificCategory, String typeOfContract) {
-		super(name, lastName, iDNumber, isInfo, kindOfPerson);
+		super(name, lastName, iDNumber, isInfo);
 		setDepartment(department);
 		setTeachingCategory(teachingCategory);
 		setScientificCategory(scientificCategory);

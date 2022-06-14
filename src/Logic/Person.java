@@ -7,7 +7,7 @@ public abstract class Person {
 	protected String lastName;
 	protected String IDNumber;
 	protected boolean isInfo;
-	protected String kindOfPerson;
+	
 	
 	
 	//getters
@@ -23,9 +23,7 @@ public abstract class Person {
 	public boolean isInfo() {
 		return isInfo;
 	}
-	public String getKindOfPerson() {
-		return kindOfPerson;
-	}
+	
 		
 	//setters
 	public void setName(String name) {
@@ -46,16 +44,14 @@ public abstract class Person {
 		this.isInfo = isInfo;
 	}
 	
-	public void setKindOfPerson(String kindOfPerson) {
-		this.kindOfPerson = kindOfPerson;
-	}
+	
 	//constructor
-	public Person(String name, String lastName, String iDNumber, boolean isInfo,String kindOfPerson) {
+	public Person(String name, String lastName, String iDNumber, boolean isInfo) {
 		setName(name);
 		setLastName(lastName);
 		setIDNumber(IDNumber);
 		setInfo(isInfo);
-		setKindOfPerson(kindOfPerson);
+		
 	}
 	
 	

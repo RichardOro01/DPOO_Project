@@ -22,9 +22,9 @@ public class Executive extends Person{
 	}
 	
 	//constructor
-	public Executive(String name, String lastName, String iDNumber, boolean isInfo, String kindOfPerson,
+	public Executive(String name, String lastName, String iDNumber, boolean isInfo,
 			String position, String area) {
-		super(name, lastName, iDNumber, isInfo,kindOfPerson);
+		super(name, lastName, iDNumber, isInfo);
 		setPosition(position);
 		setArea(area);
 	}
