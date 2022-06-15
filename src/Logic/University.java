@@ -96,6 +96,7 @@ public class University {
 				ae.setHourIn(8);
 				ae.setHourOut(person.isInfo()?17:12);
 				acc.add(ae);
+				break;
 			case "Student":
 				Access af=new Access();
 				af.getClasifiaciones().add("Local de estudiantes");
@@ -105,6 +106,7 @@ public class University {
 				af.setHourIn(person.isInfo()?-1:8);
 				af.setHourOut(person.isInfo()?-1:12);
 				acc.add(af);
+				break;
 
 
 				
