@@ -8,7 +8,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		University u=new University();
+		University u = University.getInstance();
 		
 		//persona prueba
 		Professor p=new Professor("Pepe", "Antonio", "0102068706", true, null, null, null,  null);
@@ -40,7 +40,7 @@ public class Main {
 			System.out.println(o.getID());
 		}
 		
-		System.out.println("Prueba Reporte 2. Escriba el el tipo de persona para saber cuántos violaron el horario de acceso: ");
+		System.out.println("Prueba Reporte 2. Escriba el tipo de persona para saber cuántos violaron el horario de acceso: ");
 		Scanner ss=new Scanner(System.in);
 		String tp=ss.nextLine();
 		ArrayList<ArrayList<Person>> persons= new ArrayList<ArrayList<Person>>();
@@ -51,6 +51,8 @@ public class Main {
 				System.out.println("Local "+i+": "+persons.get(i).get(j).getName()+" "+persons.get(i).get(j).getLastName());
 			}
 		}
+		s.close();
+		ss.close();
 	}
 
 }
