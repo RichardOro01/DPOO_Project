@@ -6,10 +6,17 @@ public class University {
 	//attributes
 	private ArrayList<Person> staff;
 	private Faculty computerFac;
-	
+	private static University instance;
 	//getters
 	public ArrayList<Person> getStaff() {
 		return staff;
+	}
+	
+	public static University getInstance() {
+		if(instance==null) {
+			instance = new University();
+		}
+		return instance;
 	}
 
 	public Faculty getComputerFac() {
@@ -17,7 +24,7 @@ public class University {
 	}
 	
 	//constructor
-	public University() {
+	private University() {
 		computerFac= new Faculty();
 	}
 	
@@ -53,26 +60,26 @@ public class University {
 			case "Executive":
 			case "Administrative":
 				Access aa=new Access();
-				aa.getClasifiaciones().add("*");
+				aa.getClassification().add("*");
 				aa.setHourIn(person.isInfo()?-1:8);
 				aa.setHourOut(person.isInfo()?-1:12);
 				acc.add(aa);
 				break;
 			case "Professor":
 				Access ab=new Access();
-				ab.getClasifiaciones().add("Local de estudiantes");
-				ab.getClasifiaciones().add("Local de profesores");
-				ab.getClasifiaciones().add("Aula");
-				ab.getClasifiaciones().add("Laboratorio");
+				ab.getClassification().add("Local de estudiantes");
+				ab.getClassification().add("Local de profesores");
+				ab.getClassification().add("Aula");
+				ab.getClassification().add("Laboratorio");
 				ab.setHourIn(person.isInfo()?-1:8);
 				ab.setHourOut(person.isInfo()?-1:12);
 				acc.add(ab);
 				Access ac=new Access();
-				ac.getClasifiaciones().add("Local del decano");
-				ac.getClasifiaciones().add("Local del vicedecano");
-				ac.getClasifiaciones().add("Local de especialistas");
-				ac.getClasifiaciones().add("Local de área administrativa");
-				ac.getClasifiaciones().add("Local de jefe de departamento");
+				ac.getClassification().add("Local del decano");
+				ac.getClassification().add("Local del vicedecano");
+				ac.getClassification().add("Local de especialistas");
+				ac.getClassification().add("Local de área administrativa");
+				ac.getClassification().add("Local de jefe de departamento");
 				ac.setHourIn(8);
 				ac.setHourOut(person.isInfo()?17:12);
 				acc.add(ac);
@@ -80,29 +87,29 @@ public class University {
 			case "Specialist":
 			case "Technical":	
 				Access ad=new Access();
-				ad.getClasifiaciones().add("Laboratorios");
-				ad.getClasifiaciones().add("Local de profesores");
-				ad.getClasifiaciones().add("Local de estudiantes");
-				ad.getClasifiaciones().add("Local de especialistas");
+				ad.getClassification().add("Laboratorios");
+				ad.getClassification().add("Local de profesores");
+				ad.getClassification().add("Local de estudiantes");
+				ad.getClassification().add("Local de especialistas");
 				ad.setHourIn(person.isInfo()?-1:8);
 				ad.setHourOut(person.isInfo()?-1:12);
 				acc.add(ad);
 				Access ae=new Access();
-				ae.getClasifiaciones().add("Local del decano");
-				ae.getClasifiaciones().add("Local del vicedecano");
-				ae.getClasifiaciones().add("Local de profesores");
-				ae.getClasifiaciones().add("Local de área administrativa");
-				ae.getClasifiaciones().add("Local de jefe de departamento");
+				ae.getClassification().add("Local del decano");
+				ae.getClassification().add("Local del vicedecano");
+				ae.getClassification().add("Local de profesores");
+				ae.getClassification().add("Local de área administrativa");
+				ae.getClassification().add("Local de jefe de departamento");
 				ae.setHourIn(8);
 				ae.setHourOut(person.isInfo()?17:12);
 				acc.add(ae);
 				break;
 			case "Student":
 				Access af=new Access();
-				af.getClasifiaciones().add("Local de estudiantes");
-				af.getClasifiaciones().add("Local de profesores");
-				af.getClasifiaciones().add("Aula");
-				af.getClasifiaciones().add("Laboratorio");
+				af.getClassification().add("Local de estudiantes");
+				af.getClassification().add("Local de profesores");
+				af.getClassification().add("Aula");
+				af.getClassification().add("Laboratorio");
 				af.setHourIn(person.isInfo()?-1:8);
 				af.setHourOut(person.isInfo()?-1:12);
 				acc.add(af);

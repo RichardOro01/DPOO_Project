@@ -5,21 +5,21 @@ import java.util.ArrayList;
 public class Access {
 	
 
-	private ArrayList<String> clasifiaciones;
+	private ArrayList<String> classification;
 	private int hourIn;
 	private int hourOut;
 
 	public Access() {
 		
-		clasifiaciones=new ArrayList<String>(); 
+		classification=new ArrayList<String>(); 
 	}
 	
-	public ArrayList<String> getClasifiaciones() {
-		return clasifiaciones;
+	public ArrayList<String> getClassification() {
+		return classification;
 	}
 
-	public void setClasifiaciones(ArrayList<String> clasifiaciones) {
-		this.clasifiaciones = clasifiaciones;
+	public void setClasifiaciones(ArrayList<String> classification) {
+		this.classification = classification;
 	}
 
 	public int getHourIn() {
