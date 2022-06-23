@@ -2,6 +2,7 @@ package Logic;
 
 import java.util.Date;
 import java.util.Scanner;
+
 import java.util.ArrayList;
 
 public class Main {
@@ -9,6 +10,7 @@ public class Main {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		University u = University.getInstance();
+		
 		
 		//persona prueba
 		Professor p=new Professor("Pepe", "Antonio", "0102068706", true, null, null, null,  null);
@@ -50,9 +52,21 @@ public class Main {
 			for (int j=0; j<persons.get(i).size();j++) {
 				System.out.println("Local "+i+": "+persons.get(i).get(j).getName()+" "+persons.get(i).get(j).getLastName());
 			}
-		}
-		s.close();
+		}	
+		
+		
+		System.out.println("Prueba reporte 3. Introduzca el primer mes del rango de meses para saber el promedio de visitas");
+		int month1=s.nextInt();
+		System.out.println("Introduzca el segundo mes del rango de meses para saber el promedio de visitas");
+		int month2=s.nextInt();
+		System.out.println("Introduca el tipo de visitante del que desea conocer los datos");
+		String typePerson = ss.nextLine();
+		double result= u.averageVisitsInMonthPerVisitor(month1, month2, typePerson);
+		System.out.println("El promedio de visitas en este rango de meses es de: "+result);
+		
 		ss.close();
-	}
+		s.close();
+		}
+		
 
 }
