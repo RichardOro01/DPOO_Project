@@ -157,4 +157,19 @@ public class University {
 		}		
 		return ((double)assis/(month2-month1+1));
 	}
+	
+	public ArrayList<ArrayList<Person>> getVisitByAgeRange(int age1, int age2){
+		ArrayList<ArrayList<Person>> list=new ArrayList<ArrayList<Person>>();
+		for(Office o: computerFac.getOffices()) {
+			ArrayList<Person> list2 = new ArrayList<Person>();
+			for(Register r: o.getRegister()) {
+				int age=r.getPerson().calculateAge();
+				if (age>=age1 && age<=age2) {
+					list2.add(r.getPerson());
+				}
+			}
+			list.add(list2);
+		}		 
+		return list;
+	}
 }	

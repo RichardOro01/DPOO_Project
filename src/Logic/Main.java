@@ -12,7 +12,7 @@ public class Main {
 		University u = University.getInstance();
 				
 		//persona prueba
-		Professor p=new Professor("Pepe", "Antonio", "0102068706", true, null, null, null,  null);
+		Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
 		
 		//oficinas de pruebas
 		Office of1=new Office("1", null, p);
@@ -64,6 +64,18 @@ public class Main {
 		String typePerson = ss.nextLine();		
 		double result= u.averageVisitsInMonthPerVisitor(month1, month2, typePerson);
 		System.out.println("El promedio de visitas en este rango de meses es de: "+result);
+		
+		System.out.println("Prueba reporte 4. Introduzca la edad inicial");
+		int age1=s.nextInt();
+		System.out.println("Prueba reporte 4. Introduzca la edad final");
+		int age2=s.nextInt();
+		persons=u.getVisitByAgeRange(age1, age2);
+		for (int i=0; i< persons.size(); i++) {
+			for (int j=0; j<persons.get(i).size();j++) {
+				System.out.println("Local "+i+": "+persons.get(i).get(j).getName()+" "+persons.get(i).get(j).getLastName());
+			}
+		}	
+		
 			
 		ss.close();
 		s.close();

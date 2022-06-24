@@ -1,5 +1,7 @@
 package Logic;
 
+import java.util.Date;
+
 public abstract class Person {
 	
 	//attributes
@@ -44,12 +46,36 @@ public abstract class Person {
 		this.isInfo = isInfo;
 	}
 	
+	public int calculateAge() {
+		int age=0;
+		long agems;
+		Date birth=new Date();
+		Date actual=new Date();
+		int year=Integer.parseInt(getIDNumber().substring(0, 2));
+		int month=Integer.parseInt(getIDNumber().substring(2, 4));
+		int day=Integer.parseInt(getIDNumber().substring(4, 6));
+		int century=Integer.parseInt(getIDNumber().substring(6, 7));
+		if (century==9) {
+			year+=1800;
+		}else if (century <=5) {
+			year+=1900;
+		}else {
+			year+=2000;
+		}
+		birth.setYear(year-1900);
+		birth.setMonth(month);
+		birth.setDate(day);
+		agems=actual.getTime()-birth.getTime();
+		age=(int)(agems/31536000000L);
+		return age;
+	}
+	
 	
 	//constructor
 	public Person(String name, String lastName, String iDNumber, boolean isInfo) {
 		setName(name);
 		setLastName(lastName);
-		setIDNumber(IDNumber);
+		setIDNumber(iDNumber);
 		setInfo(isInfo);
 		
 	}
