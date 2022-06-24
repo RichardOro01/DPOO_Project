@@ -155,6 +155,6 @@ public class University {
 				}
 			}	
 		}		
-		return (assis/(month2-month1+1));
+		return ((double)assis/(month2-month1+1));
 	}
 }	
