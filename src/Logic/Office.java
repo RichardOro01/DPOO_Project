@@ -28,7 +28,8 @@ public class Office {
 
 	//setters
 	public void setClassification(String classification) {
-		this.classification = classification;
+		if(classification!=null&&!classification.isEmpty())
+			this.classification = classification;
 	}
 	public void setSupervisor(Person supervisor) {
 		if(supervisor.isInfo) { 

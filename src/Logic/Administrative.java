@@ -12,7 +12,8 @@ public class Administrative extends Person {
 		
 	//setters
 	public void setJob(String job) {
-		this.job = job;
+		if(job!=null&&!job.isEmpty())
+			this.job = job;
 	}
 
 	

@@ -1,7 +1,5 @@
 package Logic;
 
-
-
 public class Student extends Person{
 	//attributes
 	private int year;

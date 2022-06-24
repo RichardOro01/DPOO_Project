@@ -30,7 +30,8 @@ public class Register{
 	}
 	
 	public void setPerson(Person person) {
-		this.person = person;
+		if(person!=null)
+			this.person = person;
 	}
 		
 	//constructor
