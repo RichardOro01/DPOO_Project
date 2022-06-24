@@ -1,7 +1,5 @@
 package Logic;
 
-
-
 public class Specialist extends Person {
 	//attributes
 	private String project;

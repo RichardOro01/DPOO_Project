@@ -1,8 +1,5 @@
 package Logic;
 
-
-
-
 public class Technical extends Person {
 	//attributes
 	private String job;

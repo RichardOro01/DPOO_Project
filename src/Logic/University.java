@@ -114,10 +114,7 @@ public class University {
 				af.setHourIn(person.isInfo()?-1:8);
 				af.setHourOut(person.isInfo()?-1:12);
 				acc.add(af);
-				break;
-
-
-				
+				break;				
 		}
 		return acc;
 	}
@@ -150,18 +147,14 @@ public class University {
 
 	public double averageVisitsInMonthPerVisitor(int month1, int month2, String typePerson) {		
 		int assis=0;
-			for(Office o: computerFac.getOffices()) {
-				for(Register r: o.getRegister()) {
-					if(r.getPerson().getClass().getSimpleName().equalsIgnoreCase(typePerson) && 
-							(r.getCheckInDate().getMonth()+1>=month1 && r.getCheckInDate().getMonth()+1<= month2)) {
-						assis++;
-					}
-				}	
-			}
-		
-		
-		
-		
+		for(Office o: computerFac.getOffices()) {
+			for(Register r: o.getRegister()) {
+				if(r.getPerson().getClass().getSimpleName().equalsIgnoreCase(typePerson) && 
+						(r.getCheckInDate().getMonth()+1>=month1 && r.getCheckInDate().getMonth()+1<= month2)) {
+					assis++;
+				}
+			}	
+		}		
 		return (assis/(month2-month1+1));
 	}
 }	

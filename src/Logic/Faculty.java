@@ -13,6 +13,6 @@ public class Faculty {
 	
 	//constructor
 	public Faculty() {
-
+		offices = new ArrayList<Office>();
 	}
 }

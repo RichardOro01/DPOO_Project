@@ -7,10 +7,12 @@ public class Executive extends Person{
 	
 	//setters
 	public void setPosition(String position) {
-		this.position = position;
+		if(position!=null&&!position.isEmpty())
+			this.position = position;
 	}
 	public void setArea(String area) {
-		this.area = area;
+		if(area!=null&&!area.isEmpty())
+			this.area = area;
 	}
 	
 	//getters
