@@ -1,5 +1,7 @@
 package Logic;
 
+
+
 public class Student extends Person{
 	//attributes
 	private int year;
@@ -15,20 +17,23 @@ public class Student extends Person{
 	
 	
 	//setters
-	public void setYear(int year) {
-		if(year>=1 && year<=4)
+	public void setYear(int year)  {
+		if(year>=1 && year<=4) 
 			this.year = year;
+		
 	}
 	public void setGroup(int group) {
-		if(group>=1 && group<=4)
-		this.group = group;
+		if(group>=1 && group<=4) 
+			this.group = group;
+		
 	}
 	
 	//constructor
 	public Student(String name, String lastName, String iDNumber, boolean isInfo,
 			int year, int group) {
-		super(name, lastName, iDNumber, isInfo);
-		setYear(year);
+		super(name, lastName, iDNumber, isInfo);	
+		setYear(year);		
 		setGroup(group);
+		
 	}
 }
