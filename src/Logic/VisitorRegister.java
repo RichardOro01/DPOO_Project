@@ -2,6 +2,7 @@ package Logic;
 
 import java.util.Date;
 
+
 public class VisitorRegister extends Register {
 	//attributes
 	private String area;
@@ -22,16 +23,21 @@ public class VisitorRegister extends Register {
 	}
 	
 	//setters		
-	public void setMotive(String motive) {
-		this.motive = motive;
+	public void setMotive(String motive)  {
+		if(motive!=null&&!motive.isEmpty()) 
+			this.motive = motive;
+		
 	}
 	
-	public void setArea(String area) {
-		this.area = area;
+	public void setArea(String area)  {
+		if(area!=null&&!area.isEmpty()) 
+			this.area = area;
+	
 	}
 
 	public void setID(String ID) {
-		this.ID = ID;
+		if(ID!=null&&!ID.isEmpty()) 
+			this.ID = ID;
 	}
 	
 	//constructor

@@ -50,6 +50,7 @@ public class University {
 					}
 				}
 			}
+		
 		}
 		return offices;
 	}
@@ -149,14 +150,17 @@ public class University {
 
 	public double averageVisitsInMonthPerVisitor(int month1, int month2, String typePerson) {		
 		int assis=0;
-		for(Office o: computerFac.getOffices()) {
-			for(Register r: o.getRegister()) {
-				if(r.getPerson().getClass().getSimpleName().equalsIgnoreCase(typePerson) && 
-						(r.getCheckInDate().getMonth()+1>=month1 && r.getCheckInDate().getMonth()+1<= month2)) {
-					assis++;
-				}
-			}	
-		}
+			for(Office o: computerFac.getOffices()) {
+				for(Register r: o.getRegister()) {
+					if(r.getPerson().getClass().getSimpleName().equalsIgnoreCase(typePerson) && 
+							(r.getCheckInDate().getMonth()+1>=month1 && r.getCheckInDate().getMonth()+1<= month2)) {
+						assis++;
+					}
+				}	
+			}
+		
+		
+		
 		
 		return (assis/(month2-month1+1));
 	}

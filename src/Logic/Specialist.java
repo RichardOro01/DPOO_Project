@@ -1,5 +1,7 @@
 package Logic;
 
+
+
 public class Specialist extends Person {
 	//attributes
 	private String project;
@@ -11,12 +13,14 @@ public class Specialist extends Person {
 
 	//setters
 	public void setProject(String project) {
-		this.project = project;
+		if(project!=null&&!project.isEmpty()) 
+			this.project = project;
+		
 	}
 	
 	//constructor
 	public Specialist(String name, String lastName, String iDNumber, boolean isInfo,
-			String project) {
+			String project)  {
 		super(name, lastName, iDNumber, isInfo);
 		setProject(project);
 	}

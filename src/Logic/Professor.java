@@ -22,22 +22,30 @@ public class Professor extends Person {
 	}
 	
 	//setters
-	public void setDepartment(String department) {
-		this.department = department;
+	public void setDepartment(String department)  {
+		if(department!=null&&department.isEmpty()) 
+			this.department = department;
+		
 	}	
 	public void setTeachingCategory(String teachingCategory) {
-		this.teachingCategory = teachingCategory;
+		if(teachingCategory!=null&&!teachingCategory.isEmpty()) 
+			this.teachingCategory = teachingCategory;
+		
 	}	
-	public void setScientificCategory(String scientificCategory) {
-		this.scientificCategory = scientificCategory;
+	public void setScientificCategory(String scientificCategory){
+		if(scientificCategory!=null&&!scientificCategory.isEmpty()) 
+			this.scientificCategory = scientificCategory;
+		
 	}
 	public void setTypeOfContract(String typeOfContract) {
-		this.typeOfContract = typeOfContract;
+		if(typeOfContract!=null&&!typeOfContract.isEmpty()) 
+			this.typeOfContract = typeOfContract;
+		
 	}
 		
 	//constructor
 	public Professor(String name, String lastName, String iDNumber, boolean isInfo, 
-			String department, String teachingCategory, String scientificCategory, String typeOfContract) {
+			String department, String teachingCategory, String scientificCategory, String typeOfContract)  {
 		super(name, lastName, iDNumber, isInfo);
 		setDepartment(department);
 		setTeachingCategory(teachingCategory);

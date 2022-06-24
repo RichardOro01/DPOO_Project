@@ -1,5 +1,8 @@
 package Logic;
 
+
+
+
 public class Technical extends Person {
 	//attributes
 	private String job;
@@ -11,7 +14,9 @@ public class Technical extends Person {
 			
 	//setters
 	public void setJob(String job) {
-		this.job=job;
+		if(job!=null&&!job.isEmpty() ) 
+			this.job=job;
+		
 	}
 
 	//constructor
