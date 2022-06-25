@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.GridBagLayout;
@@ -141,6 +143,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne() {
 		if (cbTipoVisitatne == null) {
 			cbTipoVisitatne = new JComboBox();
+			cbTipoVisitatne.setName("Tipo de visitante");
 			cbTipoVisitatne.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					for (JPanel panel: specialData) {
@@ -188,6 +191,36 @@ public class RegisterPersonWindow extends JFrame {
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton("Registrar");
+			btnRegistrar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						Checking.checkEmpty(textNombre);
+						Checking.checkEmpty(textApellidos);
+						Checking.checkEmpty(textNI);
+						Checking.checkNotSelected(cbTipoVisitatne);
+						for (JPanel panel: specialData) {
+							if (panel.isVisible()) {
+								for (Component c: panel.getComponents()) {
+									if (c instanceof JComboBox) {
+										if (c.isVisible()) {
+											Checking.checkNotSelected((JComboBox)c);
+										}
+									}else if (c instanceof JTextField) {
+										if (c.isVisible()) {
+											Checking.checkEmpty((JTextField)c);
+										}
+									}
+								}
+							}
+						}
+					}catch(EmptyTextFormException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}catch (NotSelectedException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 		}
 		return btnRegistrar;
 	}
@@ -213,6 +246,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
+			textNombre.setName("Nombre");
 			textNombre.setColumns(10);
 		}
 		return textNombre;
@@ -227,6 +261,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextApellidos() {
 		if (textApellidos == null) {
 			textApellidos = new JTextField();
+			textApellidos.setName("Apellidos");
 			textApellidos.setColumns(10);
 		}
 		return textApellidos;
@@ -241,6 +276,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNI() {
 		if (textNI == null) {
 			textNI = new JTextField();
+			textNI.setName("Número de identidad");
 			textNI.setColumns(10);
 		}
 		return textNI;
@@ -328,6 +364,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbCargo() {
 		if (cbCargo == null) {
 			cbCargo = new JComboBox();
+			cbCargo.setName("Cargo");
 			cbCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Decano", "Vicedecanos", "Jefe de departamentos", "Jefe de secretar\u00EDa docente"}));
 		}
 		return cbCargo;
@@ -335,6 +372,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbArea() {
 		if (cbArea == null) {
 			cbArea = new JComboBox();
+			cbArea.setName("Área");
 			cbArea.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String item=(String) cbArea.getSelectedItem();
@@ -375,6 +413,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbPlaza() {
 		if (cbPlaza == null) {
 			cbPlaza = new JComboBox();
+			cbPlaza.setName("Plaza");
 			cbPlaza.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Asesor", "Secretaria"}));
 		}
 		return cbPlaza;
@@ -408,6 +447,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne_1() {
 		if (cbTipoVisitatne_1 == null) {
 			cbTipoVisitatne_1 = new JComboBox();
+			cbTipoVisitatne_1.setName("Departamento");
 			cbTipoVisitatne_1.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Departamento 1", "Departamento 2", "Departamento 3", "Departamento 4", "Departamento 5", "Departamento 6", "Departamento 7", "Departamento 8"}));
 		}
 		return cbTipoVisitatne_1;
@@ -422,6 +462,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne_2() {
 		if (cbTipoVisitatne_2 == null) {
 			cbTipoVisitatne_2 = new JComboBox();
+			cbTipoVisitatne_2.setName("Categoría científica");
 			cbTipoVisitatne_2.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Doctor", "Master"}));
 		}
 		return cbTipoVisitatne_2;
@@ -429,6 +470,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne_3() {
 		if (cbTipoVisitatne_3 == null) {
 			cbTipoVisitatne_3 = new JComboBox();
+			cbTipoVisitatne_3.setName("Categoría docente");
 			cbTipoVisitatne_3.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Titular ", "Auxiliar", "Asistente", "Instructor"}));
 		}
 		return cbTipoVisitatne_3;
@@ -436,6 +478,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne_4() {
 		if (cbTipoVisitatne_4 == null) {
 			cbTipoVisitatne_4 = new JComboBox();
+			cbTipoVisitatne_4.setName("Tipo de contrato");
 			cbTipoVisitatne_4.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Determinado", "Indeterminado"}));
 		}
 		return cbTipoVisitatne_4;
@@ -477,6 +520,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.setName("Proyecto en el que trabaja");
 			textField.setColumns(10);
 		}
 		return textField;
@@ -504,6 +548,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne_5() {
 		if (cbTipoVisitatne_5 == null) {
 			cbTipoVisitatne_5 = new JComboBox();
+			cbTipoVisitatne_5.setName("Plaza");
 			cbTipoVisitatne_5.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Plaza 1", "Plaza 2"}));
 		}
 		return cbTipoVisitatne_5;
@@ -560,6 +605,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbDepa() {
 		if (cbDepa == null) {
 			cbDepa = new JComboBox();
+			cbDepa.setName("Departamento");
 			cbDepa.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Departamento 1", "Departamento 2", "Departamento 3", "Departamento 4", "Departamento 5", "Departamento 6", "Departamento 7", "Departamento 8"}));
 			cbDepa.setVisible(false);
 		}

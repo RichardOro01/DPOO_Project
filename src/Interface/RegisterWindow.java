@@ -29,6 +29,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
+
+import Logic.Office;
+import Logic.University;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -38,18 +42,16 @@ public class RegisterWindow extends JFrame {
 	private JPanel contentPane;
 	private JLabel lblIdLocal;
 	private JLabel lblClasificacion;
-	private JComboBox cbResponsable;
-	private JLabel lblResponsable;
 	private JLabel lblTipoVisitante;
-	private JComboBox cbTipoVisitatne;
+	private JComboBox cbPersona;
 	private JPanel panelFechaEntrada;
-	private JTextField textField_4;
+	private JTextField textHoraEntrada;
 	private JLabel lblNewLabel_3_1_1;
-	private JTextField textField_5;
+	private JTextField textMinutosEntrada;
 	private JPanel panelFechaSalida;
-	private JTextField textField_9;
+	private JTextField textHoraSalida;
 	private JLabel lblNewLabel_3_1_1_1;
-	private JTextField textField_10;
+	private JTextField textMinutosSalida;
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
 	private JPanel panelBotones;
@@ -59,7 +61,7 @@ public class RegisterWindow extends JFrame {
 
 	private JDateChooser dateChooserEntrada;
 	private JDateChooser dateChooserSalida;
-	private JComboBox cbClasificacion_1;
+	private JComboBox cbLocal;
 	private JLabel lblNewLabel;
 
 	/**
@@ -113,20 +115,6 @@ public class RegisterWindow extends JFrame {
 		}
 		return lblClasificacion;
 	}
-	private JComboBox getCbResponsable() {
-		if (cbResponsable == null) {
-			cbResponsable = new JComboBox();
-			cbResponsable.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Antonio ", "Jose", "Miguel"}));
-		}
-		return cbResponsable;
-	}
-	private JLabel getLblResponsable() {
-		if (lblResponsable == null) {
-			lblResponsable = new JLabel("Responsable");
-			lblResponsable.setHorizontalAlignment(SwingConstants.RIGHT);
-		}
-		return lblResponsable;
-	}
 	private JLabel getLblTipoVisitante() {
 		if (lblTipoVisitante == null) {
 			lblTipoVisitante = new JLabel("Persona\r\n");
@@ -134,13 +122,13 @@ public class RegisterWindow extends JFrame {
 		}
 		return lblTipoVisitante;
 	}
-	private JComboBox getCbTipoVisitatne() {
-		if (cbTipoVisitatne == null) {
-			cbTipoVisitatne = new JComboBox();
-			
-			cbTipoVisitatne.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Persona 1", "Persona 2", "Persona 3", "Persona 4", "Persona 5"}));
+	private JComboBox getCbPersona() {
+		if (cbPersona == null) {
+			cbPersona = new JComboBox();
+			cbPersona.setName("Persona");
+			cbPersona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Persona 1", "Persona 2", "Persona 3", "Persona 4", "Persona 5"}));
 		}
-		return cbTipoVisitatne;
+		return cbPersona;
 	}
 	private JPanel getPanelFechaEntrada() {
 		if (panelFechaEntrada == null) {
@@ -148,20 +136,21 @@ public class RegisterWindow extends JFrame {
 			panelFechaEntrada.setBounds(12, 153, 319, 59);
 			panelFechaEntrada.setBorder(new TitledBorder(null, "Fecha de entrada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panelFechaEntrada.setLayout(null);
-			panelFechaEntrada.add(getTextField_4());
+			panelFechaEntrada.add(getTextHoraEntrada());
 			panelFechaEntrada.add(getLblNewLabel_3_1_1());
-			panelFechaEntrada.add(getTextField_5());
+			panelFechaEntrada.add(getTextMinutosEntrada());
 			panelFechaEntrada.add(getDateChooserEntrada());
 		}
 		return panelFechaEntrada;
 	}
-	private JTextField getTextField_4() {
-		if (textField_4 == null) {
-			textField_4 = new JTextField();
-			textField_4.setColumns(10);
-			textField_4.setBounds(233, 24, 26, 19);
+	private JTextField getTextHoraEntrada() {
+		if (textHoraEntrada == null) {
+			textHoraEntrada = new JTextField();
+			textHoraEntrada.setName("Hora de entrada");
+			textHoraEntrada.setColumns(10);
+			textHoraEntrada.setBounds(233, 24, 26, 19);
 		}
-		return textField_4;
+		return textHoraEntrada;
 	}
 	private JLabel getLblNewLabel_3_1_1() {
 		if (lblNewLabel_3_1_1 == null) {
@@ -170,13 +159,14 @@ public class RegisterWindow extends JFrame {
 		}
 		return lblNewLabel_3_1_1;
 	}
-	private JTextField getTextField_5() {
-		if (textField_5 == null) {
-			textField_5 = new JTextField();
-			textField_5.setColumns(10);
-			textField_5.setBounds(271, 24, 26, 19);
+	private JTextField getTextMinutosEntrada() {
+		if (textMinutosEntrada == null) {
+			textMinutosEntrada = new JTextField();
+			textMinutosEntrada.setName("Minutos de entrada");
+			textMinutosEntrada.setColumns(10);
+			textMinutosEntrada.setBounds(271, 24, 26, 19);
 		}
-		return textField_5;
+		return textMinutosEntrada;
 	}
 	private JPanel getPanelFechaSalida() {
 		if (panelFechaSalida == null) {
@@ -184,20 +174,21 @@ public class RegisterWindow extends JFrame {
 			panelFechaSalida.setBounds(12, 222, 319, 59);
 			panelFechaSalida.setLayout(null);
 			panelFechaSalida.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Fecha de salida", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panelFechaSalida.add(getTextField_9());
+			panelFechaSalida.add(getTextHoraSalida());
 			panelFechaSalida.add(getLblNewLabel_3_1_1_1());
-			panelFechaSalida.add(getTextField_10());
+			panelFechaSalida.add(getTextMinutosSalida());
 			panelFechaSalida.add(getDateChooserSalida());
 		}
 		return panelFechaSalida;
 	}
-	private JTextField getTextField_9() {
-		if (textField_9 == null) {
-			textField_9 = new JTextField();
-			textField_9.setColumns(10);
-			textField_9.setBounds(235, 24, 26, 19);
+	private JTextField getTextHoraSalida() {
+		if (textHoraSalida == null) {
+			textHoraSalida = new JTextField();
+			textHoraSalida.setName("Hora de salida");
+			textHoraSalida.setColumns(10);
+			textHoraSalida.setBounds(235, 24, 26, 19);
 		}
-		return textField_9;
+		return textHoraSalida;
 	}
 	private JLabel getLblNewLabel_3_1_1_1() {
 		if (lblNewLabel_3_1_1_1 == null) {
@@ -206,17 +197,42 @@ public class RegisterWindow extends JFrame {
 		}
 		return lblNewLabel_3_1_1_1;
 	}
-	private JTextField getTextField_10() {
-		if (textField_10 == null) {
-			textField_10 = new JTextField();
-			textField_10.setColumns(10);
-			textField_10.setBounds(271, 24, 26, 19);
+	private JTextField getTextMinutosSalida() {
+		if (textMinutosSalida == null) {
+			textMinutosSalida = new JTextField();
+			textMinutosSalida.setName("Minutos de salida");
+			textMinutosSalida.setColumns(10);
+			textMinutosSalida.setBounds(271, 24, 26, 19);
 		}
-		return textField_10;
+		return textMinutosSalida;
 	}
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton("Registrar");
+			btnRegistrar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						
+						Checking.checkNotSelected(cbLocal);
+						Checking.checkNotSelected(cbPersona);
+						Checking.checkDate(dateChooserEntrada);
+						Checking.checkDate(dateChooserSalida);
+						Checking.checkEmpty(textHoraEntrada);
+						Checking.checkEmpty(textMinutosEntrada);
+						Checking.checkEmpty(textHoraSalida);
+						Checking.checkEmpty(textMinutosSalida);
+						
+						JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+					}catch (EmptyTextFormException ex){
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}catch (NotSelectedException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}catch (DateChooserException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 		}
 		return btnRegistrar;
 	}
@@ -254,7 +270,7 @@ public class RegisterWindow extends JFrame {
 			paneDatos1 = new JPanel();
 			paneDatos1.setBounds(12, 10, 319, 66);
 			paneDatos1.setLayout(new MigLayout("", "[67.00px][228.00px,grow]", "[19px][21px]"));
-			paneDatos1.add(getCbClasificacion_1(), "cell 1 0,growx");
+			paneDatos1.add(getCbLocal(), "cell 1 0,growx");
 			paneDatos1.add(getLblClasificacion(), "cell 0 1,alignx right,aligny center");
 			paneDatos1.add(getLblIdLocal(), "cell 0 0,alignx trailing,aligny center");
 			paneDatos1.add(getLblNewLabel(), "cell 1 1");
@@ -266,16 +282,15 @@ public class RegisterWindow extends JFrame {
 			panelDatos2 = new JPanel();
 			panelDatos2.setBounds(12, 77, 319, 66);
 			panelDatos2.setLayout(new MigLayout("", "[75px][228.00px]", "[21px][21px]"));
-			panelDatos2.add(getCbResponsable(), "cell 1 0,growx,aligny top");
-			panelDatos2.add(getCbTipoVisitatne(), "cell 1 1,growx,aligny top");
-			panelDatos2.add(getLblResponsable(), "cell 0 0,alignx right,aligny center");
-			panelDatos2.add(getLblTipoVisitante(), "cell 0 1,alignx right,growy");
+			panelDatos2.add(getLblTipoVisitante(), "cell 0 0,alignx right,growy");
+			panelDatos2.add(getCbPersona(), "cell 1 0,growx,aligny top");
 		}
 		return panelDatos2;
 	}
 	private JDateChooser getDateChooserEntrada() {
 		if (dateChooserEntrada == null) {
 			dateChooserEntrada = new JDateChooser();
+			dateChooserEntrada.setName("Fecha de entrada");
 			dateChooserEntrada.setBounds(10, 24, 213, 19);
 		}
 		return dateChooserEntrada;
@@ -283,16 +298,18 @@ public class RegisterWindow extends JFrame {
 	private JDateChooser getDateChooserSalida() {
 		if (dateChooserSalida == null) {
 			dateChooserSalida = new JDateChooser();
+			dateChooserSalida.setName("Fecha de salida");
 			dateChooserSalida.setBounds(11, 24, 214, 19);
 		}
 		return dateChooserSalida;
 	}
-	private JComboBox getCbClasificacion_1() {
-		if (cbClasificacion_1 == null) {
-			cbClasificacion_1 = new JComboBox();
-			cbClasificacion_1.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local 1", "Local 2", "Local 3", "Local 4", "Local 5", "Local 6", "Local 7", "Local 8"}));
+	private JComboBox getCbLocal() {
+		if (cbLocal == null) {
+			cbLocal = new JComboBox();
+			cbLocal.setName("Local");
+			cbLocal.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local 1", "Local 2", "Local 3", "Local 4", "Local 5", "Local 6", "Local 7", "Local 8"}));
 		}
-		return cbClasificacion_1;
+		return cbLocal;
 	}
 	private JLabel getLblNewLabel() {
 		if (lblNewLabel == null) {

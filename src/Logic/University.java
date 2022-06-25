@@ -119,6 +119,14 @@ public class University {
 		return acc;
 	}
 	
+	public Person getPersonByFullName(String fullName) {
+		Person person=null;
+		for (Person p: staff) {
+			if ((p.getName()+" "+p.getLastName()).equals(fullName));
+				person=p;
+		}
+		return person;
+	}
 	
 	public ArrayList<ArrayList<Person>> visitOutOfTime(String typePerson){
 		ArrayList<ArrayList<Person>> persons= new ArrayList<ArrayList<Person>>();
