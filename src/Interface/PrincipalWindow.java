@@ -34,13 +34,14 @@ public class PrincipalWindow extends JFrame {
 	private JPanel contentPane;
 	private JLabel text_CAFII;
 	private JMenuBar menuBar;
-	private JMenu mnNewMenu;
-	private JMenuItem mntmNewMenuItem;
-	private JMenu mnNewMenu_1;
-	private JMenuItem mntmNewMenuItem_1;
-	private JMenu mnNewMenu_2;
-	private JMenuItem mntmNewMenuItem_2;
-	private JMenuItem mntmNewMenuItem_3;
+	private JMenu mnConsultar;
+	private JMenuItem mntmBD;
+	private JMenu mnGestion;
+	private JMenuItem mntmCerrarSesion;
+	private JMenu mnRegistrar;
+	private JMenuItem mntmNuevaPersona;
+	private JMenuItem mntmNuevaVisita;
+	private JMenuItem mntmNuevoLocal;
 
 	/**
 	 * Launch the application.
@@ -98,23 +99,23 @@ public class PrincipalWindow extends JFrame {
 		if (menuBar == null) {
 			menuBar = new JMenuBar();
 			menuBar.setBounds(0, 0, 706, 34);
-			menuBar.add(getMnNewMenu());
-			menuBar.add(getMnNewMenu_2());
-			menuBar.add(getMnNewMenu_1());
+			menuBar.add(getMnConsultar());
+			menuBar.add(getMnRegistrar());
+			menuBar.add(getMnGestion());
 		}
 		return menuBar;
 	}
-	private JMenu getMnNewMenu() {
-		if (mnNewMenu == null) {
-			mnNewMenu = new JMenu("Consultar\r\n");
-			mnNewMenu.add(getMntmNewMenuItem());
+	private JMenu getMnConsultar() {
+		if (mnConsultar == null) {
+			mnConsultar = new JMenu("Consultar\r\n");
+			mnConsultar.add(getMntmBD());
 		}
-		return mnNewMenu;
+		return mnConsultar;
 	}
-	private JMenuItem getMntmNewMenuItem() {
-		if (mntmNewMenuItem == null) {
-			mntmNewMenuItem = new JMenuItem("Base de datos");
-			mntmNewMenuItem.addActionListener(new ActionListener() {
+	private JMenuItem getMntmBD() {
+		if (mntmBD == null) {
+			mntmBD = new JMenuItem("Base de datos");
+			mntmBD.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					QueryWindow p_window = new QueryWindow();
 					p_window.setVisible(true);
@@ -123,19 +124,19 @@ public class PrincipalWindow extends JFrame {
 				}
 			});
 		}
-		return mntmNewMenuItem;
+		return mntmBD;
 	}
-	private JMenu getMnNewMenu_1() {
-		if (mnNewMenu_1 == null) {
-			mnNewMenu_1 = new JMenu("Gesti\u00F3n\r\n");
-			mnNewMenu_1.add(getMntmNewMenuItem_1());
+	private JMenu getMnGestion() {
+		if (mnGestion == null) {
+			mnGestion = new JMenu("Gesti\u00F3n\r\n");
+			mnGestion.add(getMntmCerrarSesion());
 		}
-		return mnNewMenu_1;
+		return mnGestion;
 	}
-	private JMenuItem getMntmNewMenuItem_1() {
-		if (mntmNewMenuItem_1 == null) {
-			mntmNewMenuItem_1 = new JMenuItem("Cerrar Sesi\u00F3n");
-			mntmNewMenuItem_1.addActionListener(new ActionListener() {
+	private JMenuItem getMntmCerrarSesion() {
+		if (mntmCerrarSesion == null) {
+			mntmCerrarSesion = new JMenuItem("Cerrar Sesi\u00F3n");
+			mntmCerrarSesion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Login l_window = new Login();
 					l_window.setVisible(true);
@@ -144,20 +145,21 @@ public class PrincipalWindow extends JFrame {
 				}
 			});
 		}
-		return mntmNewMenuItem_1;
+		return mntmCerrarSesion;
 	}
-	private JMenu getMnNewMenu_2() {
-		if (mnNewMenu_2 == null) {
-			mnNewMenu_2 = new JMenu("Registrar");
-			mnNewMenu_2.add(getMntmNewMenuItem_2());
-			mnNewMenu_2.add(getMntmNewMenuItem_3());
+	private JMenu getMnRegistrar() {
+		if (mnRegistrar == null) {
+			mnRegistrar = new JMenu("Registrar");
+			mnRegistrar.add(getMntmNuevaPersona());
+			mnRegistrar.add(getMntmNuevaVisita());
+			mnRegistrar.add(getMntmNuevoLocal());
 		}
-		return mnNewMenu_2;
+		return mnRegistrar;
 	}
-	private JMenuItem getMntmNewMenuItem_2() {
-		if (mntmNewMenuItem_2 == null) {
-			mntmNewMenuItem_2 = new JMenuItem("Nueva persona");
-			mntmNewMenuItem_2.addActionListener(new ActionListener() {
+	private JMenuItem getMntmNuevaPersona() {
+		if (mntmNuevaPersona == null) {
+			mntmNuevaPersona = new JMenuItem("Nueva persona");
+			mntmNuevaPersona.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					RegisterPersonWindow r_window = new RegisterPersonWindow();
 					r_window.setVisible(true);
@@ -165,12 +167,12 @@ public class PrincipalWindow extends JFrame {
 				}
 			});
 		}
-		return mntmNewMenuItem_2;
+		return mntmNuevaPersona;
 	}
-	private JMenuItem getMntmNewMenuItem_3() {
-		if (mntmNewMenuItem_3 == null) {
-			mntmNewMenuItem_3 = new JMenuItem("Nueva visita");
-			mntmNewMenuItem_3.addActionListener(new ActionListener() {
+	private JMenuItem getMntmNuevaVisita() {
+		if (mntmNuevaVisita == null) {
+			mntmNuevaVisita = new JMenuItem("Nueva visita");
+			mntmNuevaVisita.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					RegisterWindow r_window = new RegisterWindow();
 					r_window.setVisible(true);
@@ -178,6 +180,19 @@ public class PrincipalWindow extends JFrame {
 				}
 			});
 		}
-		return mntmNewMenuItem_3;
+		return mntmNuevaVisita;
+	}
+	private JMenuItem getMntmNuevoLocal() {
+		if (mntmNuevoLocal == null) {
+			mntmNuevoLocal = new JMenuItem("Nuevo local");
+			mntmNuevoLocal.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					RegisterLocal r_window = new RegisterLocal();
+					r_window.setVisible(true);
+					r_window.setLocationRelativeTo(null);
+				}
+			});
+		}
+		return mntmNuevoLocal;
 	}
 }
