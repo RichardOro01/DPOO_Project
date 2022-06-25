@@ -13,6 +13,11 @@ import java.awt.Image;
 import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.table.DefaultTableModel;
+
+import Logic.Office;
+import Logic.Register;
+import Logic.University;
+
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
@@ -21,6 +26,7 @@ import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -117,35 +123,32 @@ public class QueryWindow extends JFrame {
 				}
 			});
 			table_1.setBorder(new LineBorder(Color.LIGHT_GRAY));
+			
+			ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
+			for (Office off: University.getInstance().getComputerFac().getOffices()) {
+				ArrayList<String> list2=new ArrayList<String>();
+				for (Register r: off.getRegister()) {
+					list2.add(r.getPerson().getName()+" "+r.getPerson().getLastName());
+					list2.add(off.getID());
+					list2.add(r.getCheckInDate().toGMTString());
+					list2.add(r.getCheckOutDate().toGMTString());
+				}
+				list.add(list2);
+			}
+			Object obj[][]=new Object[list.size()][4];
+			for (int i=0; i<list.size(); i++) {
+				list.get(i).toArray(obj[i]);
+			}
+			
+			
 			table_1.setModel(new DefaultTableModel(
-				new Object[][] {
-					{"", "", "", "", ""},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-					{null, null, null, null, null},
-				},
+				obj,
 				new String[] {
-					"Viasitante", "Local Visitado", "Fecha entrada", "Fecha salida", "Responsable"
+					"Visitante", "Local Visitado", "Fecha entrada", "Fecha salida"
 				}
 			) {
 				boolean[] columnEditables = new boolean[] {
-					false, false, false, false, false
+					false, false, false, false
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -155,7 +158,6 @@ public class QueryWindow extends JFrame {
 			table_1.getColumnModel().getColumn(1).setResizable(false);
 			table_1.getColumnModel().getColumn(2).setResizable(false);
 			table_1.getColumnModel().getColumn(3).setResizable(false);
-			table_1.getColumnModel().getColumn(4).setResizable(false);
 		}
 		return table_1;
 	}

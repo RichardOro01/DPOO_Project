@@ -3,6 +3,8 @@ package Interface;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
+import java.util.Date;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -21,7 +23,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
-import java.sql.Date;
+
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
@@ -31,7 +33,12 @@ import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
 
 import Logic.Office;
+import Logic.Person;
+import Logic.Register;
+import Logic.Student;
+import Logic.Technical;
 import Logic.University;
+import Logic.VisitorRegister;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -62,7 +69,14 @@ public class RegisterWindow extends JFrame {
 	private JDateChooser dateChooserEntrada;
 	private JDateChooser dateChooserSalida;
 	private JComboBox cbLocal;
-	private JLabel lblNewLabel;
+	private JLabel lblClasificacion2;
+	private JPanel panelVisitante;
+	private JLabel lblMotivo;
+	private JTextField textMotivo;
+	private JLabel lblAutorizador;
+	private JLabel lblrea;
+	private JComboBox cbAutorizador;
+	private JComboBox cbAreaVisit;
 
 	/**
 	 * Launch the application.
@@ -73,7 +87,7 @@ public class RegisterWindow extends JFrame {
 				try {
 					frame3 = new RegisterWindow();
 					frame3.setVisible(true);
-					
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -87,8 +101,8 @@ public class RegisterWindow extends JFrame {
 	public RegisterWindow() {
 		setTitle("Agregar nueva visita");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 362, 417);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 362, 463);
 
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,7 +113,8 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(getPanelBotones());
 		contentPane.add(getPaneDatos1());
 		contentPane.add(getPanelDatos2());
-		
+		contentPane.add(getPanelVisitante());
+
 	}
 	private JLabel getLblIdLocal() {
 		if (lblIdLocal == null) {
@@ -125,15 +140,33 @@ public class RegisterWindow extends JFrame {
 	private JComboBox getCbPersona() {
 		if (cbPersona == null) {
 			cbPersona = new JComboBox();
+			cbPersona.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String str=new String();
+					str=(String)cbPersona.getSelectedItem();
+					if (str.equals("<Seleccione>") || University.getInstance().getPersonByFullName(str).isInfo()) {
+						panelVisitante.setVisible(false);
+					}else {
+						panelVisitante.setVisible(true);
+					}
+				}
+			});
 			cbPersona.setName("Persona");
-			cbPersona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Persona 1", "Persona 2", "Persona 3", "Persona 4", "Persona 5"}));
+			ArrayList<String> personas=new ArrayList<String>();
+			personas.add("<Seleccione>");
+			for (Person p: University.getInstance().getStaff()) {	
+				personas.add(p.getName()+" "+p.getLastName());
+			}
+			String arrP[]=new String[personas.size()];
+			personas.toArray(arrP);
+			cbPersona.setModel(new DefaultComboBoxModel(arrP));
 		}
 		return cbPersona;
 	}
 	private JPanel getPanelFechaEntrada() {
 		if (panelFechaEntrada == null) {
 			panelFechaEntrada = new JPanel();
-			panelFechaEntrada.setBounds(12, 153, 319, 59);
+			panelFechaEntrada.setBounds(12, 124, 319, 59);
 			panelFechaEntrada.setBorder(new TitledBorder(null, "Fecha de entrada", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			panelFechaEntrada.setLayout(null);
 			panelFechaEntrada.add(getTextHoraEntrada());
@@ -171,7 +204,7 @@ public class RegisterWindow extends JFrame {
 	private JPanel getPanelFechaSalida() {
 		if (panelFechaSalida == null) {
 			panelFechaSalida = new JPanel();
-			panelFechaSalida.setBounds(12, 222, 319, 59);
+			panelFechaSalida.setBounds(12, 187, 319, 59);
 			panelFechaSalida.setLayout(null);
 			panelFechaSalida.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Fecha de salida", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 			panelFechaSalida.add(getTextHoraSalida());
@@ -222,7 +255,23 @@ public class RegisterWindow extends JFrame {
 						Checking.checkEmpty(textMinutosEntrada);
 						Checking.checkEmpty(textHoraSalida);
 						Checking.checkEmpty(textMinutosSalida);
-						
+						Date entrada=new Date();
+						Date salida=new Date();
+						entrada=dateChooserEntrada.getDate();
+						entrada.setHours(Integer.parseInt(textHoraEntrada.getText()));
+						entrada.setMinutes(Integer.parseInt(textMinutosEntrada.getText()));
+						salida=dateChooserSalida.getDate();
+						salida.setHours(Integer.parseInt(textHoraSalida.getText()));
+						salida.setMinutes(Integer.parseInt(textMinutosSalida.getText()));
+						Person person=University.getInstance().getPersonByFullName((String)cbPersona.getSelectedItem());
+						if (person.isInfo()){
+							University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new Register(entrada,salida,person));
+						}else {
+							Checking.checkEmpty(textMotivo);
+							Checking.checkNotSelected(cbAutorizador);
+							Checking.checkNotSelected(cbAreaVisit);
+							University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new VisitorRegister(entrada,salida,person,(String)cbAreaVisit.getSelectedItem(),textMotivo.getText(),person.getIDNumber()));
+						}
 						JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -251,7 +300,7 @@ public class RegisterWindow extends JFrame {
 	private JPanel getPanelBotones() {
 		if (panelBotones == null) {
 			panelBotones = new JPanel();
-			panelBotones.setBounds(121, 326, 220, 37);
+			panelBotones.setBounds(118, 379, 220, 37);
 			panelBotones.setLayout(new MigLayout("", "[75px][grow][79px]", "[32px,grow]"));
 			panelBotones.add(getBtnCancelar(), "cell 0 0,grow");
 			panelBotones.add(getPanelSeparador(), "cell 1 0,grow");
@@ -273,14 +322,14 @@ public class RegisterWindow extends JFrame {
 			paneDatos1.add(getCbLocal(), "cell 1 0,growx");
 			paneDatos1.add(getLblClasificacion(), "cell 0 1,alignx right,aligny center");
 			paneDatos1.add(getLblIdLocal(), "cell 0 0,alignx trailing,aligny center");
-			paneDatos1.add(getLblNewLabel(), "cell 1 1");
+			paneDatos1.add(getLblClasificacion2(), "cell 1 1");
 		}
 		return paneDatos1;
 	}
 	private JPanel getPanelDatos2() {
 		if (panelDatos2 == null) {
 			panelDatos2 = new JPanel();
-			panelDatos2.setBounds(12, 77, 319, 66);
+			panelDatos2.setBounds(12, 77, 319, 37);
 			panelDatos2.setLayout(new MigLayout("", "[75px][228.00px]", "[21px][21px]"));
 			panelDatos2.add(getLblTipoVisitante(), "cell 0 0,alignx right,growy");
 			panelDatos2.add(getCbPersona(), "cell 1 0,growx,aligny top");
@@ -306,15 +355,92 @@ public class RegisterWindow extends JFrame {
 	private JComboBox getCbLocal() {
 		if (cbLocal == null) {
 			cbLocal = new JComboBox();
+			cbLocal.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String s=(String)cbLocal.getSelectedItem();
+					if (!s.equals("<Seleccione>"))
+						lblClasificacion2.setText(University.getInstance().getOfficeById(s).getClassification());
+					else
+						lblClasificacion2.setText("");
+				}
+			});
 			cbLocal.setName("Local");
-			cbLocal.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local 1", "Local 2", "Local 3", "Local 4", "Local 5", "Local 6", "Local 7", "Local 8"}));
+			ArrayList<String> locales=new ArrayList<String>();
+			locales.add("<Seleccione>");
+			for (Office o: University.getInstance().getComputerFac().getOffices()) {
+				if (!(o.getClassification().equals("Aula")) && !(o.getClassification().equals("Laboratorio"))) {
+					locales.add(o.getID());
+				}
+			}
+			String arrP[]=new String[locales.size()];
+			locales.toArray(arrP);
+			cbLocal.setModel(new DefaultComboBoxModel(arrP));
 		}
 		return cbLocal;
 	}
-	private JLabel getLblNewLabel() {
-		if (lblNewLabel == null) {
-			lblNewLabel = new JLabel("Con la l\u00F3gica se clasificar\u00E1 autoamtico");
+	private JLabel getLblClasificacion2() {
+		if (lblClasificacion2 == null) {
+			lblClasificacion2 = new JLabel("");
 		}
-		return lblNewLabel;
+		return lblClasificacion2;
+	}
+	private JPanel getPanelVisitante() {
+		if (panelVisitante == null) {
+			panelVisitante = new JPanel();
+			panelVisitante.setBorder(new TitledBorder(null, "Visitante", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			panelVisitante.setBounds(12, 256, 319, 113);
+			panelVisitante.setLayout(new MigLayout("", "[53px][228px]", "[19px][21px][21px]"));
+			panelVisitante.add(getLblMotivo(), "cell 0 0,growx,aligny center");
+			panelVisitante.add(getTextMotivo(), "cell 1 0,growx,aligny top");
+			panelVisitante.add(getLblAutorizador(), "cell 0 1,alignx left,aligny center");
+			panelVisitante.add(getLblrea(), "cell 0 2,growx,aligny center");
+			panelVisitante.add(getCbAutorizador(), "cell 1 1,growx,aligny top");
+			panelVisitante.add(getCbAreaVisit(), "cell 1 2,growx,aligny top");
+			panelVisitante.setVisible(false);
+		}
+		return panelVisitante;
+	}
+	private JLabel getLblMotivo() {
+		if (lblMotivo == null) {
+			lblMotivo = new JLabel("Motivo");
+			lblMotivo.setHorizontalAlignment(SwingConstants.TRAILING);
+		}
+		return lblMotivo;
+	}
+	private JTextField getTextMotivo() {
+		if (textMotivo == null) {
+			textMotivo = new JTextField();
+			textMotivo.setName("Motivo");
+			textMotivo.setColumns(10);
+		}
+		return textMotivo;
+	}
+	private JLabel getLblAutorizador() {
+		if (lblAutorizador == null) {
+			lblAutorizador = new JLabel("Autorizador");
+			lblAutorizador.setHorizontalAlignment(SwingConstants.TRAILING);
+		}
+		return lblAutorizador;
+	}
+	private JLabel getLblrea() {
+		if (lblrea == null) {
+			lblrea = new JLabel("\u00C1rea");
+			lblrea.setHorizontalAlignment(SwingConstants.TRAILING);
+		}
+		return lblrea;
+	}
+	private JComboBox getCbAutorizador() {
+		if (cbAutorizador == null) {
+			cbAutorizador = new JComboBox();
+			cbAutorizador.setName("Autorizador");
+		}
+		return cbAutorizador;
+	}
+	private JComboBox getCbAreaVisit() {
+		if (cbAreaVisit == null) {
+			cbAreaVisit = new JComboBox();
+			cbAreaVisit.setName("Área");
+		}
+		return cbAreaVisit;
 	}
 }

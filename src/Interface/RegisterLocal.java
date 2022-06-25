@@ -5,6 +5,8 @@ import java.awt.EventQueue;
 
 import Logic.Office;
 import Logic.Person;
+import Logic.Student;
+import Logic.Technical;
 import Logic.University;
 
 import javax.swing.JFrame;
@@ -20,16 +22,17 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class RegisterLocal extends JFrame {
 
 	private JPanel contentPane;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_1;
-	private JLabel lblNewLabel_2;
+	private JLabel lblId;
+	private JLabel lblResponsable;
+	private JLabel lblClasificacion;
 	private JTextField textField;
-	private JComboBox comboBox;
-	private JComboBox comboBox_1;
+	private JComboBox cbResponsable;
+	private JComboBox cbClasificacion;
 	private JButton btnNewButton;
 	private JButton btnCancelar;
 	private JPanel panelBotones;
@@ -55,43 +58,43 @@ public class RegisterLocal extends JFrame {
 	 */
 	public RegisterLocal() {
 		setTitle("Registrar local");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 398, 250);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		contentPane.add(getLblNewLabel());
-		contentPane.add(getLblNewLabel_1());
-		contentPane.add(getLblNewLabel_2());
+		contentPane.add(getLblId());
+		contentPane.add(getLblResponsable());
+		contentPane.add(getLblClasificacion());
 		contentPane.add(getTextField());
-		contentPane.add(getComboBox());
-		contentPane.add(getComboBox_1());
+		contentPane.add(getCbResponsable());
+		contentPane.add(getCbClasificacion());
 		contentPane.add(getPanelBotones());
 	}
-	private JLabel getLblNewLabel() {
-		if (lblNewLabel == null) {
-			lblNewLabel = new JLabel("ID");
-			lblNewLabel.setHorizontalAlignment(SwingConstants.TRAILING);
-			lblNewLabel.setBounds(58, 45, 64, 13);
+	private JLabel getLblId() {
+		if (lblId == null) {
+			lblId = new JLabel("ID");
+			lblId.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblId.setBounds(58, 45, 64, 13);
 		}
-		return lblNewLabel;
+		return lblId;
 	}
-	private JLabel getLblNewLabel_1() {
-		if (lblNewLabel_1 == null) {
-			lblNewLabel_1 = new JLabel("Responsable");
-			lblNewLabel_1.setHorizontalAlignment(SwingConstants.TRAILING);
-			lblNewLabel_1.setBounds(43, 75, 79, 13);
+	private JLabel getLblResponsable() {
+		if (lblResponsable == null) {
+			lblResponsable = new JLabel("Responsable");
+			lblResponsable.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblResponsable.setBounds(43, 75, 79, 13);
 		}
-		return lblNewLabel_1;
+		return lblResponsable;
 	}
-	private JLabel getLblNewLabel_2() {
-		if (lblNewLabel_2 == null) {
-			lblNewLabel_2 = new JLabel("Clasificaci\u00F3n");
-			lblNewLabel_2.setHorizontalAlignment(SwingConstants.TRAILING);
-			lblNewLabel_2.setBounds(30, 107, 92, 13);
+	private JLabel getLblClasificacion() {
+		if (lblClasificacion == null) {
+			lblClasificacion = new JLabel("Clasificaci\u00F3n");
+			lblClasificacion.setHorizontalAlignment(SwingConstants.TRAILING);
+			lblClasificacion.setBounds(30, 107, 92, 13);
 		}
-		return lblNewLabel_2;
+		return lblClasificacion;
 	}
 	private JTextField getTextField() {
 		if (textField == null) {
@@ -102,23 +105,32 @@ public class RegisterLocal extends JFrame {
 		}
 		return textField;
 	}
-	private JComboBox getComboBox() {
-		if (comboBox == null) {
-			comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "asd"}));
-			comboBox.setName("Responsable");
-			comboBox.setBounds(134, 71, 204, 21);
+	private JComboBox getCbResponsable() {
+		if (cbResponsable == null) {
+			cbResponsable = new JComboBox();
+			ArrayList<String> personas=new ArrayList<String>();
+			personas.add("<Seleccione>");
+			for (Person p: University.getInstance().getStaff()) {
+				if (!(p instanceof Student) && !(p instanceof Technical)) {
+					personas.add(p.getName()+" "+p.getLastName());
+				}
+			}
+			String arrP[]=new String[personas.size()];
+			personas.toArray(arrP);
+			cbResponsable.setModel(new DefaultComboBoxModel(arrP));
+			cbResponsable.setName("Responsable");
+			cbResponsable.setBounds(134, 71, 204, 21);
 		}
-		return comboBox;
+		return cbResponsable;
 	}
-	private JComboBox getComboBox_1() {
-		if (comboBox_1 == null) {
-			comboBox_1 = new JComboBox();
-			comboBox_1.setName("Clasificación");
-			comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local del decano", "Local de vicedecano", "Local de jefe de departamento", "Local de servidores", "Local de \u00E1rea administrativa", "Local de profesores", "Local de especialistas", "Local de estudiantes", "Aula", "Laboratorio"}));
-			comboBox_1.setBounds(134, 103, 204, 21);
+	private JComboBox getCbClasificacion() {
+		if (cbClasificacion == null) {
+			cbClasificacion = new JComboBox();
+			cbClasificacion.setName("Clasificación");
+			cbClasificacion.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local del decano", "Local de vicedecano", "Local de jefe de departamento", "Local de servidores", "Local de \u00E1rea administrativa", "Local de profesores", "Local de especialistas", "Local de estudiantes", "Aula", "Laboratorio"}));
+			cbClasificacion.setBounds(134, 103, 204, 21);
 		}
-		return comboBox_1;
+		return cbClasificacion;
 	}
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
@@ -128,9 +140,9 @@ public class RegisterLocal extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					try {
 						Checking.checkEmpty(textField);
-						Checking.checkNotSelected(comboBox);
-						Checking.checkNotSelected(comboBox_1);
-						Office o= new Office(textField.getText(),(String)comboBox.getSelectedItem(),University.getInstance().getPersonByFullName((String)comboBox_1.getSelectedItem()));
+						Checking.checkNotSelected(cbResponsable);
+						Checking.checkNotSelected(cbClasificacion);
+						Office o= new Office(textField.getText(),(String)cbClasificacion.getSelectedItem(),University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
 						University.getInstance().getComputerFac().getOffices().add(o);
 						JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 					}catch (EmptyTextFormException ex){
