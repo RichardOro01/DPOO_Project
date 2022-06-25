@@ -26,6 +26,7 @@ public class University {
 	//constructor
 	private University() {
 		computerFac= new Faculty();
+		staff=new ArrayList<Person>();
 	}
 	
 	public ArrayList<Office> officesWithMoreVisitByMonth(int month){
@@ -119,6 +120,26 @@ public class University {
 		return acc;
 	}
 	
+	public Person getPersonByFullName(String fullName) {
+		Person person=null;
+		for (Person p: staff) {
+			String name=new String();
+			name=p.getName()+" "+p.getLastName();
+			if (name.equals(fullName))
+				person=p;
+		}
+		return person;
+	}
+	
+	public Office getOfficeById(String id) {
+		Office office=null;
+		for (Office o: getComputerFac().getOffices()) {
+			if (o.getID().equals(id)){
+					office=o;
+			}
+		}
+		return office;
+	}
 	
 	public ArrayList<ArrayList<Person>> visitOutOfTime(String typePerson){
 		ArrayList<ArrayList<Person>> persons= new ArrayList<ArrayList<Person>>();

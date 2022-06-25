@@ -17,6 +17,8 @@ import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.GridBagLayout;
@@ -29,6 +31,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
+
+import Logic.Administrative;
+import Logic.Executive;
+import Logic.Professor;
+import Logic.Specialist;
+import Logic.Student;
+import Logic.Technical;
+import Logic.University;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -62,20 +73,20 @@ public class RegisterPersonWindow extends JFrame {
 	private JLabel lblPlaza;
 	private JComboBox cbPlaza;
 	private JPanel profesorPane;
-	private JLabel labelNombre_1;
-	private JComboBox cbTipoVisitatne_1;
-	private JLabel lblTipoVisitante_1;
-	private JComboBox cbTipoVisitatne_2;
-	private JComboBox cbTipoVisitatne_3;
-	private JComboBox cbTipoVisitatne_4;
-	private JLabel labelNombre_1_1;
-	private JLabel lblCategoriaCientifica;
+	private JLabel labelDepartamento;
+	private JComboBox cbDepartamento;
+	private JLabel lblTipoContrato;
+	private JComboBox cbCatCientifica;
+	private JComboBox cbCatDocente;
+	private JComboBox cbTipoContrato;
+	private JLabel labelCatDocente;
+	private JLabel lblCatCientifica;
 	private JPanel especialistaPane;
-	private JLabel lblResponsable_1;
-	private JTextField textField;
+	private JLabel lblProyecto;
+	private JTextField textProyecto;
 	private JPanel tecnicoPanel;
-	private JLabel lblPlaza_1;
-	private JComboBox cbTipoVisitatne_5;
+	private JLabel lblPlazaTec;
+	private JComboBox cbPlazaTec;
 	private JPanel estudiantePane;
 	private JLabel lblAnno;
 	private JLabel lblGrupo;
@@ -109,7 +120,7 @@ public class RegisterPersonWindow extends JFrame {
 	public RegisterPersonWindow() {
 		setTitle("Registrar persona");
 		setResizable(false);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 654, 314);
 		specialData = new ArrayList<JPanel>();
 		contentPane = new JPanel();
@@ -141,6 +152,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbTipoVisitatne() {
 		if (cbTipoVisitatne == null) {
 			cbTipoVisitatne = new JComboBox();
+			cbTipoVisitatne.setName("Tipo de visitante");
 			cbTipoVisitatne.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					for (JPanel panel: specialData) {
@@ -179,7 +191,7 @@ public class RegisterPersonWindow extends JFrame {
 		int tf=arr.length;
 		String[] list= new String[tf+1];
 		list[0]="<Seleccione>";
-		for (int i=1;i<tf;i++) {
+		for (int i=1;i<=tf;i++) {
 			list[i]=arr[i-1];
 		}
 		return list;
@@ -188,6 +200,59 @@ public class RegisterPersonWindow extends JFrame {
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton("Registrar");
+			btnRegistrar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					try {
+						Checking.checkEmpty(textNombre);
+						Checking.checkEmpty(textApellidos);
+						Checking.checkEmpty(textNI);
+						Checking.checkNotSelected(cbTipoVisitatne);
+						for (JPanel panel: specialData) {
+							if (panel.isVisible()) {
+								for (Component c: panel.getComponents()) {
+									if (c instanceof JComboBox) {
+										if (c.isVisible()) {
+											Checking.checkNotSelected((JComboBox)c);
+										}
+									}else if (c instanceof JTextField) {
+										if (c.isVisible()) {
+											Checking.checkEmpty((JTextField)c);
+										}
+									}
+								}
+							}
+						}
+						switch ((String)cbTipoVisitatne.getSelectedItem()) {
+						case "Directivo": 
+							University.getInstance().getStaff().add(new Executive(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbCargo.getSelectedItem(),cbArea.getSelectedItem().equals("Departamento")?(String)cbDepa.getSelectedItem():(String)cbArea.getSelectedItem()));
+							break;
+						case "Administrativo":
+							University.getInstance().getStaff().add(new Administrative(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlaza.getSelectedItem()));
+							break;
+						case "Profesor":
+							University.getInstance().getStaff().add(new Professor(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbDepartamento.getSelectedItem(),(String)cbCatDocente.getSelectedItem(),(String)cbCatCientifica.getSelectedItem(),(String)cbTipoContrato.getSelectedItem()));
+							break;
+						case "Especialista":
+							University.getInstance().getStaff().add(new Specialist(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), textProyecto.getText()));
+							break;
+						case "Técnico":
+							University.getInstance().getStaff().add(new Technical(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlazaTec.getSelectedItem()));
+							break;
+						case "Estudiante":
+							University.getInstance().getStaff().add(new Student(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), (int)spinnerAnno.getValue(), (int)spinnerGrupo.getValue()));
+							break;
+						}
+						
+						//University.getInstance().getStaff().add(new Person(textNombre.getText(),));
+						JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+					}catch(EmptyTextFormException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}catch (NotSelectedException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
+				}
+			});
 		}
 		return btnRegistrar;
 	}
@@ -213,6 +278,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
+			textNombre.setName("Nombre");
 			textNombre.setColumns(10);
 		}
 		return textNombre;
@@ -227,6 +293,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextApellidos() {
 		if (textApellidos == null) {
 			textApellidos = new JTextField();
+			textApellidos.setName("Apellidos");
 			textApellidos.setColumns(10);
 		}
 		return textApellidos;
@@ -241,6 +308,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNI() {
 		if (textNI == null) {
 			textNI = new JTextField();
+			textNI.setName("Número de identidad");
 			textNI.setColumns(10);
 		}
 		return textNI;
@@ -328,6 +396,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbCargo() {
 		if (cbCargo == null) {
 			cbCargo = new JComboBox();
+			cbCargo.setName("Cargo");
 			cbCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Decano", "Vicedecanos", "Jefe de departamentos", "Jefe de secretar\u00EDa docente"}));
 		}
 		return cbCargo;
@@ -335,6 +404,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbArea() {
 		if (cbArea == null) {
 			cbArea = new JComboBox();
+			cbArea.setName("Área");
 			cbArea.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String item=(String) cbArea.getSelectedItem();
@@ -375,6 +445,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbPlaza() {
 		if (cbPlaza == null) {
 			cbPlaza = new JComboBox();
+			cbPlaza.setName("Plaza");
 			cbPlaza.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Asesor", "Secretaria"}));
 		}
 		return cbPlaza;
@@ -387,72 +458,76 @@ public class RegisterPersonWindow extends JFrame {
 
 			profesorPane.setVisible(false);
 			specialData.add(profesorPane);
-			profesorPane.add(getLabelNombre_1(), "cell 0 0,alignx trailing");
-			profesorPane.add(getCbTipoVisitatne_1(), "cell 1 0,growx");
-			profesorPane.add(getLabelNombre_1_1(), "cell 0 1,alignx trailing");
-			profesorPane.add(getCbTipoVisitatne_3(), "cell 1 1,growx");
-			profesorPane.add(getLblCategoriaCientifica(), "cell 0 2,alignx trailing");
-			profesorPane.add(getCbTipoVisitatne_2(), "cell 1 2,growx");
-			profesorPane.add(getLblTipoVisitante_1(), "cell 0 3,alignx trailing");
-			profesorPane.add(getCbTipoVisitatne_4(), "cell 1 3,growx");
+			profesorPane.add(getLabelDepartamento(), "cell 0 0,alignx trailing");
+			profesorPane.add(getCbDepartamento(), "cell 1 0,growx");
+			profesorPane.add(getLabelCatDocente(), "cell 0 1,alignx trailing");
+			profesorPane.add(getCbCatDocente(), "cell 1 1,growx");
+			profesorPane.add(getLblCatCientifica(), "cell 0 2,alignx trailing");
+			profesorPane.add(getCbCatCientifica(), "cell 1 2,growx");
+			profesorPane.add(getLblTipoContrato(), "cell 0 3,alignx trailing");
+			profesorPane.add(getCbTipoContrato(), "cell 1 3,growx");
 		}
 		return profesorPane;
 	}
-	private JLabel getLabelNombre_1() {
-		if (labelNombre_1 == null) {
-			labelNombre_1 = new JLabel("Departamento");
-			labelNombre_1.setHorizontalAlignment(SwingConstants.RIGHT);
+	private JLabel getLabelDepartamento() {
+		if (labelDepartamento == null) {
+			labelDepartamento = new JLabel("Departamento");
+			labelDepartamento.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
-		return labelNombre_1;
+		return labelDepartamento;
 	}
-	private JComboBox getCbTipoVisitatne_1() {
-		if (cbTipoVisitatne_1 == null) {
-			cbTipoVisitatne_1 = new JComboBox();
-			cbTipoVisitatne_1.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Departamento 1", "Departamento 2", "Departamento 3", "Departamento 4", "Departamento 5", "Departamento 6", "Departamento 7", "Departamento 8"}));
+	private JComboBox getCbDepartamento() {
+		if (cbDepartamento == null) {
+			cbDepartamento = new JComboBox();
+			cbDepartamento.setName("Departamento");
+			cbDepartamento.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Departamento 1", "Departamento 2", "Departamento 3", "Departamento 4", "Departamento 5", "Departamento 6", "Departamento 7", "Departamento 8"}));
 		}
-		return cbTipoVisitatne_1;
+		return cbDepartamento;
 	}
-	private JLabel getLblTipoVisitante_1() {
-		if (lblTipoVisitante_1 == null) {
-			lblTipoVisitante_1 = new JLabel("Tipo de Contrato");
-			lblTipoVisitante_1.setHorizontalAlignment(SwingConstants.RIGHT);
+	private JLabel getLblTipoContrato() {
+		if (lblTipoContrato == null) {
+			lblTipoContrato = new JLabel("Tipo de Contrato");
+			lblTipoContrato.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
-		return lblTipoVisitante_1;
+		return lblTipoContrato;
 	}
-	private JComboBox getCbTipoVisitatne_2() {
-		if (cbTipoVisitatne_2 == null) {
-			cbTipoVisitatne_2 = new JComboBox();
-			cbTipoVisitatne_2.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Doctor", "Master"}));
+	private JComboBox getCbCatCientifica() {
+		if (cbCatCientifica == null) {
+			cbCatCientifica = new JComboBox();
+			cbCatCientifica.setName("Categoría científica");
+			cbCatCientifica.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Doctor", "Master"}));
 		}
-		return cbTipoVisitatne_2;
+		return cbCatCientifica;
 	}
-	private JComboBox getCbTipoVisitatne_3() {
-		if (cbTipoVisitatne_3 == null) {
-			cbTipoVisitatne_3 = new JComboBox();
-			cbTipoVisitatne_3.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Titular ", "Auxiliar", "Asistente", "Instructor"}));
+	private JComboBox getCbCatDocente() {
+		if (cbCatDocente == null) {
+			cbCatDocente = new JComboBox();
+			cbCatDocente.setName("Categoría docente");
+			cbCatDocente.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Titular ", "Auxiliar", "Asistente", "Instructor"}));
 		}
-		return cbTipoVisitatne_3;
+		return cbCatDocente;
 	}
-	private JComboBox getCbTipoVisitatne_4() {
-		if (cbTipoVisitatne_4 == null) {
-			cbTipoVisitatne_4 = new JComboBox();
-			cbTipoVisitatne_4.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Determinado", "Indeterminado"}));
+	private JComboBox getCbTipoContrato() {
+		if (cbTipoContrato == null) {
+			cbTipoContrato = new JComboBox();
+			cbTipoContrato.setName("Tipo de contrato");
+			cbTipoContrato.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Determinado", "Indeterminado"}));
 		}
-		return cbTipoVisitatne_4;
+		return cbTipoContrato;
 	}
-	private JLabel getLabelNombre_1_1() {
-		if (labelNombre_1_1 == null) {
-			labelNombre_1_1 = new JLabel("Categor\u00EDa Docente");
-			labelNombre_1_1.setHorizontalAlignment(SwingConstants.RIGHT);
+	private JLabel getLabelCatDocente() {
+		if (labelCatDocente == null) {
+			labelCatDocente = new JLabel("Categor\u00EDa Docente");
+			labelCatDocente.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
-		return labelNombre_1_1;
+		return labelCatDocente;
 	}
-	private JLabel getLblCategoriaCientifica() {
-		if (lblCategoriaCientifica == null) {
-			lblCategoriaCientifica = new JLabel("Categor\u00EDa Cient\u00EDfica");
-			lblCategoriaCientifica.setHorizontalAlignment(SwingConstants.RIGHT);
+	private JLabel getLblCatCientifica() {
+		if (lblCatCientifica == null) {
+			lblCatCientifica = new JLabel("Categor\u00EDa Cient\u00EDfica");
+			lblCatCientifica.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
-		return lblCategoriaCientifica;
+		return lblCatCientifica;
 	}
 	private JPanel getEspecialistaPane() {
 		if (especialistaPane == null) {
@@ -462,24 +537,25 @@ public class RegisterPersonWindow extends JFrame {
 
 			especialistaPane.setVisible(false);
 			specialData.add(especialistaPane);
-			especialistaPane.add(getLblResponsable_1(), "cell 0 0,alignx trailing");
-			especialistaPane.add(getTextField(), "cell 1 0,growx");
+			especialistaPane.add(getLblProyecto(), "cell 0 0,alignx trailing");
+			especialistaPane.add(getTextProyecto(), "cell 1 0,growx");
 		}
 		return especialistaPane;
 	}
-	private JLabel getLblResponsable_1() {
-		if (lblResponsable_1 == null) {
-			lblResponsable_1 = new JLabel("Proyecto en el que trabaja");
-			lblResponsable_1.setHorizontalAlignment(SwingConstants.RIGHT);
+	private JLabel getLblProyecto() {
+		if (lblProyecto == null) {
+			lblProyecto = new JLabel("Proyecto en el que trabaja");
+			lblProyecto.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
-		return lblResponsable_1;
+		return lblProyecto;
 	}
-	private JTextField getTextField() {
-		if (textField == null) {
-			textField = new JTextField();
-			textField.setColumns(10);
+	private JTextField getTextProyecto() {
+		if (textProyecto == null) {
+			textProyecto = new JTextField();
+			textProyecto.setName("Proyecto en el que trabaja");
+			textProyecto.setColumns(10);
 		}
-		return textField;
+		return textProyecto;
 	}
 	private JPanel getTecnicoPanel() {
 		if (tecnicoPanel == null) {
@@ -489,24 +565,25 @@ public class RegisterPersonWindow extends JFrame {
 
 			tecnicoPanel.setVisible(false);
 			specialData.add(tecnicoPanel);
-			tecnicoPanel.add(getLblPlaza_1(), "cell 0 0,alignx trailing");
-			tecnicoPanel.add(getCbTipoVisitatne_5(), "cell 1 0,growx");
+			tecnicoPanel.add(getLblPlazaTec(), "cell 0 0,alignx trailing");
+			tecnicoPanel.add(getCbPlazaTec(), "cell 1 0,growx");
 		}
 		return tecnicoPanel;
 	}
-	private JLabel getLblPlaza_1() {
-		if (lblPlaza_1 == null) {
-			lblPlaza_1 = new JLabel("Plaza");
-			lblPlaza_1.setHorizontalAlignment(SwingConstants.RIGHT);
+	private JLabel getLblPlazaTec() {
+		if (lblPlazaTec == null) {
+			lblPlazaTec = new JLabel("Plaza");
+			lblPlazaTec.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
-		return lblPlaza_1;
+		return lblPlazaTec;
 	}
-	private JComboBox getCbTipoVisitatne_5() {
-		if (cbTipoVisitatne_5 == null) {
-			cbTipoVisitatne_5 = new JComboBox();
-			cbTipoVisitatne_5.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Plaza 1", "Plaza 2"}));
+	private JComboBox getCbPlazaTec() {
+		if (cbPlazaTec == null) {
+			cbPlazaTec = new JComboBox();
+			cbPlazaTec.setName("Plaza");
+			cbPlazaTec.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Plaza 1", "Plaza 2"}));
 		}
-		return cbTipoVisitatne_5;
+		return cbPlazaTec;
 	}
 	private JPanel getEstudiantePane() {
 		if (estudiantePane == null) {
@@ -560,6 +637,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbDepa() {
 		if (cbDepa == null) {
 			cbDepa = new JComboBox();
+			cbDepa.setName("Departamento");
 			cbDepa.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Departamento 1", "Departamento 2", "Departamento 3", "Departamento 4", "Departamento 5", "Departamento 6", "Departamento 7", "Departamento 8"}));
 			cbDepa.setVisible(false);
 		}
