@@ -107,7 +107,7 @@ public class RegisterPersonWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterPersonWindow() {
-		setTitle("Registrar visitante");
+		setTitle("Registrar persona");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 654, 314);
@@ -146,7 +146,7 @@ public class RegisterPersonWindow extends JFrame {
 					for (JPanel panel: specialData) {
 						panel.setVisible(false);
 					}
-					String item=(String) cbTipoVisitatne.getSelectedItem();
+					String item= (String) cbTipoVisitatne.getSelectedItem();
 					switch (item){
 					case "Directivo":
 						directivoPane.setVisible(true);
@@ -170,10 +170,21 @@ public class RegisterPersonWindow extends JFrame {
 					}
 				}
 			});
-			cbTipoVisitatne.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Directivo", "Administrativo", "Profesor", "Especialista", "T\u00E9cnico", "Estudiante"}));
+			cbTipoVisitatne.setModel(new DefaultComboBoxModel(addSeleccioneCB(Lists.getPersonType())));
 		}
 		return cbTipoVisitatne;
 	}
+	
+	public String[] addSeleccioneCB(String[] arr) {
+		int tf=arr.length;
+		String[] list= new String[tf+1];
+		list[0]="<Seleccione>";
+		for (int i=1;i<tf;i++) {
+			list[i]=arr[i-1];
+		}
+		return list;
+	}
+	
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton("Registrar");
