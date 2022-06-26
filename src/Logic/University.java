@@ -29,10 +29,12 @@ public class University {
 		staff=new ArrayList<Person>();
 	}
 	
-	public ArrayList<Office> officesWithMoreVisitByMonth(int month){
+	public AuxVisitMonth officesWithMoreVisitByMonth(int month){
+		AuxVisitMonth aux;
 		ArrayList<Office> offices=new ArrayList<Office>();
+		int greater=0;
 		if (month>=1 && month<=12) {
-			int greater=0;
+			
 			for (Office o: computerFac.getOffices()) {
 				int visits=0;
 				for (Register r: o.getRegister()) {
@@ -50,10 +52,12 @@ public class University {
 						offices.add(o);
 					}
 				}
+				
 			}
-		
+			
 		}
-		return offices;
+		aux=new AuxVisitMonth(greater, offices);
+		return aux;
 	}
 	
 	public ArrayList<Access> getAccess(Person person) {

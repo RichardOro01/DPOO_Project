@@ -126,14 +126,16 @@ public class QueryWindow extends JFrame {
 			
 			ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
 			for (Office off: University.getInstance().getComputerFac().getOffices()) {
-				ArrayList<String> list2=new ArrayList<String>();
+				
 				for (Register r: off.getRegister()) {
+					ArrayList<String> list2=new ArrayList<String>();
 					list2.add(r.getPerson().getName()+" "+r.getPerson().getLastName());
 					list2.add(off.getID());
 					list2.add(r.getCheckInDate().toGMTString());
 					list2.add(r.getCheckOutDate().toGMTString());
+					list.add(list2);
 				}
-				list.add(list2);
+				
 			}
 			Object obj[][]=new Object[list.size()][4];
 			for (int i=0; i<list.size(); i++) {
