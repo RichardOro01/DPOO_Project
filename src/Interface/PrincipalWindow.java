@@ -116,12 +116,33 @@ public class PrincipalWindow extends JFrame {
 			mnNewMenu.add(mntmNewMenuItem_3);
 			
 			JMenuItem mntmNewMenuItem_2 = new JMenuItem("Locales con visitantes en un rango de edad");
+			mntmNewMenuItem_2.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ReportVisitAge r_window = new ReportVisitAge();
+					r_window.setVisible(true);
+					r_window.setLocationRelativeTo(null);
+				}
+			});
 			mnNewMenu.add(mntmNewMenuItem_2);
 			
 			JMenuItem mntmNewMenuItem_1 = new JMenuItem("Locales con personas que violaron el horario establecido");
+			mntmNewMenuItem_1.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ReportOutOfHour r_window = new ReportOutOfHour();
+					r_window.setVisible(true);
+					r_window.setLocationRelativeTo(null);
+				}
+			});
 			mnNewMenu.add(mntmNewMenuItem_1);
 			
 			JMenuItem mntmNewMenuItem = new JMenuItem("Promedio de visitas en un rango de meses\r\n");
+			mntmNewMenuItem.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ReportAverageVisit r_window = new ReportAverageVisit();
+					r_window.setVisible(true);
+					r_window.setLocationRelativeTo(null);
+				}
+			});
 			mnNewMenu.add(mntmNewMenuItem);
 			menuBar.add(getMnGestion());
 		}
