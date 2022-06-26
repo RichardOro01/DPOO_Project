@@ -22,12 +22,15 @@ import Logic.University;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.JComboBox;
+import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class ReportGreatVisitByMonth extends JFrame {
+public class ReportAverageVisit extends JFrame {
 
 	private JPanel contentPane;
-	private JTable table;
-	private JLabel lblVisitN;
+	private JComboBox comboBox;
 
 	/**
 	 * Launch the application.
@@ -36,7 +39,7 @@ public class ReportGreatVisitByMonth extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					ReportGreatVisitByMonth frame = new ReportGreatVisitByMonth();
+					ReportAverageVisit frame = new ReportAverageVisit();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -48,37 +51,41 @@ public class ReportGreatVisitByMonth extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public ReportGreatVisitByMonth() {
+	public ReportAverageVisit() {
 		setResizable(false);
-		setTitle("Locales con m\u00E1s visitas en un mes");
+		setTitle("Promedio de visitas por rango de meses");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setBounds(100, 100, 588, 312);
+		setBounds(100, 100, 553, 213);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblMes = new JLabel("Mes");
-		lblMes.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblMes.setBounds(10, 30, 37, 14);
-		contentPane.add(lblMes);
+		JLabel lblMeses = new JLabel("Rango de meses");
+		lblMeses.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblMeses.setBounds(10, 30, 89, 14);
+		contentPane.add(lblMeses);
 		
-		JSpinner spinnerMes = new JSpinner();
-		spinnerMes.setBounds(57, 27, 47, 20);
-		contentPane.add(spinnerMes);
+		JSpinner spinnerMinAge = new JSpinner();
+		spinnerMinAge.setBounds(109, 27, 47, 20);
+		contentPane.add(spinnerMinAge);
 		
-		JButton btnNewAceptar = new JButton("Aceptar");
+		JButton btnNewAceptar = new JButton("Calcular");
+		btnNewAceptar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int month=(int)spinnerMes.getValue();
+				int month=(int)spinnerMinAge.getValue();
 				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
 				AuxVisitMonth aux=University.getInstance().officesWithMoreVisitByMonth(month); 
 				for (Office off: aux.getOffices()) {
 					ArrayList<String> list2=new ArrayList<String>();		
 					list2.add(off.getID());
 					list2.add(off.getClassification());
-					list2.add(off.getSupervisor().getIDNumber());				
+					list2.add(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());				
 					list.add(list2);
 				}
 				lblVisitN.setText(""+aux.getVisits());
@@ -95,41 +102,48 @@ public class ReportGreatVisitByMonth extends JFrame {
 				
 			}
 		});
-		btnNewAceptar.setBounds(114, 26, 89, 23);
+		btnNewAceptar.setBounds(120, 79, 89, 23);
 		contentPane.add(btnNewAceptar);
 		
-		JScrollPane scrollPaneTable = new JScrollPane();
-		scrollPaneTable.setBounds(20, 58, 530, 157);
-		contentPane.add(scrollPaneTable);
-		
-		table = new JTable();
-		table.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null, null},
-			},
-			new String[] {
-				"ID Local", "Clasificacion", "ID Responsable"
-			}
-		));
-		scrollPaneTable.setViewportView(table);
-		
-		JLabel lblVisitas = new JLabel("Visitas:");
-		lblVisitas.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblVisitas.setBounds(21, 226, 47, 14);
-		contentPane.add(lblVisitas);
-		
 		JButton btnSalir = new JButton("Salir");
+		btnSalir.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnSalir.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				dispose();
 			}
 		});
-		btnSalir.setBounds(461, 226, 89, 23);
+		btnSalir.setBounds(422, 120, 89, 23);
 		contentPane.add(btnSalir);
 		
-		lblVisitN = new JLabel("0");
-		lblVisitN.setBounds(73, 226, 47, 14);
-		contentPane.add(lblVisitN);
+		JSpinner spinnerMaxAge = new JSpinner();
+		spinnerMaxAge.setBounds(166, 27, 47, 20);
+		contentPane.add(spinnerMaxAge);
+		
+		JLabel lblPromedio = new JLabel("Promedio:");
+		lblPromedio.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblPromedio.setBounds(-18, 83, 89, 14);
+		contentPane.add(lblPromedio);
+		
+		JLabel lblMeses_1_1 = new JLabel("0");
+		lblMeses_1_1.setBounds(74, 83, 89, 14);
+		contentPane.add(lblMeses_1_1);
+		
+		JLabel lblTipoDeVisitante = new JLabel("Tipo de visitante\r\n");
+		lblTipoDeVisitante.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblTipoDeVisitante.setBounds(223, 30, 108, 14);
+		contentPane.add(lblTipoDeVisitante);
+		contentPane.add(getComboBox());
+	}
+	private JComboBox getComboBox() {
+		if (comboBox == null) {
+			comboBox = new JComboBox();
+			comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+			comboBox.setBounds(352, 26, 161, 22);
+		}
+		return comboBox;
 	}
 }
