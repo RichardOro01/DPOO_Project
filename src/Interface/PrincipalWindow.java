@@ -31,7 +31,6 @@ import java.awt.event.ActionEvent;
 public class PrincipalWindow extends JFrame {
 
 	private static PrincipalWindow frame2;
-	private JPanel contentPane;
 	private JLabel text_CAFII;
 	private JMenuBar menuBar;
 	private JMenu mnConsultar;
@@ -42,6 +41,7 @@ public class PrincipalWindow extends JFrame {
 	private JMenuItem mntmNuevaPersona;
 	private JMenuItem mntmNuevaVisita;
 	private JMenuItem mntmNuevoLocal;
+	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -101,6 +101,28 @@ public class PrincipalWindow extends JFrame {
 			menuBar.setBounds(0, 0, 706, 34);
 			menuBar.add(getMnConsultar());
 			menuBar.add(getMnRegistrar());
+			
+			JMenu mnNewMenu = new JMenu("Reportes");
+			menuBar.add(mnNewMenu);
+			
+			JMenuItem mntmNewMenuItem_3 = new JMenuItem("Locales con m\u00E1s visitas en un mes");
+			mntmNewMenuItem_3.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ReportGreatVisitByMonth r_window = new ReportGreatVisitByMonth();
+					r_window.setVisible(true);
+					r_window.setLocationRelativeTo(null);
+				}
+			});
+			mnNewMenu.add(mntmNewMenuItem_3);
+			
+			JMenuItem mntmNewMenuItem_2 = new JMenuItem("Locales con visitantes en un rango de edad");
+			mnNewMenu.add(mntmNewMenuItem_2);
+			
+			JMenuItem mntmNewMenuItem_1 = new JMenuItem("Locales con personas que violaron el horario establecido");
+			mnNewMenu.add(mntmNewMenuItem_1);
+			
+			JMenuItem mntmNewMenuItem = new JMenuItem("Promedio de visitas en un rango de meses\r\n");
+			mnNewMenu.add(mntmNewMenuItem);
 			menuBar.add(getMnGestion());
 		}
 		return menuBar;
