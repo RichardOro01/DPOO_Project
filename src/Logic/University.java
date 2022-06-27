@@ -189,7 +189,7 @@ public class University {
 			ArrayList<Person> list2 = new ArrayList<Person>();
 			for(Register r: o.getRegister()) {
 				int age=r.getPerson().calculateAge();
-				if (age>=age1 && age<=age2) {
+				if (age>=age1 && age<=age2 && !list2.contains(r.getPerson())) {
 					list2.add(r.getPerson());
 				}
 			}

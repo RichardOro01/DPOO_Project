@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Logic.AuxVisitMonth;
 import Logic.Office;
+import Logic.Person;
 import Logic.Register;
 import Logic.University;
 
@@ -27,6 +28,7 @@ public class ReportVisitAge extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private JSpinner spinnerMaxAge;
 
 	/**
 	 * Launch the application.
@@ -70,17 +72,21 @@ public class ReportVisitAge extends JFrame {
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int month=(int)spinnerMinAge.getValue();
+				int minAge=(int)spinnerMinAge.getValue();
+				int maxAge=(int)spinnerMaxAge.getValue();
 				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
-				AuxVisitMonth aux=University.getInstance().officesWithMoreVisitByMonth(month); 
-				for (Office off: aux.getOffices()) {
-					ArrayList<String> list2=new ArrayList<String>();		
-					list2.add(off.getID());
-					list2.add(off.getClassification());
-					list2.add(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());				
-					list.add(list2);
+				ArrayList<ArrayList<Person>> persons=University.getInstance().getVisitByAgeRange(minAge, maxAge);
+				for (int i=0; i<persons.size();i++) {
+					Office off=University.getInstance().getComputerFac().getOffices().get(i);
+					for (Person p: persons.get(i)) {
+						ArrayList<String> list2=new ArrayList<String>();		
+						list2.add(off.getID());
+						list2.add(off.getClassification());
+						list2.add(p.getIDNumber());				
+						list.add(list2);
+					}
 				}
-				lblVisitN.setText(""+aux.getVisits());
+				
 				Object obj[][]=new Object[list.size()][3];
 				for (int i=0; i<list.size(); i++) {
 					list.get(i).toArray(obj[i]);
@@ -88,7 +94,7 @@ public class ReportVisitAge extends JFrame {
 				table.setModel(new DefaultTableModel(
 						obj,
 						new String[] {
-								"ID", "Clasificacion", "Responsable"
+								"ID Local", "Clasificacion", "ID Visitante"
 						}
 						));
 				
@@ -104,7 +110,6 @@ public class ReportVisitAge extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null},
 			},
 			new String[] {
 				"ID Local", "Clasificacion", "ID Visitante"
@@ -122,7 +127,7 @@ public class ReportVisitAge extends JFrame {
 		btnSalir.setBounds(461, 226, 89, 23);
 		contentPane.add(btnSalir);
 		
-		JSpinner spinnerMaxAge = new JSpinner();
+		spinnerMaxAge = new JSpinner();
 		spinnerMaxAge.setBounds(166, 27, 47, 20);
 		contentPane.add(spinnerMaxAge);
 	}

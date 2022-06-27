@@ -30,7 +30,9 @@ import java.awt.event.ActionEvent;
 public class ReportAverageVisit extends JFrame {
 
 	private JPanel contentPane;
-	private JComboBox comboBox;
+	private JComboBox cbTipoPersona;
+	private JSpinner spinnerMonth2;
+	private JLabel lblPromedioN;
 
 	/**
 	 * Launch the application.
@@ -63,12 +65,12 @@ public class ReportAverageVisit extends JFrame {
 		
 		JLabel lblMeses = new JLabel("Rango de meses");
 		lblMeses.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblMeses.setBounds(10, 30, 89, 14);
+		lblMeses.setBounds(10, 30, 115, 14);
 		contentPane.add(lblMeses);
 		
-		JSpinner spinnerMinAge = new JSpinner();
-		spinnerMinAge.setBounds(109, 27, 47, 20);
-		contentPane.add(spinnerMinAge);
+		JSpinner spinnerMonth1 = new JSpinner();
+		spinnerMonth1.setBounds(135, 28, 47, 20);
+		contentPane.add(spinnerMonth1);
 		
 		JButton btnNewAceptar = new JButton("Calcular");
 		btnNewAceptar.addActionListener(new ActionListener() {
@@ -78,31 +80,15 @@ public class ReportAverageVisit extends JFrame {
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int month=(int)spinnerMinAge.getValue();
-				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
-				AuxVisitMonth aux=University.getInstance().officesWithMoreVisitByMonth(month); 
-				for (Office off: aux.getOffices()) {
-					ArrayList<String> list2=new ArrayList<String>();		
-					list2.add(off.getID());
-					list2.add(off.getClassification());
-					list2.add(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());				
-					list.add(list2);
-				}
-				lblVisitN.setText(""+aux.getVisits());
-				Object obj[][]=new Object[list.size()][3];
-				for (int i=0; i<list.size(); i++) {
-					list.get(i).toArray(obj[i]);
-				}
-				table.setModel(new DefaultTableModel(
-						obj,
-						new String[] {
-								"ID", "Clasificacion", "Responsable"
-						}
-						));
+				int month1=(int)spinnerMonth1.getValue();
+				int month2=(int)spinnerMonth2.getValue();
+				String typePerson=(String)cbTipoPersona.getSelectedItem();
+				double average=University.getInstance().averageVisitsInMonthPerVisitor(month1, month2, typePerson);
+				lblPromedioN.setText(""+average);
 				
 			}
 		});
-		btnNewAceptar.setBounds(120, 79, 89, 23);
+		btnNewAceptar.setBounds(150, 79, 89, 23);
 		contentPane.add(btnNewAceptar);
 		
 		JButton btnSalir = new JButton("Salir");
@@ -119,31 +105,31 @@ public class ReportAverageVisit extends JFrame {
 		btnSalir.setBounds(422, 120, 89, 23);
 		contentPane.add(btnSalir);
 		
-		JSpinner spinnerMaxAge = new JSpinner();
-		spinnerMaxAge.setBounds(166, 27, 47, 20);
-		contentPane.add(spinnerMaxAge);
+		spinnerMonth2 = new JSpinner();
+		spinnerMonth2.setBounds(192, 28, 47, 20);
+		contentPane.add(spinnerMonth2);
 		
 		JLabel lblPromedio = new JLabel("Promedio:");
 		lblPromedio.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblPromedio.setBounds(-18, 83, 89, 14);
+		lblPromedio.setBounds(10, 83, 89, 14);
 		contentPane.add(lblPromedio);
 		
-		JLabel lblMeses_1_1 = new JLabel("0");
-		lblMeses_1_1.setBounds(74, 83, 89, 14);
-		contentPane.add(lblMeses_1_1);
+		lblPromedioN = new JLabel("0");
+		lblPromedioN.setBounds(109, 83, 89, 14);
+		contentPane.add(lblPromedioN);
 		
 		JLabel lblTipoDeVisitante = new JLabel("Tipo de visitante\r\n");
 		lblTipoDeVisitante.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblTipoDeVisitante.setBounds(223, 30, 108, 14);
+		lblTipoDeVisitante.setBounds(234, 30, 108, 14);
 		contentPane.add(lblTipoDeVisitante);
-		contentPane.add(getComboBox());
+		contentPane.add(getCbTipoPersona());
 	}
-	private JComboBox getComboBox() {
-		if (comboBox == null) {
-			comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-			comboBox.setBounds(352, 26, 161, 22);
+	private JComboBox getCbTipoPersona() {
+		if (cbTipoPersona == null) {
+			cbTipoPersona = new JComboBox();
+			cbTipoPersona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+			cbTipoPersona.setBounds(352, 26, 161, 22);
 		}
-		return comboBox;
+		return cbTipoPersona;
 	}
 }

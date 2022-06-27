@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import Logic.AuxVisitMonth;
 import Logic.Office;
+import Logic.Person;
 import Logic.Register;
 import Logic.University;
 
@@ -29,6 +30,7 @@ public class ReportOutOfHour extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
+	private JComboBox cbTipoPersona;
 
 	/**
 	 * Launch the application.
@@ -67,26 +69,28 @@ public class ReportOutOfHour extends JFrame {
 		JButton btnNewAceptar = new JButton("Aceptar");
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
-				int month=(int)spinnerMes.getValue();
+			public void mouseClicked(MouseEvent e) { 
 				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
-				AuxVisitMonth aux=University.getInstance().officesWithMoreVisitByMonth(month); 
-				for (Office off: aux.getOffices()) {
-					ArrayList<String> list2=new ArrayList<String>();		
-					list2.add(off.getID());
-					list2.add(off.getClassification());
-					list2.add(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());				
-					list.add(list2);
+				ArrayList<ArrayList<Person>> persons=University.getInstance().visitOutOfTime((String)cbTipoPersona.getSelectedItem());
+				for (int i=0; i<persons.size();i++) {
+					Office off=University.getInstance().getComputerFac().getOffices().get(i);
+					for (Person p: persons.get(i)) {
+						ArrayList<String> list2=new ArrayList<String>();		
+						list2.add(off.getID());
+						list2.add(p.getIDNumber());	
+						
+						list.add(list2);
+					}
 				}
-				lblVisitN.setText(""+aux.getVisits());
-				Object obj[][]=new Object[list.size()][3];
+				
+				Object obj[][]=new Object[list.size()][6];
 				for (int i=0; i<list.size(); i++) {
 					list.get(i).toArray(obj[i]);
 				}
 				table.setModel(new DefaultTableModel(
 						obj,
 						new String[] {
-								"ID", "Clasificacion", "Responsable"
+								"ID Local", "ID Visitante", "Entrada", "Salida", "Entrada permitida", "Salida permitida"
 						}
 						));
 				
@@ -102,7 +106,6 @@ public class ReportOutOfHour extends JFrame {
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
-				{null, null, null, null, null, null},
 			},
 			new String[] {
 				"ID Local", "ID Visitante", "Entrada", "Salida", "Entrada permitida", "Salida permitida"
@@ -120,9 +123,9 @@ public class ReportOutOfHour extends JFrame {
 		btnSalir.setBounds(607, 226, 89, 23);
 		contentPane.add(btnSalir);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
-		comboBox.setBounds(114, 26, 162, 22);
-		contentPane.add(comboBox);
+		cbTipoPersona = new JComboBox();
+		cbTipoPersona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+		cbTipoPersona.setBounds(114, 26, 162, 22);
+		contentPane.add(cbTipoPersona);
 	}
 }
