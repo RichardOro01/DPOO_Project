@@ -1,6 +1,7 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class University {
 	//attributes
@@ -197,4 +198,50 @@ public class University {
 		}		 
 		return list;
 	}
+	
+	//datos automaticos para casos pruebas en JUnit
+	
+	public void automaticData(int manyOffice, int manyRegister) {
+		
+		//persona prueba
+		Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
+		
+		//oficinas de prueba
+		if (manyOffice == 0) {//una sola oficina
+			Office of1 = new Office("1",null,p);
+			Date d=new Date(1655245926535L);//salida de todas
+			// visitas de pruebas
+			if(manyRegister==1) {//solo un registro
+				of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+				University.getInstance().getComputerFac().getOffices().add(of1);
+			}else if(manyRegister>1) {//cuatro registros
+				of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022 
+				of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+				of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+				of1.getRegister().add(new Register(new Date(1649959974000L),d,p));//14/4/2022
+				
+				University.getInstance().getComputerFac().getOffices().add(of1);
+			}
+		}else{//para probar mas de una oficina
+			Office of1=new Office("1", null, p);
+			Office of2=new Office("2", null, p);
+			Office of3=new Office("3", null, p);
+			Date d=new Date(1655245926535L);//salida de todas
+			of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022 
+			of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+			of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+			of1.getRegister().add(new Register(new Date(1649959974000L),d,p));//14/4/2022
+			of2.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+			of2.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+			of3.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
+			of3.getRegister().add(new Register(new Date(1649959974000L),d,p));//14/4/2022
+			
+			University.getInstance().getComputerFac().getOffices().add(of1);
+			University.getInstance().getComputerFac().getOffices().add(of2);
+			University.getInstance().getComputerFac().getOffices().add(of3);
+
+		}
+		
+	}
+	
 }	
