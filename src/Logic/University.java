@@ -225,7 +225,7 @@ public class University {
 		of2.getRegister().add(new Register(new Date(1647439200000L),new Date(1647453600000L),s)); //fecha de entrada:  16/3/2022-14:00pm || fecha de salida: 16/3/2022-18:00pm
 		of3.getRegister().add(new Register(new Date(1652688000000L),new Date(1652716800000L),p)); //fecha de entrada:  16/5/2022-08:00am || fecha de salida: 16/5/2022-16:00pm
 		of3.getRegister().add(new Register(new Date(1652778000000L),new Date(1652806800000L),t)); //fecha de entrada:  17/5/2022-09:00am || fecha de salida: 17/5/2022-17:00pm
-		of3.getRegister().add(new Register(new Date(1652871600000L),new Date(1652886000000L),a)); //fecha de entrada:  18/5/2022-11:00am || fecha de salida: 18/5/2022-15:00pm
+		of3.getRegister().add(new Register(new Date(1652871600000L),new Date(1652886000000L),a)); //fecha de entrada:  18/5/2022-11:00am || fecha de salida: 18/5/2022-15:00pm || excede fecha de salida porq es visitante
 		of4.getRegister().add(new Register(new Date(1645434000000L),new Date(1645477200000L),e)); //fecha de entrada:  21/2/2022-09:00am || fecha de salida: 21/2/2022-21:00pm || excede fecha de salida 
 		of4.getRegister().add(new Register(new Date(1645516800000L),new Date(1645531200000L),p)); //fecha de entrada:  22/2/2022-08:00am || fecha de salida: 22/2/2022-12:00pm
 		of4.getRegister().add(new Register(new Date(1645603200000L),new Date(1645621200000L),e)); //fecha de entrada:  23/2/2022-08:00am || fecha de salida: 23/2/2022-13:00pm		
