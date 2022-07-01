@@ -11,7 +11,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		University.getInstance();
+		University.getInstance().automaticData();		
 		Login.main(null);
 //		//persona prueba
 //		Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
