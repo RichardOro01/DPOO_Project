@@ -39,6 +39,7 @@ import Logic.Specialist;
 import Logic.Student;
 import Logic.Technical;
 import Logic.University;
+import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -182,20 +183,12 @@ public class RegisterPersonWindow extends JFrame {
 					}
 				}
 			});
-			cbTipoVisitatne.setModel(new DefaultComboBoxModel(addSeleccioneCB(Lists.getPersonType())));
+			cbTipoVisitatne.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
 		}
 		return cbTipoVisitatne;
 	}
 	
-	public String[] addSeleccioneCB(String[] arr) {
-		int tf=arr.length;
-		String[] list= new String[tf+1];
-		list[0]="<Seleccione>";
-		for (int i=1;i<=tf;i++) {
-			list[i]=arr[i-1];
-		}
-		return list;
-	}
+	
 	
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {

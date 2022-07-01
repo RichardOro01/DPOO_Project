@@ -13,6 +13,8 @@ public class Main {
 		// TODO Auto-generated method stub
 		University.getInstance();
 		Login.main(null);
+		
+	
 //		//persona prueba
 //		Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
 //		

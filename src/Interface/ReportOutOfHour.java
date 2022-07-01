@@ -15,10 +15,12 @@ import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
 import Logic.AuxVisitMonth;
+import Logic.AuxVisitOutHour;
 import Logic.Office;
 import Logic.Person;
 import Logic.Register;
 import Logic.University;
+import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -71,14 +73,17 @@ public class ReportOutOfHour extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) { 
 				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
-				ArrayList<ArrayList<Person>> persons=University.getInstance().visitOutOfTime((String)cbTipoPersona.getSelectedItem());
+				ArrayList<ArrayList<AuxVisitOutHour>> persons=University.getInstance().visitOutOfTime(Utils.tpSpa2Eng((String)cbTipoPersona.getSelectedItem()));
 				for (int i=0; i<persons.size();i++) {
 					Office off=University.getInstance().getComputerFac().getOffices().get(i);
-					for (Person p: persons.get(i)) {
+					for (AuxVisitOutHour p: persons.get(i)) {
 						ArrayList<String> list2=new ArrayList<String>();		
 						list2.add(off.getID());
-						list2.add(p.getIDNumber());	
-						
+						list2.add(p.getPerson().getIDNumber());	
+						list2.add(Utils.formatDate(p.getDateIn()));
+						list2.add(Utils.formatDate(p.getDateOut()));
+						list2.add(Utils.formatDate(p.getDateInMust()));
+						list2.add(Utils.formatDate(p.getDateOutMust()));
 						list.add(list2);
 					}
 				}
@@ -124,7 +129,7 @@ public class ReportOutOfHour extends JFrame {
 		contentPane.add(btnSalir);
 		
 		cbTipoPersona = new JComboBox();
-		cbTipoPersona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+		cbTipoPersona.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
 		cbTipoPersona.setBounds(114, 26, 162, 22);
 		contentPane.add(cbTipoPersona);
 	}

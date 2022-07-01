@@ -146,19 +146,23 @@ public class University {
 		return office;
 	}
 	
-	public ArrayList<ArrayList<Person>> visitOutOfTime(String typePerson){
-		ArrayList<ArrayList<Person>> persons= new ArrayList<ArrayList<Person>>();
+	public ArrayList<ArrayList<AuxVisitOutHour>> visitOutOfTime(String typePerson){
+		ArrayList<ArrayList<AuxVisitOutHour>> persons= new ArrayList<ArrayList<AuxVisitOutHour>>();
 		for (Office o: computerFac.getOffices()) {
-			ArrayList<Person> aux=new ArrayList<Person>();
+			ArrayList<AuxVisitOutHour> aux=new ArrayList<AuxVisitOutHour>();
 			for (Register r: o.getRegister()) {
 				String nameClass=r.getPerson().getClass().getSimpleName();
 				if (typePerson.equals(nameClass)) {
 					ArrayList<Access> a=new ArrayList<Access>();
 					a=getAccess(r.getPerson());
 					for (Access acc: a) {
-						if (r.getCheckInDate().getHours()+1<acc.getHourIn() || r.getCheckOutDate().getHours()+1>acc.getHourOut()) {
+						Date mustIn=new Date(r.getCheckInDate().getTime());
+						Date mustOut=new Date(r.getCheckInDate().getTime());
+						mustIn.setHours(acc.getHourIn());
+						mustOut.setHours(acc.getHourOut());
+						if (r.getCheckInDate().compareTo(mustIn)<0 || r.getCheckOutDate().compareTo(mustOut)>0) {
 							if (!aux.contains(r.getPerson())){
-								aux.add(r.getPerson());
+								aux.add(new AuxVisitOutHour(r.getPerson(), r.getCheckInDate(), r.getCheckOutDate(), mustIn, mustOut));
 							}
 						}
 					}

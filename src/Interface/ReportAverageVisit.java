@@ -18,6 +18,7 @@ import Logic.AuxVisitMonth;
 import Logic.Office;
 import Logic.Register;
 import Logic.University;
+import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -82,7 +83,7 @@ public class ReportAverageVisit extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int month1=(int)spinnerMonth1.getValue();
 				int month2=(int)spinnerMonth2.getValue();
-				String typePerson=(String)cbTipoPersona.getSelectedItem();
+				String typePerson=Utils.tpSpa2Eng((String)cbTipoPersona.getSelectedItem());
 				double average=University.getInstance().averageVisitsInMonthPerVisitor(month1, month2, typePerson);
 				lblPromedioN.setText(""+average);
 				
@@ -127,7 +128,7 @@ public class ReportAverageVisit extends JFrame {
 	private JComboBox getCbTipoPersona() {
 		if (cbTipoPersona == null) {
 			cbTipoPersona = new JComboBox();
-			cbTipoPersona.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>"}));
+			cbTipoPersona.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
 			cbTipoPersona.setBounds(352, 26, 161, 22);
 		}
 		return cbTipoPersona;

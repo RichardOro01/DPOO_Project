@@ -255,14 +255,18 @@ public class RegisterWindow extends JFrame {
 						Checking.checkEmpty(textMinutosEntrada);
 						Checking.checkEmpty(textHoraSalida);
 						Checking.checkEmpty(textMinutosSalida);
+						
 						Date entrada=new Date();
 						Date salida=new Date();
 						entrada=dateChooserEntrada.getDate();
 						entrada.setHours(Integer.parseInt(textHoraEntrada.getText()));
 						entrada.setMinutes(Integer.parseInt(textMinutosEntrada.getText()));
+						entrada.setSeconds(0);	
 						salida=dateChooserSalida.getDate();
 						salida.setHours(Integer.parseInt(textHoraSalida.getText()));
 						salida.setMinutes(Integer.parseInt(textMinutosSalida.getText()));
+						salida.setSeconds(0);
+						
 						Person person=University.getInstance().getPersonByFullName((String)cbPersona.getSelectedItem());
 						if (person.isInfo()){
 							University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new Register(entrada,salida,person));

@@ -14,9 +14,12 @@ import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.table.DefaultTableModel;
 
+
+
 import Logic.Office;
 import Logic.Register;
 import Logic.University;
+import Utils.Utils;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
@@ -131,8 +134,8 @@ public class QueryWindow extends JFrame {
 					ArrayList<String> list2=new ArrayList<String>();
 					list2.add(r.getPerson().getName()+" "+r.getPerson().getLastName());
 					list2.add(off.getID());
-					list2.add(r.getCheckInDate().toGMTString());
-					list2.add(r.getCheckOutDate().toGMTString());
+					list2.add(Utils.formatDate(r.getCheckInDate()));
+					list2.add(Utils.formatDate(r.getCheckOutDate()));
 					list.add(list2);
 				}
 				
