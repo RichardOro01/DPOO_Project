@@ -201,7 +201,7 @@ public class University {
 	
 	//datos automaticos para casos pruebas en JUnit
 	
-	public void automaticData(int manyOffice, int manyRegister) {
+	public void automaticDataForMethod2(int manyOffice, int manyRegister) {
 		
 		//persona prueba
 		Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
@@ -242,6 +242,19 @@ public class University {
 
 		}
 		
+	}
+	public void automaticDataForMethod1(int test) {
+		if(test==0) {
+			Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
+			Office of1=new Office("0110", null, p);
+			University.getInstance().getComputerFac().getOffices().add(of1);	
+		}else if(test>0) {
+			Professor p=new Professor("Pepe", "Antonio", "01022068706", true, null, null, null,  null);
+			Office of1=new Office("1", null, p);
+			University.getInstance().getComputerFac().getOffices().add(of1);
+		}else {
+			University.getInstance();
+		}
 	}
 	
 }	

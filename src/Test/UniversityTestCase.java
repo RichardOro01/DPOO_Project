@@ -26,7 +26,7 @@ public class UniversityTestCase {
 	public void testAverageVisitsInMonthPerVisitorOneOfficeEmpty() {
 		uni=University.getInstance();
 		//iniciarlizar con una oficina y ningun registro
-		uni.automaticData(0, 0);
+		uni.automaticDataForMethod2(0, 0);
 		assertTrue(0.0==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
 		uni.getComputerFac().getOffices().clear();
 		}
@@ -35,7 +35,7 @@ public class UniversityTestCase {
 	public void testAverageVisitsInMonthPerVisitorOneOfficeOneRegister() {
 		uni=University.getInstance();
 		//iniciarlizar con una oficina y cuatro registros
-		uni.automaticData(0, 1);
+		uni.automaticDataForMethod2(0, 1);
 		assertTrue(0.5==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
 		uni.getComputerFac().getOffices().clear();
 	}
@@ -44,7 +44,7 @@ public class UniversityTestCase {
 	public void testAverageVisitsInMonthPerVisitorOneOfficeOneManyRegister() {
 		uni=University.getInstance();
 		//iniciarlizar con una oficina y un registro
-		uni.automaticData(0, 2);
+		uni.automaticDataForMethod2(0, 2);
 		assertTrue(2.0==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
 		uni.getComputerFac().getOffices().clear();
 	}
@@ -53,10 +53,33 @@ public class UniversityTestCase {
 	public void testAverageVisitsInMonthPerVisitorManyOffice() {
 		uni=University.getInstance();
 		//tres oficinas y ocho registro
-		uni.automaticData(1, 2);
+		uni.automaticDataForMethod2(1, 2);
 		assertTrue(4.0==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
 		uni.getComputerFac().getOffices().clear();
 	}
 	
-
+	@Test
+	public void testGetOfficeByIdFound(){
+		uni=University.getInstance();
+		uni.automaticDataForMethod1(0);
+		assertEquals(uni.getComputerFac().getOffices().get(0),uni.getOfficeById("0110"));
+		uni.getComputerFac().getOffices().clear();
+	}
+	
+	@Test
+	public void testGetOfficeByIdNotFound(){
+		uni=University.getInstance();
+		uni.automaticDataForMethod1(1);
+		assertEquals(null,uni.getOfficeById("0110"));
+		uni.getComputerFac().getOffices().clear();
+	}
+	
+	@Test
+	public void testGetOfficeByIdNoOffice(){
+		uni=University.getInstance();
+		uni.automaticDataForMethod1(-1);
+		assertEquals(null,uni.getOfficeById("0110"));
+		uni.getComputerFac().getOffices().clear();
+	}
+	
 }
