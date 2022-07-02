@@ -220,6 +220,8 @@ public class University {
 		Office of3=new Office("0310", "Local de profesores", p);
 		Office of4=new Office("0410", "Local de estudiantes", p);
 		
+		
+		
 		//registros
 		of1.getRegister().add(new Register(new Date(1654077600000L),new Date(1654084800000L),d)); //fecha de entrada:  1/6/2022-10:00am  || fecha de salida: 1/6/2022-12:00pm 
 		of1.getRegister().add(new Register(new Date(1654164000000L),new Date(1654171200000L),a)); //fecha de entrada:  2/6/2022-10:00am  || fecha de salida: 2/6/2022-12:00pm
@@ -233,6 +235,11 @@ public class University {
 		of4.getRegister().add(new Register(new Date(1645434000000L),new Date(1645477200000L),e)); //fecha de entrada:  21/2/2022-09:00am || fecha de salida: 21/2/2022-21:00pm || excede fecha de salida 
 		of4.getRegister().add(new Register(new Date(1645516800000L),new Date(1645531200000L),p)); //fecha de entrada:  22/2/2022-08:00am || fecha de salida: 22/2/2022-12:00pm
 		of4.getRegister().add(new Register(new Date(1645603200000L),new Date(1645621200000L),e)); //fecha de entrada:  23/2/2022-08:00am || fecha de salida: 23/2/2022-13:00pm		
+		
+		computerFac.getOffices().add(of1);
+		computerFac.getOffices().add(of2);
+		computerFac.getOffices().add(of3);
+		computerFac.getOffices().add(of4);
 	}
 	
 	//datos automaticos para casos pruebas en JUnit
