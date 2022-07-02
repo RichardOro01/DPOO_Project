@@ -1,5 +1,7 @@
 package Interface;
 
+import java.util.Date;
+
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
@@ -20,6 +22,11 @@ public class Checking {
 	public static void checkDate(JDateChooser date) throws DateChooserException{
 		if (date.getDate()==null) {
 			throw new DateChooserException(date.getName());
+		}
+	}
+	public static void checkDateAfterDate(Date entrada, Date salida) throws DateChooserException {
+		if (entrada.compareTo(salida)>=0) {
+			throw new DateChooserException(1);
 		}
 	}
 }
