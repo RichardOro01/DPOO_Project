@@ -8,6 +8,7 @@ public class AuxVisitOutHour {
 	private Date dateOut;
 	private Date dateInMust;
 	private Date dateOutMust;
+	private String access;
 	
 	public AuxVisitOutHour(Person person, Date dateIn, Date dateOut, Date dateInMust, Date dateOutMust) {
 		super();
@@ -16,6 +17,20 @@ public class AuxVisitOutHour {
 		this.dateOut = dateOut;
 		this.dateInMust = dateInMust;
 		this.dateOutMust = dateOutMust;
+	}
+	public AuxVisitOutHour(Person person, Date dateIn, Date dateOut, String access) {
+		super();
+		this.person = person;
+		this.dateIn = dateIn;
+		this.dateOut = dateOut;
+		this.access = access;
+	}
+	
+	public String getAccess() {
+		return access;
+	}
+	public void setAccess(String access) {
+		this.access = access;
 	}
 	public Person getPerson() {
 		return person;

@@ -82,8 +82,8 @@ public class ReportOutOfHour extends JFrame {
 						list2.add(p.getPerson().getIDNumber());	
 						list2.add(Utils.formatDate(p.getDateIn()));
 						list2.add(Utils.formatDate(p.getDateOut()));
-						list2.add(Utils.formatDate(p.getDateInMust()));
-						list2.add(Utils.formatDate(p.getDateOutMust()));
+						list2.add(p.getAccess()==null?Utils.formatDate(p.getDateInMust()):p.getAccess());
+						list2.add(p.getAccess()==null?Utils.formatDate(p.getDateOutMust()):p.getAccess());
 						list.add(list2);
 					}
 				}
