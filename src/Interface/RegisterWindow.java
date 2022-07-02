@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import java.util.Date;
+import Utils.Utils;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
+
+
 import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.border.EtchedBorder;
@@ -43,6 +46,8 @@ import Logic.VisitorRegister;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegisterWindow extends JFrame {
 
@@ -278,7 +283,7 @@ public class RegisterWindow extends JFrame {
 							Checking.checkNotSelected(cbAreaVisit);
 							University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new VisitorRegister(entrada,salida,person,(String)cbAreaVisit.getSelectedItem(),textMotivo.getText(),person.getIDNumber()));
 						}
-						JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "…xito", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "√âxito", JOptionPane.INFORMATION_MESSAGE);
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
@@ -416,6 +421,12 @@ public class RegisterWindow extends JFrame {
 	private JTextField getTextMotivo() {
 		if (textMotivo == null) {
 			textMotivo = new JTextField();
+			textMotivo.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.characterLimit(e, textMotivo, 49);
+				}
+			});
 			textMotivo.setName("Motivo");
 			textMotivo.setColumns(10);
 		}
@@ -445,7 +456,7 @@ public class RegisterWindow extends JFrame {
 	private JComboBox getCbAreaVisit() {
 		if (cbAreaVisit == null) {
 			cbAreaVisit = new JComboBox();
-			cbAreaVisit.setName("¡rea");
+			cbAreaVisit.setName("√Årea");
 		}
 		return cbAreaVisit;
 	}
