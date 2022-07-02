@@ -123,6 +123,18 @@ public class Login extends JFrame {
 	private JTextField getTxtUser() {
 		if (txtUser == null) {
 			txtUser = new JTextField();
+<<<<<<< HEAD
+=======
+			txtUser.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+						toAccess();
+					}
+
+				}
+			});
+>>>>>>> javier
 			txtUser.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -151,6 +163,18 @@ public class Login extends JFrame {
 	private JPasswordField getPasswordField() {
 		if (passwordField == null) {
 			passwordField = new JPasswordField();
+<<<<<<< HEAD
+=======
+			passwordField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+						toAccess();
+					}
+
+				}
+			});
+>>>>>>> javier
 			passwordField.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
