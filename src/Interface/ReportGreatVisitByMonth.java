@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -66,8 +67,14 @@ public class ReportGreatVisitByMonth extends JFrame {
 		contentPane.add(lblMes);
 		
 		JSpinner spinnerMes = new JSpinner();
+		SpinnerNumberModel spinnerModel = new SpinnerNumberModel();
+	    spinnerModel.setMaximum(12);
+	    spinnerModel.setMinimum(1);
+	    spinnerModel.setValue(1);
 		spinnerMes.setBounds(57, 27, 47, 20);
+		spinnerMes.setModel(spinnerModel);
 		contentPane.add(spinnerMes);
+		
 		
 		JButton btnNewAceptar = new JButton("Aceptar");
 		btnNewAceptar.addMouseListener(new MouseAdapter() {

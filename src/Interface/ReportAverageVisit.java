@@ -11,6 +11,7 @@ import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -72,7 +73,12 @@ public class ReportAverageVisit extends JFrame {
 		contentPane.add(lblMeses);
 		
 		JSpinner spinnerMonth1 = new JSpinner();
+		SpinnerNumberModel spinnerModel = new SpinnerNumberModel();
+	    spinnerModel.setMaximum(12);
+	    spinnerModel.setMinimum(1);
+	    spinnerModel.setValue(1);
 		spinnerMonth1.setBounds(135, 28, 47, 20);
+		spinnerMonth1.setModel(spinnerModel);
 		contentPane.add(spinnerMonth1);
 		
 		JButton btnNewAceptar = new JButton("Calcular");
@@ -109,7 +115,12 @@ public class ReportAverageVisit extends JFrame {
 		contentPane.add(btnSalir);
 		
 		spinnerMonth2 = new JSpinner();
+		SpinnerNumberModel spinnerModel2 = new SpinnerNumberModel();
+	    spinnerModel2.setMaximum(12);
+	    spinnerModel2.setMinimum(1);
+	    spinnerModel2.setValue(1);
 		spinnerMonth2.setBounds(192, 28, 47, 20);
+		spinnerMonth2.setModel(spinnerModel2);
 		contentPane.add(spinnerMonth2);
 		
 		JLabel lblPromedio = new JLabel("Promedio:");
