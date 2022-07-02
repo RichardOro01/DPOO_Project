@@ -22,6 +22,7 @@ import Logic.University;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.Toolkit;
 
 public class ReportGreatVisitByMonth extends JFrame {
 
@@ -49,6 +50,7 @@ public class ReportGreatVisitByMonth extends JFrame {
 	 * Create the frame.
 	 */
 	public ReportGreatVisitByMonth() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setResizable(false);
 		setTitle("Locales con m\u00E1s visitas en un mes");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

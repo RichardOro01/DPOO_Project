@@ -23,6 +23,7 @@ import Logic.University;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.Toolkit;
 
 public class ReportVisitAge extends JFrame {
 
@@ -50,6 +51,7 @@ public class ReportVisitAge extends JFrame {
 	 * Create the frame.
 	 */
 	public ReportVisitAge() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setResizable(false);
 		setTitle("Visitas por rango de edad");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

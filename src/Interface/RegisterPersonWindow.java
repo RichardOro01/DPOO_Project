@@ -43,6 +43,7 @@ import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 public class RegisterPersonWindow extends JFrame {
 
@@ -119,6 +120,7 @@ public class RegisterPersonWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterPersonWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setTitle("Registrar persona");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -35,6 +35,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
+import java.awt.Toolkit;
 
 public class QueryWindow extends JFrame {
 
@@ -70,6 +71,7 @@ public class QueryWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public QueryWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setTitle("CAFII");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 480);

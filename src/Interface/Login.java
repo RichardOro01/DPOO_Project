@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	
@@ -60,6 +61,7 @@ public class Login extends JFrame {
 	 */
 		
 	public Login() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setTitle("Autentificaci\u00F3n CAFII");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -27,6 +27,7 @@ import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class ReportAverageVisit extends JFrame {
 
@@ -55,6 +56,7 @@ public class ReportAverageVisit extends JFrame {
 	 * Create the frame.
 	 */
 	public ReportAverageVisit() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setResizable(false);
 		setTitle("Promedio de visitas por rango de meses");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
