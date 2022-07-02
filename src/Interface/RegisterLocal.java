@@ -9,6 +9,8 @@ import Logic.Student;
 import Logic.Technical;
 import Logic.University;
 
+import Utils.Utils;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,6 +26,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegisterLocal extends JFrame {
 
@@ -101,6 +105,12 @@ public class RegisterLocal extends JFrame {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.characterLimit(e, textField, 9);
+				}
+			});
 			textField.setName("ID");
 			textField.setBounds(134, 42, 204, 19);
 			textField.setColumns(10);
@@ -128,7 +138,7 @@ public class RegisterLocal extends JFrame {
 	private JComboBox getCbClasificacion() {
 		if (cbClasificacion == null) {
 			cbClasificacion = new JComboBox();
-			cbClasificacion.setName("Clasificación");
+			cbClasificacion.setName("ClasificaciÃ³n");
 			cbClasificacion.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local del decano", "Local de vicedecano", "Local de jefe de departamento", "Local de servidores", "Local de \u00E1rea administrativa", "Local de profesores", "Local de especialistas", "Local de estudiantes", "Aula", "Laboratorio"}));
 			cbClasificacion.setBounds(134, 103, 204, 21);
 		}
@@ -146,7 +156,7 @@ public class RegisterLocal extends JFrame {
 						Checking.checkNotSelected(cbClasificacion);
 						Office o= new Office(textField.getText(),(String)cbClasificacion.getSelectedItem(),University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
 						University.getInstance().getComputerFac().getOffices().add(o);
-						JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {

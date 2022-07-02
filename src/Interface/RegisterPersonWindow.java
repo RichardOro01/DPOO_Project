@@ -44,7 +44,12 @@ import Utils.Utils;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+
 import javax.swing.SpinnerNumberModel;
+
 
 public class RegisterPersonWindow extends JFrame {
 
@@ -176,7 +181,7 @@ public class RegisterPersonWindow extends JFrame {
 					case "Especialista":
 						especialistaPane.setVisible(true);
 						break;
-					case "TÈcnico":
+					case "T√©cnico":
 						tecnicoPanel.setVisible(true);
 						break;
 					case "Estudiante":
@@ -233,7 +238,7 @@ public class RegisterPersonWindow extends JFrame {
 						case "Especialista":
 							University.getInstance().getStaff().add(new Specialist(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), textProyecto.getText()));
 							break;
-						case "TÈcnico":
+						case "T√©cnico":
 							University.getInstance().getStaff().add(new Technical(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlazaTec.getSelectedItem()));
 							break;
 						case "Estudiante":
@@ -242,7 +247,7 @@ public class RegisterPersonWindow extends JFrame {
 						}
 						
 						//University.getInstance().getStaff().add(new Person(textNombre.getText(),));
-						JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "…xito", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "√âxito", JOptionPane.INFORMATION_MESSAGE);
 					}catch(EmptyTextFormException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
@@ -277,6 +282,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
+			textNombre.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyLetters(e, textNombre, 19);
+				}
+			});
 			textNombre.setName("Nombre");
 			textNombre.setColumns(10);
 		}
@@ -292,6 +303,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextApellidos() {
 		if (textApellidos == null) {
 			textApellidos = new JTextField();
+			textApellidos.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyLetters(e, textApellidos, 39);
+				}
+			});
 			textApellidos.setName("Apellidos");
 			textApellidos.setColumns(10);
 		}
@@ -307,7 +324,13 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNI() {
 		if (textNI == null) {
 			textNI = new JTextField();
-			textNI.setName("N˙mero de identidad");
+			textNI.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyNumbers(e, textNI, 10);
+				}
+			});
+			textNI.setName("N√∫mero de identidad");
 			textNI.setColumns(10);
 		}
 		return textNI;
@@ -403,7 +426,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbArea() {
 		if (cbArea == null) {
 			cbArea = new JComboBox();
-			cbArea.setName("¡rea");
+			cbArea.setName("√Årea");
 			cbArea.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String item=(String) cbArea.getSelectedItem();
@@ -493,7 +516,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbCatCientifica() {
 		if (cbCatCientifica == null) {
 			cbCatCientifica = new JComboBox();
-			cbCatCientifica.setName("CategorÌa cientÌfica");
+			cbCatCientifica.setName("Categor√≠a cient√≠fica");
 			cbCatCientifica.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Doctor", "Master"}));
 		}
 		return cbCatCientifica;
@@ -501,7 +524,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbCatDocente() {
 		if (cbCatDocente == null) {
 			cbCatDocente = new JComboBox();
-			cbCatDocente.setName("CategorÌa docente");
+			cbCatDocente.setName("Categor√≠a docente");
 			cbCatDocente.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Titular ", "Auxiliar", "Asistente", "Instructor"}));
 		}
 		return cbCatDocente;
@@ -551,6 +574,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextProyecto() {
 		if (textProyecto == null) {
 			textProyecto = new JTextField();
+			textProyecto.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.characterLimit(e, textProyecto, 49);
+				}
+			});
 			textProyecto.setName("Proyecto en el que trabaja");
 			textProyecto.setColumns(10);
 		}
