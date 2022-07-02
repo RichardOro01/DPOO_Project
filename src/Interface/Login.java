@@ -22,6 +22,8 @@ import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Login extends JFrame {
 	
@@ -77,6 +79,19 @@ public class Login extends JFrame {
 		setLocationRelativeTo(null);
 		EventQueue.invokeLater( () -> contentPane.requestFocusInWindow() );
 	}
+	private void toAccess() {
+		if (String.valueOf(passwordField.getPassword()).equals("admin") && txtUser.getText().equals("admin") ) {
+			JOptionPane.showInternalMessageDialog(contentPane,"Autentificación exitosa.","Acceso",JOptionPane.INFORMATION_MESSAGE);
+			PrincipalWindow p_window = new PrincipalWindow();
+			p_window.setVisible(true);
+			p_window.setLocationRelativeTo(null);
+			dispose();
+		}else {
+			frame.setEnabled(false);
+			JOptionPane.showInternalMessageDialog(contentPane,"Usuario o contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);			
+		}
+		frame.setEnabled(true);
+	}
 	private JLabel getBallenaLogo() {
 		if (ballenaLogo == null) {
 			ballenaLogo = new JLabel("");
@@ -123,6 +138,13 @@ public class Login extends JFrame {
 	private JTextField getTxtUser() {
 		if (txtUser == null) {
 			txtUser = new JTextField();
+			txtUser.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER)
+						toAccess();
+				}
+			});
 			txtUser.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
@@ -151,6 +173,13 @@ public class Login extends JFrame {
 	private JPasswordField getPasswordField() {
 		if (passwordField == null) {
 			passwordField = new JPasswordField();
+			passwordField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyReleased(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER)
+						toAccess();
+				}
+			});
 			passwordField.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {

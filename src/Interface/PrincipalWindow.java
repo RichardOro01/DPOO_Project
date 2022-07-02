@@ -181,9 +181,7 @@ public class PrincipalWindow extends JFrame {
 			mntmCerrarSesion = new JMenuItem("Cerrar Sesi\u00F3n");
 			mntmCerrarSesion.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					Login l_window = new Login();
-					l_window.setVisible(true);
-					l_window.setLocationRelativeTo(null);
+					Login.main(null);
 					dispose();
 				}
 			});
