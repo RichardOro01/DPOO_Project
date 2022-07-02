@@ -44,8 +44,12 @@ import Utils.Utils;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+
+import javax.swing.SpinnerNumberModel;
+
 
 public class RegisterPersonWindow extends JFrame {
 
@@ -205,6 +209,7 @@ public class RegisterPersonWindow extends JFrame {
 						Checking.checkEmpty(textApellidos);
 						Checking.checkEmpty(textNI);
 						Checking.checkNotSelected(cbTipoVisitatne);
+						Checking.checkCI(textNI.getText());
 						for (JPanel panel: specialData) {
 							if (panel.isVisible()) {
 								for (Component c: panel.getComponents()) {
@@ -246,6 +251,8 @@ public class RegisterPersonWindow extends JFrame {
 					}catch(EmptyTextFormException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}catch (CIException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
@@ -638,12 +645,14 @@ public class RegisterPersonWindow extends JFrame {
 	private JSpinner getSpinnerAnno() {
 		if (spinnerAnno == null) {
 			spinnerAnno = new JSpinner();
+			spinnerAnno.setModel(new SpinnerNumberModel(1, 1, 6, 1));
 		}
 		return spinnerAnno;
 	}
 	private JSpinner getSpinnerGrupo() {
 		if (spinnerGrupo == null) {
 			spinnerGrupo = new JSpinner();
+			spinnerGrupo.setModel(new SpinnerNumberModel(1, 1, 6, 1));
 		}
 		return spinnerGrupo;
 	}

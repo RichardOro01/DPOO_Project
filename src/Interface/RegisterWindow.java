@@ -42,6 +42,7 @@ import Logic.Student;
 import Logic.Technical;
 import Logic.University;
 import Logic.VisitorRegister;
+import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -186,6 +187,14 @@ public class RegisterWindow extends JFrame {
 	private JTextField getTextHoraEntrada() {
 		if (textHoraEntrada == null) {
 			textHoraEntrada = new JTextField();
+			textHoraEntrada.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if (!Utils.isNumeric(String.valueOf(e.getKeyChar())) || textHoraEntrada.getText().length()>=2 || Integer.parseInt(textHoraEntrada.getText()+String.valueOf(e.getKeyChar()))>=24) {
+						e.consume();
+					}
+				}
+			});
 			textHoraEntrada.setName("Hora de entrada");
 			textHoraEntrada.setColumns(10);
 			textHoraEntrada.setBounds(233, 24, 26, 19);
@@ -202,6 +211,14 @@ public class RegisterWindow extends JFrame {
 	private JTextField getTextMinutosEntrada() {
 		if (textMinutosEntrada == null) {
 			textMinutosEntrada = new JTextField();
+			textMinutosEntrada.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if (!Utils.isNumeric(String.valueOf(e.getKeyChar())) || textMinutosEntrada.getText().length()>=2 || Integer.parseInt(textMinutosEntrada.getText()+String.valueOf(e.getKeyChar()))>=60) {
+						e.consume();
+					}
+				}
+			});
 			textMinutosEntrada.setName("Minutos de entrada");
 			textMinutosEntrada.setColumns(10);
 			textMinutosEntrada.setBounds(271, 24, 26, 19);
@@ -224,6 +241,14 @@ public class RegisterWindow extends JFrame {
 	private JTextField getTextHoraSalida() {
 		if (textHoraSalida == null) {
 			textHoraSalida = new JTextField();
+			textHoraSalida.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if (!Utils.isNumeric(String.valueOf(e.getKeyChar())) || textHoraSalida.getText().length()>=2 || Integer.parseInt(textHoraSalida.getText()+String.valueOf(e.getKeyChar()))>=24) {
+						e.consume();
+					}
+				}
+			});
 			textHoraSalida.setName("Hora de salida");
 			textHoraSalida.setColumns(10);
 			textHoraSalida.setBounds(235, 24, 26, 19);
@@ -240,6 +265,14 @@ public class RegisterWindow extends JFrame {
 	private JTextField getTextMinutosSalida() {
 		if (textMinutosSalida == null) {
 			textMinutosSalida = new JTextField();
+			textMinutosSalida.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if (!Utils.isNumeric(String.valueOf(e.getKeyChar())) || textMinutosSalida.getText().length()>=2 || Integer.parseInt(textMinutosSalida.getText()+String.valueOf(e.getKeyChar()))>=60) {
+						e.consume();
+					}
+				}
+			});
 			textMinutosSalida.setName("Minutos de salida");
 			textMinutosSalida.setColumns(10);
 			textMinutosSalida.setBounds(271, 24, 26, 19);
@@ -263,16 +296,18 @@ public class RegisterWindow extends JFrame {
 						Checking.checkEmpty(textHoraSalida);
 						Checking.checkEmpty(textMinutosSalida);
 						
-						Date entrada=new Date();
-						Date salida=new Date();
-						entrada=dateChooserEntrada.getDate();
+						
+						Date entrada=new Date((long)(dateChooserEntrada.getDate().getTime()/10000)*10000);
+						Date salida=new Date((long)(dateChooserSalida.getDate().getTime()/10000)*10000);
 						entrada.setHours(Integer.parseInt(textHoraEntrada.getText()));
 						entrada.setMinutes(Integer.parseInt(textMinutosEntrada.getText()));
 						entrada.setSeconds(0);	
-						salida=dateChooserSalida.getDate();
 						salida.setHours(Integer.parseInt(textHoraSalida.getText()));
 						salida.setMinutes(Integer.parseInt(textMinutosSalida.getText()));
 						salida.setSeconds(0);
+						
+						
+						Checking.checkDateAfterDate(entrada, salida);
 						
 						Person person=University.getInstance().getPersonByFullName((String)cbPersona.getSelectedItem());
 						if (person.isInfo()){

@@ -49,6 +49,7 @@ public class Utils {
 		return tpEng;
 	}
 	
+
 	public static void onlyLetters(KeyEvent e, JTextField txtName, int size) {
 		int key = e.getKeyChar();					
 		boolean capitalLetters = key >= 65 && key <=90;
@@ -73,3 +74,16 @@ public class Utils {
 		}
 	}
 }
+
+	public static boolean isNumeric(String strNum) {
+		try {
+	        Double.parseDouble(strNum);
+	        return true;
+	    } catch (Exception nfe) {
+	        return false;
+	    }
+  
+	}
+	
+}
+
