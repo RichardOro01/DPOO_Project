@@ -46,4 +46,14 @@ public class Utils {
 		return tpEng;
 	}
 	
+	public static boolean isNumeric(String strNum) {
+		try {
+	        Double.parseDouble(strNum);
+	        return true;
+	    } catch (Exception nfe) {
+	        return false;
+	    }
+  
+	}
+	
 }
