@@ -90,11 +90,9 @@ public class Login extends JFrame {
 			dispose();
 
 		}else {
-
-			frame.setEnabled(false);
+			
 			JOptionPane.showInternalMessageDialog(contentPane,"Usuario o contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);			
 		}
-		frame.setEnabled(true);
 	}
 
 	private JLabel getBallenaLogo() {
@@ -145,7 +143,7 @@ public class Login extends JFrame {
 			txtUser = new JTextField();
 			txtUser.addKeyListener(new KeyAdapter() {
 				@Override
-				public void keyReleased(KeyEvent e) {
+				public void keyPressed(KeyEvent e) {
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
 						toAccess();
 					}
@@ -182,7 +180,7 @@ public class Login extends JFrame {
 			passwordField = new JPasswordField();
 			passwordField.addKeyListener(new KeyAdapter() {
 				@Override
-				public void keyReleased(KeyEvent e) {
+				public void keyPressed(KeyEvent e) {
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
 						toAccess();
 					}
