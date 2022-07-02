@@ -5,7 +5,11 @@ import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 
+
+
 import com.toedter.calendar.JDateChooser;
+
+import Utils.Utils;
 
 public class Checking {
 	public static void checkEmpty(JTextField text) throws EmptyTextFormException {
@@ -27,6 +31,11 @@ public class Checking {
 	public static void checkDateAfterDate(Date entrada, Date salida) throws DateChooserException {
 		if (entrada.compareTo(salida)>=0) {
 			throw new DateChooserException(1);
+		}
+	}
+	public static void checkCI(String CI) throws CIException {
+		if (!Utils.isNumeric(CI) || CI.length()!=11) {
+			throw new CIException("El CI debe tener 11 dígitos");
 		}
 	}
 }
