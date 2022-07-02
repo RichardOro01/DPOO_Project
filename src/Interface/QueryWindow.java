@@ -36,6 +36,8 @@ import javax.swing.JButton;
 import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class QueryWindow extends JFrame {
 
@@ -186,6 +188,12 @@ public class QueryWindow extends JFrame {
 			txtBuscarPorNombre.setText("Buscar por nombre");
 			txtBuscarPorNombre.setBounds(73, 74, 448, 19);
 			txtBuscarPorNombre.setColumns(10);
+			txtBuscarPorNombre.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyLetters(e,txtBuscarPorNombre,49);					
+				}				
+			});
 		}
 		return txtBuscarPorNombre;
 	}

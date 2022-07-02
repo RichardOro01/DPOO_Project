@@ -149,7 +149,12 @@ public class Login extends JFrame {
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
 						toAccess();
 					}
-
+				}
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if(txtUser.getText().length()>=50) {
+						e.consume();
+					}
 				}
 			});
 			txtUser.addMouseListener(new MouseAdapter() {
@@ -187,6 +192,12 @@ public class Login extends JFrame {
 						toAccess();
 					}
 
+				}
+				@Override
+				public void keyTyped(KeyEvent e) {
+					if(passwordField.getPassword().length>=50) {
+						e.consume();
+					}
 				}
 			});
 			passwordField.addMouseListener(new MouseAdapter() {

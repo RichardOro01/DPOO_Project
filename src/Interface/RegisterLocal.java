@@ -9,6 +9,8 @@ import Logic.Student;
 import Logic.Technical;
 import Logic.University;
 
+import Utils.Utils;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -24,6 +26,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegisterLocal extends JFrame {
 
@@ -101,6 +105,12 @@ public class RegisterLocal extends JFrame {
 	private JTextField getTextField() {
 		if (textField == null) {
 			textField = new JTextField();
+			textField.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.characterLimit(e, textField, 9);
+				}
+			});
 			textField.setName("ID");
 			textField.setBounds(134, 42, 204, 19);
 			textField.setColumns(10);

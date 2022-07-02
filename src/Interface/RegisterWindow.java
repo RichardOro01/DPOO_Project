@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import java.util.Date;
+import Utils.Utils;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -15,6 +16,8 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
+
+
 import javax.swing.SwingConstants;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.border.EtchedBorder;
@@ -43,6 +46,8 @@ import Logic.VisitorRegister;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegisterWindow extends JFrame {
 
@@ -416,6 +421,12 @@ public class RegisterWindow extends JFrame {
 	private JTextField getTextMotivo() {
 		if (textMotivo == null) {
 			textMotivo = new JTextField();
+			textMotivo.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.characterLimit(e, textMotivo, 49);
+				}
+			});
 			textMotivo.setName("Motivo");
 			textMotivo.setColumns(10);
 		}

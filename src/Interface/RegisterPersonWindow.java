@@ -44,6 +44,8 @@ import Utils.Utils;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class RegisterPersonWindow extends JFrame {
 
@@ -273,6 +275,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNombre() {
 		if (textNombre == null) {
 			textNombre = new JTextField();
+			textNombre.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyLetters(e, textNombre, 19);
+				}
+			});
 			textNombre.setName("Nombre");
 			textNombre.setColumns(10);
 		}
@@ -288,6 +296,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextApellidos() {
 		if (textApellidos == null) {
 			textApellidos = new JTextField();
+			textApellidos.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyLetters(e, textApellidos, 39);
+				}
+			});
 			textApellidos.setName("Apellidos");
 			textApellidos.setColumns(10);
 		}
@@ -303,6 +317,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextNI() {
 		if (textNI == null) {
 			textNI = new JTextField();
+			textNI.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.onlyNumbers(e, textNI, 10);
+				}
+			});
 			textNI.setName("Número de identidad");
 			textNI.setColumns(10);
 		}
@@ -547,6 +567,12 @@ public class RegisterPersonWindow extends JFrame {
 	private JTextField getTextProyecto() {
 		if (textProyecto == null) {
 			textProyecto = new JTextField();
+			textProyecto.addKeyListener(new KeyAdapter() {
+				@Override
+				public void keyTyped(KeyEvent e) {
+					Utils.characterLimit(e, textProyecto, 49);
+				}
+			});
 			textProyecto.setName("Proyecto en el que trabaja");
 			textProyecto.setColumns(10);
 		}
