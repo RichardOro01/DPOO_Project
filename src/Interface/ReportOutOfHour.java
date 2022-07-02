@@ -27,6 +27,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.Toolkit;
 
 public class ReportOutOfHour extends JFrame {
 
@@ -54,6 +55,7 @@ public class ReportOutOfHour extends JFrame {
 	 * Create the frame.
 	 */
 	public ReportOutOfHour() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setResizable(false);
 		setTitle("Personas que violaron horarios de visita");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

@@ -23,6 +23,7 @@ import javax.swing.DefaultComboBoxModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.awt.Toolkit;
 
 public class RegisterLocal extends JFrame {
 
@@ -57,6 +58,7 @@ public class RegisterLocal extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterLocal() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setTitle("Registrar local");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 398, 250);

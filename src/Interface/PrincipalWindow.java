@@ -63,6 +63,7 @@ public class PrincipalWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public PrincipalWindow() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setTitle("CAFII");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
