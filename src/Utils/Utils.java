@@ -73,7 +73,7 @@ public class Utils {
 			e.consume();
 		}
 	}
-}
+
 
 	public static boolean isNumeric(String strNum) {
 		try {
