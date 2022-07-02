@@ -146,10 +146,6 @@ public class Login extends JFrame {
 			txtUser.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
-
-					if(e.getKeyCode()==KeyEvent.VK_ENTER)
-						toAccess();
-
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
 						toAccess();
 					}
@@ -187,10 +183,6 @@ public class Login extends JFrame {
 			passwordField.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyReleased(KeyEvent e) {
-
-					if(e.getKeyCode()==KeyEvent.VK_ENTER)
-						toAccess();
-
 					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
 						toAccess();
 					}
