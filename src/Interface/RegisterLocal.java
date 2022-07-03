@@ -156,7 +156,7 @@ public class RegisterLocal extends JFrame {
 						Checking.checkNotSelected(cbClasificacion);
 						Office o= new Office(textField.getText(),(String)cbClasificacion.getSelectedItem(),University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
 						University.getInstance().getComputerFac().getOffices().add(o);
-						JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Ã‰xito", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {

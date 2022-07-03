@@ -181,7 +181,7 @@ public class RegisterPersonWindow extends JFrame {
 					case "Especialista":
 						especialistaPane.setVisible(true);
 						break;
-					case "Técnico":
+					case "TÃ©cnico":
 						tecnicoPanel.setVisible(true);
 						break;
 					case "Estudiante":
@@ -238,7 +238,7 @@ public class RegisterPersonWindow extends JFrame {
 						case "Especialista":
 							University.getInstance().getStaff().add(new Specialist(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), textProyecto.getText()));
 							break;
-						case "Técnico":
+						case "TÃ©cnico":
 							University.getInstance().getStaff().add(new Technical(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlazaTec.getSelectedItem()));
 							break;
 						case "Estudiante":
@@ -330,7 +330,7 @@ public class RegisterPersonWindow extends JFrame {
 					Utils.onlyNumbers(e, textNI, 10);
 				}
 			});
-			textNI.setName("Número de identidad");
+			textNI.setName("NÃºmero de identidad");
 			textNI.setColumns(10);
 		}
 		return textNI;
@@ -426,7 +426,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbArea() {
 		if (cbArea == null) {
 			cbArea = new JComboBox();
-			cbArea.setName("Área");
+			cbArea.setName("Ã�rea");
 			cbArea.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String item=(String) cbArea.getSelectedItem();
@@ -516,7 +516,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbCatCientifica() {
 		if (cbCatCientifica == null) {
 			cbCatCientifica = new JComboBox();
-			cbCatCientifica.setName("Categoría científica");
+			cbCatCientifica.setName("CategorÃ­a cientÃ­fica");
 			cbCatCientifica.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Doctor", "Master"}));
 		}
 		return cbCatCientifica;
@@ -524,7 +524,7 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox getCbCatDocente() {
 		if (cbCatDocente == null) {
 			cbCatDocente = new JComboBox();
-			cbCatDocente.setName("Categoría docente");
+			cbCatDocente.setName("CategorÃ­a docente");
 			cbCatDocente.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Titular ", "Auxiliar", "Asistente", "Instructor"}));
 		}
 		return cbCatDocente;

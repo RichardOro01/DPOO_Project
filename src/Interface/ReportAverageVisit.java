@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
@@ -89,11 +90,19 @@ public class ReportAverageVisit extends JFrame {
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int month1=(int)spinnerMonth1.getValue();
-				int month2=(int)spinnerMonth2.getValue();
-				String typePerson=Utils.tpSpa2Eng((String)cbTipoPersona.getSelectedItem());
-				double average=University.getInstance().averageVisitsInMonthPerVisitor(month1, month2, typePerson);
-				lblPromedioN.setText(""+Math.round(average*100.0)/100.0);
+				try {
+					Checking.checkNotSelected(cbTipoPersona);
+					int month1=(int)spinnerMonth1.getValue();
+					int month2=(int)spinnerMonth2.getValue();
+					Checking.monthGreaterMonth(month1, month2);
+					String typePerson=Utils.tpSpa2Eng((String)cbTipoPersona.getSelectedItem());
+					double average=University.getInstance().averageVisitsInMonthPerVisitor(month1, month2, typePerson);
+					lblPromedioN.setText(""+Math.round(average*100.0)/100.0);
+				}catch (NotSelectedException ex) {
+					JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+				} catch (DateChooserException ex) {
+					JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 				
 			}
 		});
@@ -141,6 +150,7 @@ public class ReportAverageVisit extends JFrame {
 	private JComboBox getCbTipoPersona() {
 		if (cbTipoPersona == null) {
 			cbTipoPersona = new JComboBox();
+			cbTipoPersona.setName("Tipo de visitante");
 			cbTipoPersona.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
 			cbTipoPersona.setBounds(352, 26, 161, 22);
 		}
