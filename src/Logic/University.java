@@ -202,7 +202,8 @@ public class University {
 				}		
 				return ((double)assis/(month2-month1+1));
 			}
-
+			
+			
 			public ArrayList<ArrayList<Person>> getVisitByAgeRange(int age1, int age2){
 				ArrayList<ArrayList<Person>> list=new ArrayList<ArrayList<Person>>();
 				for(Office o: computerFac.getOffices()) {
@@ -238,7 +239,7 @@ public class University {
 
 				//oficinas
 				Office of1=new Office("0110", "Local de decano", d);
-				Office of2=new Office("0210", "Local de servidores", a);
+				Office of2=new Office("0210", "Local de servidores", d);
 				Office of3=new Office("0310", "Local de profesores", p);
 				Office of4=new Office("0410", "Local de estudiantes", p);
 

@@ -181,7 +181,7 @@ public class RegisterPersonWindow extends JFrame {
 					case "Especialista":
 						especialistaPane.setVisible(true);
 						break;
-					case "TÃ©cnico":
+					case "Técnico":
 						tecnicoPanel.setVisible(true);
 						break;
 					case "Estudiante":
@@ -238,7 +238,7 @@ public class RegisterPersonWindow extends JFrame {
 						case "Especialista":
 							University.getInstance().getStaff().add(new Specialist(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), textProyecto.getText()));
 							break;
-						case "TÃ©cnico":
+						case "Técnico":
 							University.getInstance().getStaff().add(new Technical(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlazaTec.getSelectedItem()));
 							break;
 						case "Estudiante":
@@ -246,7 +246,6 @@ public class RegisterPersonWindow extends JFrame {
 							break;
 						}
 						
-						//University.getInstance().getStaff().add(new Person(textNombre.getText(),));
 						JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 					}catch(EmptyTextFormException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
