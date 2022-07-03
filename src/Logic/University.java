@@ -283,9 +283,6 @@ public class University {
 					}else if(manyRegister>1) {//cuatro registros
 						of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022 
 						of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
-						of1.getRegister().add(new Register(new Date(1647281574000L),d,p));//14/3/2022
-						of1.getRegister().add(new Register(new Date(1649959974000L),d,p));//14/4/2022
-
 						University.getInstance().getComputerFac().getOffices().add(of1);
 					}
 				}else{//para probar mas de una oficina

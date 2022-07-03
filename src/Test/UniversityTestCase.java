@@ -32,23 +32,23 @@ public class UniversityTestCase {
 		}
 	
 	@Test
-	public void testAverageVisitsInMonthPerVisitorOneOfficeOneRegister() {
+	public void testAverageVisitsInMonthPerVisitorOneOfficeOneManyRegister() {
 		uni=University.getInstance();
-		//iniciarlizar con una oficina y cuatro registros
+		//iniciarlizar con una oficina y un registro
 		uni.automaticDataForMethod2(0, 1);
 		assertTrue(0.5==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
 		uni.getComputerFac().getOffices().clear();
 	}
 	
 	@Test
-	public void testAverageVisitsInMonthPerVisitorOneOfficeOneManyRegister() {
+	public void testAverageVisitsInMonthPerVisitorOneOfficeOneRegister() {
 		uni=University.getInstance();
-		//iniciarlizar con una oficina y un registro
+		//iniciarlizar con una oficina y dos registros
 		uni.automaticDataForMethod2(0, 2);
-		assertTrue(2.0==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
+		assertTrue(1.0==uni.averageVisitsInMonthPerVisitor(3, 4, "Professor"));
 		uni.getComputerFac().getOffices().clear();
 	}
-	
+		
 	@Test
 	public void testAverageVisitsInMonthPerVisitorManyOffice() {
 		uni=University.getInstance();
