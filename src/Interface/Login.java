@@ -85,7 +85,7 @@ public class Login extends JFrame {
 
 	private void toAccess() {
 		if (String.valueOf(passwordField.getPassword()).equals("admin") && txtUser.getText().equals("admin") ) {
-			JOptionPane.showInternalMessageDialog(contentPane,"Autentificación exitosa.","Acceso",JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showInternalMessageDialog(contentPane,"Autentificaci�n exitosa.","Acceso",JOptionPane.INFORMATION_MESSAGE);
 			PrincipalWindow p_window = new PrincipalWindow();
 			p_window.setVisible(true);
 			p_window.setLocationRelativeTo(null);
@@ -93,7 +93,7 @@ public class Login extends JFrame {
 
 		}else {
 			
-			JOptionPane.showInternalMessageDialog(contentPane,"Usuario o contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);			
+			JOptionPane.showInternalMessageDialog(contentPane,"Usuario o contrase�a incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);			
 		}
 	}
 
@@ -244,15 +244,7 @@ public class Login extends JFrame {
 				}
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					if (String.valueOf(passwordField.getPassword()).equals("admin") && txtUser.getText().equals("admin") ) {
-						JOptionPane.showInternalMessageDialog(contentPane,"Autentificación exitosa.","Acceso",JOptionPane.INFORMATION_MESSAGE);
-						PrincipalWindow p_window = new PrincipalWindow();
-						p_window.setVisible(true);
-						p_window.setLocationRelativeTo(null);
-						dispose();
-					}else {
-						JOptionPane.showInternalMessageDialog(contentPane,"Usuario o contraseña incorrecta.", "Error", JOptionPane.ERROR_MESSAGE);
-					}
+					toAccess();
 				}
 			});
 			btnLogin.setBounds(275, 387, 135, 32);
