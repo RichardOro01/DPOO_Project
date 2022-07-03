@@ -49,6 +49,33 @@ public class Utils {
 		return tpEng;
 	}
 	
+	public static String tpEng2Spa(String tp) {
+		String tpEng=null;
+		switch (tp) {
+		case "Executive":
+			tpEng="Directivo";
+			break;
+		case "Administrative":
+			tpEng="Administrativo";
+			break;
+		case "Professor":
+			tpEng="Profesor";
+			break;
+		case "Specialist":
+			tpEng="Especialista";
+			break;
+		case "Technical":
+			tpEng="Técnico";
+			break;
+		case "Student":
+			tpEng="Estudiante";
+			break;
+		default:
+			break;
+		}
+		return tpEng;
+	}
+	
 
 	public static void onlyLetters(KeyEvent e, JTextField txtName, int size) {
 		int key = e.getKeyChar();					
