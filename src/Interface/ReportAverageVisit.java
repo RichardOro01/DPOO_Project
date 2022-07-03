@@ -93,7 +93,7 @@ public class ReportAverageVisit extends JFrame {
 				int month2=(int)spinnerMonth2.getValue();
 				String typePerson=Utils.tpSpa2Eng((String)cbTipoPersona.getSelectedItem());
 				double average=University.getInstance().averageVisitsInMonthPerVisitor(month1, month2, typePerson);
-				lblPromedioN.setText(""+average);
+				lblPromedioN.setText(""+Math.round(average*100.0)/100.0);
 				
 			}
 		});
