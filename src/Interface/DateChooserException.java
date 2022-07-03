@@ -16,6 +16,10 @@ public class DateChooserException extends Exception {
 	public DateChooserException(int code) {
 		if (code==1) {
 			this.msg="Fecha de salida refiere a antes de la de entrada";
+		}else if (code==2) {
+			this.msg="El segundo mes es menor que el primero";
+		}else if (code==3) {
+			this.msg="La segundad edad es menor que la primera";
 		}
 	}
 	

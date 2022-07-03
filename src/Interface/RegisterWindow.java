@@ -148,17 +148,6 @@ public class RegisterWindow extends JFrame {
 	private JComboBox getCbPersona() {
 		if (cbPersona == null) {
 			cbPersona = new JComboBox();
-			cbPersona.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					String str=new String();
-					str=(String)cbPersona.getSelectedItem();
-					if (str.equals("<Seleccione>") || University.getInstance().getPersonByFullName(str).isInfo()) {
-						panelVisitante.setVisible(false);
-					}else {
-						panelVisitante.setVisible(true);
-					}
-				}
-			});
 			cbPersona.setName("Persona");
 			ArrayList<String> personas=new ArrayList<String>();
 			personas.add("<Seleccione>");
@@ -168,6 +157,21 @@ public class RegisterWindow extends JFrame {
 			String arrP[]=new String[personas.size()];
 			personas.toArray(arrP);
 			cbPersona.setModel(new DefaultComboBoxModel(arrP));
+			
+			cbPersona.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					String str=new String();
+					str=(String)cbPersona.getSelectedItem();
+					if (str.equals("<Seleccione>") || University.getInstance().getPersonByFullName(str).isInfo()) {
+						panelVisitante.setVisible(false);
+					}else {
+						panelVisitante.setVisible(true);
+						cbAutorizador.setModel(new DefaultComboBoxModel(arrP));
+					}
+				}
+			});
+			
+			
 		}
 		return cbPersona;
 	}
@@ -491,6 +495,7 @@ public class RegisterWindow extends JFrame {
 	private JComboBox getCbAreaVisit() {
 		if (cbAreaVisit == null) {
 			cbAreaVisit = new JComboBox();
+			cbAreaVisit.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Arquitectura", "Automática", "Biomédica", "Civil", "Eléctrica", "Industrial", "Mecánica", "Química"}));
 			cbAreaVisit.setName("Área");
 		}
 		return cbAreaVisit;

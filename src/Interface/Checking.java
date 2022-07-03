@@ -33,6 +33,17 @@ public class Checking {
 			throw new DateChooserException(1);
 		}
 	}
+	public static void monthGreaterMonth(int n1, int n2) throws DateChooserException {
+		if (n1>n2) {
+			throw new DateChooserException(2);
+		}
+	}
+	public static void ageGreaterAge(int n1, int n2) throws DateChooserException {
+		if (n1>n2) {
+			throw new DateChooserException(3);
+		}
+	}
+	
 	public static void checkCI(String CI) throws CIException {
 		if (!Utils.isNumeric(CI) || CI.length()!=11) {
 			throw new CIException("El CI debe tener 11 dígitos");

@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
@@ -74,6 +75,9 @@ public class ReportOutOfHour extends JFrame {
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) { 
+				try {
+					
+				Checking.checkNotSelected(cbTipoPersona);
 				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
 				ArrayList<ArrayList<AuxVisitOutHour>> persons=University.getInstance().visitOutOfTime(Utils.tpSpa2Eng((String)cbTipoPersona.getSelectedItem()));
 				for (int i=0; i<persons.size();i++) {
@@ -100,7 +104,9 @@ public class ReportOutOfHour extends JFrame {
 								"ID Local", "ID Visitante", "Entrada", "Salida", "Entrada permitida", "Salida permitida"
 						}
 						));
-				
+				}catch (NotSelectedException ex) {
+					JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 		btnNewAceptar.setBounds(286, 26, 89, 23);
@@ -131,6 +137,7 @@ public class ReportOutOfHour extends JFrame {
 		contentPane.add(btnSalir);
 		
 		cbTipoPersona = new JComboBox();
+		cbTipoPersona.setName("Tipo de persona");
 		cbTipoPersona.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
 		cbTipoPersona.setBounds(114, 26, 162, 22);
 		contentPane.add(cbTipoPersona);
