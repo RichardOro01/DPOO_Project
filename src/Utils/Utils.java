@@ -37,7 +37,7 @@ public class Utils {
 		case "Especialista":
 			tpEng="Specialist";
 			break;
-		case "TÃ©cnico":
+		case "Técnico":
 			tpEng="Technical";
 			break;
 		case "Estudiante":
