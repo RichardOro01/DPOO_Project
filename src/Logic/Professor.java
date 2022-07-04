@@ -23,7 +23,7 @@ public class Professor extends Person {
 	
 	//setters
 	public void setDepartment(String department)  {
-		if(department!=null&&department.isEmpty()) 
+		if(department!=null&&!department.isEmpty()) 
 			this.department = department;
 		
 	}	
