@@ -81,6 +81,7 @@ public class QueryWindow extends JFrame implements Observador {
 	private ArrayList<ArrayList<Integer>> posVisitas;
 	private ArrayList<Person> personas;
 	private String nameToFind;
+	private JButton btnActualizar;
 
 
 	/**
@@ -133,6 +134,7 @@ public class QueryWindow extends JFrame implements Observador {
 		contentPane.add(getToolPanel());
 		contentPane.add(getBtnEliminar());
 		contentPane.add(getBtnModificar());
+		contentPane.add(getBtnActualizar());
 		EventQueue.invokeLater( () -> contentPane.requestFocusInWindow() );
 	}
 	private JTable getTable() {
@@ -534,6 +536,14 @@ public class QueryWindow extends JFrame implements Observador {
 						break;
 					}
 				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnEliminar.setBackground(Color.LIGHT_GRAY);
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnEliminar.setBackground(new Color(240,240,240));
+				}
 			});
 			btnEliminar.setBorder(new LineBorder(new Color(240,240,240)));
 			btnEliminar.setBackground(SystemColor.menu);
@@ -544,6 +554,16 @@ public class QueryWindow extends JFrame implements Observador {
 	private JButton getBtnModificar() {
 		if (btnModificar == null) {
 			btnModificar = new JButton("Modificar\r\n");
+			btnModificar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnModificar.setBackground(Color.LIGHT_GRAY);
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnModificar.setBackground(new Color(240,240,240));
+				}
+			});
 			btnModificar.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					switch (tabbedPane.getSelectedIndex()) {
@@ -613,6 +633,30 @@ public class QueryWindow extends JFrame implements Observador {
 		actualizarTabla(tablePersonas);
 		actualizarTabla(tableVisitas);	
 	}
-
-
+	private JButton getBtnActualizar() {
+		if (btnActualizar == null) {
+			btnActualizar = new JButton("Actualizar");
+			btnActualizar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					actualizar();
+				}
+			});
+			btnActualizar.setBorder(new LineBorder(new Color(240,240,240)));
+			btnActualizar.setBackground(SystemColor.menu);
+			btnActualizar.setBounds(344, 392, 85, 21);
+			btnActualizar.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					btnActualizar.setBackground(Color.LIGHT_GRAY);
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+					btnActualizar.setBackground(new Color(240,240,240));
+				}
+				
+			});
+			
+		}
+		return btnActualizar;
+	}
 }

@@ -108,6 +108,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 	private JLabel lblEsDeInformtica;
 	private JPanel DatosEspPane;
 	private Person person;
+	private String oldCI;
 	
 	private ArrayList<Observador> observardores;
 
@@ -165,6 +166,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 		contentPane.add(getPanelDatosVisitante());
 		contentPane.add(getPanelBotones());
 		contentPane.add(getPanelDatos2());
+		oldCI=person.getIDNumber();
 		
 	}
 	private JPanel getPanelDatosVisitante() {
@@ -286,6 +288,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 							}
 						}
 						if (person==null) {
+							Checking.checkExistingCI(textNI.getText());
 							switch ((String)cbTipoVisitatne.getSelectedItem()) {
 							case "Directivo": 
 								University.getInstance().getStaff().add(new Executive(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbCargo.getSelectedItem(),cbArea.getSelectedItem().equals("Departamento")?(String)cbDepa.getSelectedItem():(String)cbArea.getSelectedItem()));
@@ -308,6 +311,9 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 							}
 							JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						}else {
+							if (!oldCI.equals(textNI.getText())) {
+								Checking.checkExistingCI(textNI.getText());
+							}
 							person.setName(textNombre.getText());
 							person.setLastName(textApellidos.getText());
 							person.setIDNumber(textNI.getText());
