@@ -8,7 +8,8 @@ import Logic.Person;
 import Logic.Student;
 import Logic.Technical;
 import Logic.University;
-
+import Utils.Observable;
+import Utils.Observador;
 import Utils.Utils;
 
 import javax.swing.JFrame;
@@ -29,7 +30,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class RegisterLocal extends JFrame {
+public class RegisterLocal extends JFrame implements Observable{
 
 	private JPanel contentPane;
 	private JLabel lblId;
@@ -41,6 +42,8 @@ public class RegisterLocal extends JFrame {
 	private JButton btnNewButton;
 	private JButton btnCancelar;
 	private JPanel panelBotones;
+	private ArrayList<Observador> observardores;
+	private Office local;
 
 	/**
 	 * Launch the application.
@@ -50,6 +53,7 @@ public class RegisterLocal extends JFrame {
 			public void run() {
 				try {
 					RegisterLocal frame = new RegisterLocal();
+					frame.setLocationRelativeTo(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -62,10 +66,12 @@ public class RegisterLocal extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterLocal() {
+		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
 		setTitle("Registrar local");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 398, 250);
+		observardores=new ArrayList<Observador>();
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,6 +83,29 @@ public class RegisterLocal extends JFrame {
 		contentPane.add(getCbResponsable());
 		contentPane.add(getCbClasificacion());
 		contentPane.add(getPanelBotones());
+	}
+	public RegisterLocal(Office off) {
+		setResizable(false);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
+		setTitle("Modificar local");
+		local=off;
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 398, 250);
+		observardores=new ArrayList<Observador>();
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		contentPane.add(getLblId());
+		contentPane.add(getLblResponsable());
+		contentPane.add(getLblClasificacion());
+		contentPane.add(getTextField());
+		contentPane.add(getCbResponsable());
+		contentPane.add(getCbClasificacion());
+		contentPane.add(getPanelBotones());
+		getCbResponsable().setSelectedItem(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());
+		getCbClasificacion().setSelectedItem(off.getClassification());
+		getTextField().setText(off.getID());
 	}
 	private JLabel getLblId() {
 		if (lblId == null) {
@@ -146,7 +175,7 @@ public class RegisterLocal extends JFrame {
 	}
 	private JButton getBtnNewButton() {
 		if (btnNewButton == null) {
-			btnNewButton = new JButton("Registrar");
+			btnNewButton = new JButton(local==null?"Registrar":"Modificar");
 			btnNewButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -154,9 +183,17 @@ public class RegisterLocal extends JFrame {
 						Checking.checkEmpty(textField);
 						Checking.checkNotSelected(cbResponsable);
 						Checking.checkNotSelected(cbClasificacion);
-						Office o= new Office(textField.getText(),(String)cbClasificacion.getSelectedItem(),University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
-						University.getInstance().getComputerFac().getOffices().add(o);
-						JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						if (local==null) {
+							Office o= new Office(textField.getText(),(String)cbClasificacion.getSelectedItem(),University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
+							University.getInstance().getComputerFac().getOffices().add(o);
+							JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							local.setClassification((String)cbClasificacion.getSelectedItem());
+							local.setID(textField.getText());
+							local.setSupervisor(University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
+							JOptionPane.showInternalMessageDialog(contentPane,"Local modificado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						}
+						notificar();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
@@ -188,5 +225,16 @@ public class RegisterLocal extends JFrame {
 			panelBotones.add(getBtnNewButton(), "cell 4 0");
 		}
 		return panelBotones;
+	}
+	public void enlazarObservador(Observador o) {
+		observardores.add(o);
+	}
+	
+	@Override
+	public void notificar() {
+		for (Observador o: observardores) {
+			o.actualizar();
+		}
+		
 	}
 }

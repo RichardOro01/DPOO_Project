@@ -34,11 +34,14 @@ import com.toedter.calendar.JDateChooser;
 
 import Logic.Administrative;
 import Logic.Executive;
+import Logic.Person;
 import Logic.Professor;
 import Logic.Specialist;
 import Logic.Student;
 import Logic.Technical;
 import Logic.University;
+import Utils.Observable;
+import Utils.Observador;
 import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
@@ -51,7 +54,7 @@ import java.awt.event.KeyEvent;
 import javax.swing.SpinnerNumberModel;
 
 
-public class RegisterPersonWindow extends JFrame {
+public class RegisterPersonWindow extends JFrame implements Observable{
 
 	private static RegisterPersonWindow frame3;
 	private JPanel contentPane;
@@ -104,6 +107,9 @@ public class RegisterPersonWindow extends JFrame {
 	private JComboBox cbDepa;
 	private JLabel lblEsDeInformtica;
 	private JPanel DatosEspPane;
+	private Person person;
+	
+	private ArrayList<Observador> observardores;
 
 	/**
 	 * Launch the application.
@@ -113,6 +119,7 @@ public class RegisterPersonWindow extends JFrame {
 			public void run() {
 				try {
 					frame3 = new RegisterPersonWindow();
+					frame3.setLocationRelativeTo(null);
 					frame3.setVisible(true);
 					
 				} catch (Exception e) {
@@ -132,6 +139,25 @@ public class RegisterPersonWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 654, 314);
 		specialData = new ArrayList<JPanel>();
+		observardores=new ArrayList<Observador>();
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.setLayout(null);
+		contentPane.add(getPanelDatosVisitante());
+		contentPane.add(getPanelBotones());
+		contentPane.add(getPanelDatos2());
+		
+	}
+	public RegisterPersonWindow(Person p) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
+		setTitle("Modificar persona");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 654, 314);
+		person=p;
+		specialData = new ArrayList<JPanel>();
+		observardores=new ArrayList<Observador>();
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -171,20 +197,49 @@ public class RegisterPersonWindow extends JFrame {
 					switch (item){
 					case "Directivo":
 						directivoPane.setVisible(true);
+						if (person!=null) {
+							Executive p=(Executive) person;
+							cbCargo.setSelectedItem(p.getPosition());
+							cbArea.setSelectedItem(p.getArea());
+						}
 						break;
 					case "Administrativo":
 						administrativoPane.setVisible(true);
+						if (person!=null) {
+							Administrative p=(Administrative) person;
+							cbPlaza.setSelectedItem(p.getJob());
+						}
 						break;
 					case "Profesor":
 						profesorPane.setVisible(true);
+						if (person!=null) {
+							Professor p=(Professor) person;
+							cbDepartamento.setSelectedItem(p.getDepartment());
+							cbCatCientifica.setSelectedItem(p.getScientificCategory());
+							cbCatDocente.setSelectedItem(p.getTeachingCategory());
+							cbTipoContrato.setSelectedItem(p.getTypeOfContract());
+						}
 						break;
 					case "Especialista":
 						especialistaPane.setVisible(true);
+						if (person!=null) {
+							Specialist p=(Specialist) person;
+							textProyecto.setText(p.getProject());
+						}
 						break;
 					case "Técnico":
+						if (person!=null) {
+							Technical p=(Technical) person;
+							cbPlazaTec.setSelectedItem(p.getJob());
+						}
 						tecnicoPanel.setVisible(true);
 						break;
 					case "Estudiante":
+						if (person!=null) {
+							Student p=(Student) person;
+							spinnerAnno.setValue(p.getYear());
+							spinnerGrupo.setValue(p.getGroup());
+						}
 						estudiantePane.setVisible(true);
 						break;
 
@@ -192,6 +247,11 @@ public class RegisterPersonWindow extends JFrame {
 				}
 			});
 			cbTipoVisitatne.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
+			if (person!=null) {
+				cbTipoVisitatne.setSelectedItem(Utils.tpEng2Spa(person.getClass().getSimpleName()));
+				cbTipoVisitatne.setEnabled(false);
+				
+			}
 		}
 		return cbTipoVisitatne;
 	}
@@ -200,7 +260,7 @@ public class RegisterPersonWindow extends JFrame {
 	
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
-			btnRegistrar = new JButton("Registrar");
+			btnRegistrar = new JButton(person==null?"Registrar":"Modificar");
 			btnRegistrar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -225,28 +285,69 @@ public class RegisterPersonWindow extends JFrame {
 								}
 							}
 						}
-						switch ((String)cbTipoVisitatne.getSelectedItem()) {
-						case "Directivo": 
-							University.getInstance().getStaff().add(new Executive(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbCargo.getSelectedItem(),cbArea.getSelectedItem().equals("Departamento")?(String)cbDepa.getSelectedItem():(String)cbArea.getSelectedItem()));
-							break;
-						case "Administrativo":
-							University.getInstance().getStaff().add(new Administrative(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlaza.getSelectedItem()));
-							break;
-						case "Profesor":
-							University.getInstance().getStaff().add(new Professor(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbDepartamento.getSelectedItem(),(String)cbCatDocente.getSelectedItem(),(String)cbCatCientifica.getSelectedItem(),(String)cbTipoContrato.getSelectedItem()));
-							break;
-						case "Especialista":
-							University.getInstance().getStaff().add(new Specialist(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), textProyecto.getText()));
-							break;
-						case "Técnico":
-							University.getInstance().getStaff().add(new Technical(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlazaTec.getSelectedItem()));
-							break;
-						case "Estudiante":
-							University.getInstance().getStaff().add(new Student(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), (int)spinnerAnno.getValue(), (int)spinnerGrupo.getValue()));
-							break;
+						if (person==null) {
+							switch ((String)cbTipoVisitatne.getSelectedItem()) {
+							case "Directivo": 
+								University.getInstance().getStaff().add(new Executive(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbCargo.getSelectedItem(),cbArea.getSelectedItem().equals("Departamento")?(String)cbDepa.getSelectedItem():(String)cbArea.getSelectedItem()));
+								break;
+							case "Administrativo":
+								University.getInstance().getStaff().add(new Administrative(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlaza.getSelectedItem()));
+								break;
+							case "Profesor":
+								University.getInstance().getStaff().add(new Professor(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbDepartamento.getSelectedItem(),(String)cbCatDocente.getSelectedItem(),(String)cbCatCientifica.getSelectedItem(),(String)cbTipoContrato.getSelectedItem()));
+								break;
+							case "Especialista":
+								University.getInstance().getStaff().add(new Specialist(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), textProyecto.getText()));
+								break;
+							case "Técnico":
+								University.getInstance().getStaff().add(new Technical(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(),(String)cbPlazaTec.getSelectedItem()));
+								break;
+							case "Estudiante":
+								University.getInstance().getStaff().add(new Student(textNombre.getText(),textApellidos.getText(),textNI.getText(),checkIsInfo.isSelected(), (int)spinnerAnno.getValue(), (int)spinnerGrupo.getValue()));
+								break;
+							}
+							JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							person.setName(textNombre.getText());
+							person.setLastName(textApellidos.getText());
+							person.setIDNumber(textNI.getText());
+							
+							switch ((String)cbTipoVisitatne.getSelectedItem()) {
+							case "Directivo":
+								Executive personC= (Executive) person;
+								personC.setArea(cbArea.getSelectedItem().equals("Departamento")?(String)cbDepa.getSelectedItem():(String)cbArea.getSelectedItem());
+								personC.setPosition((String)cbCargo.getSelectedItem());
+								break;
+							case "Administrativo":
+								Administrative personC1= (Administrative) person;
+								personC1.setJob((String)cbPlaza.getSelectedItem());  
+								break;
+							case "Profesor":
+								Professor personC2= (Professor) person;
+								personC2.setDepartment((String)cbDepartamento.getSelectedItem());
+								personC2.setScientificCategory((String)cbCatCientifica.getSelectedItem());
+								personC2.setTeachingCategory((String)cbCatDocente.getSelectedItem());
+								personC2.setTypeOfContract((String)cbTipoContrato.getSelectedItem());
+								break;
+							case "Especialista":
+								Specialist personC3= (Specialist) person;
+								personC3.setProject(textProyecto.getText());
+								break;
+							case "Técnico":
+								Technical personC4= (Technical) person;
+								personC4.setJob((String)cbPlazaTec.getSelectedItem());
+								break;
+							case "Estudiante":
+								Student personC5= (Student) person;
+								personC5.setGroup((int)spinnerGrupo.getValue());
+								personC5.setYear((int)spinnerAnno.getValue());
+								break;
+							}
+							JOptionPane.showInternalMessageDialog(contentPane,"Persona modificada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+							
+							
 						}
-						
-						JOptionPane.showInternalMessageDialog(contentPane,"Persona registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						notificar();
 					}catch(EmptyTextFormException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
@@ -287,6 +388,9 @@ public class RegisterPersonWindow extends JFrame {
 					Utils.onlyLetters(e, textNombre, 19);
 				}
 			});
+			if (person!=null) {
+				textNombre.setText(person.getName());
+			}
 			textNombre.setName("Nombre");
 			textNombre.setColumns(10);
 		}
@@ -308,6 +412,9 @@ public class RegisterPersonWindow extends JFrame {
 					Utils.onlyLetters(e, textApellidos, 39);
 				}
 			});
+			if (person!=null) {
+				textApellidos.setText(person.getLastName());
+			}
 			textApellidos.setName("Apellidos");
 			textApellidos.setColumns(10);
 		}
@@ -329,7 +436,10 @@ public class RegisterPersonWindow extends JFrame {
 					Utils.onlyNumbers(e, textNI, 10);
 				}
 			});
-			textNI.setName("NÃºmero de identidad");
+			if (person!=null) {
+				textNI.setText(person.getIDNumber());
+			}
+			textNI.setName("Número de identidad");
 			textNI.setColumns(10);
 		}
 		return textNI;
@@ -337,6 +447,10 @@ public class RegisterPersonWindow extends JFrame {
 	private JCheckBox getCheckIsInfo() {
 		if (checkIsInfo == null) {
 			checkIsInfo = new JCheckBox("");
+			if (person!=null) {
+				checkIsInfo.setSelected(person.isInfo());
+				checkIsInfo.setEnabled(false);
+			}
 		}
 		return checkIsInfo;
 	}
@@ -397,6 +511,7 @@ public class RegisterPersonWindow extends JFrame {
 			specialData.add(directivoPane);
 			directivoPane.add(getLblDepa(), "cell 0 2,alignx trailing");
 			directivoPane.add(getCbDepa(), "cell 1 2,growx");
+			
 		}
 		return directivoPane;
 	}
@@ -419,6 +534,7 @@ public class RegisterPersonWindow extends JFrame {
 			cbCargo = new JComboBox();
 			cbCargo.setName("Cargo");
 			cbCargo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Decano", "Vicedecanos", "Jefe de departamentos", "Jefe de secretar\u00EDa docente"}));
+			
 		}
 		return cbCargo;
 	}
@@ -693,5 +809,16 @@ public class RegisterPersonWindow extends JFrame {
 			DatosEspPane.add(getEstudiantePane());
 		}
 		return DatosEspPane;
+	}
+	public void enlazarObservador(Observador o) {
+		observardores.add(o);
+	}
+	
+	@Override
+	public void notificar() {
+		for (Observador o: observardores) {
+			o.actualizar();
+		}
+		
 	}
 }

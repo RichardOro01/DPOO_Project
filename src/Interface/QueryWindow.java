@@ -16,12 +16,17 @@ import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.table.DefaultTableModel;
 
-
-
+import Logic.Administrative;
+import Logic.Executive;
 import Logic.Office;
 import Logic.Person;
+import Logic.Professor;
 import Logic.Register;
+import Logic.Specialist;
+import Logic.Student;
+import Logic.Technical;
 import Logic.University;
+import Utils.Observador;
 import Utils.Utils;
 
 import javax.swing.SwingConstants;
@@ -33,6 +38,8 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -51,7 +58,7 @@ import javax.swing.event.ChangeEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class QueryWindow extends JFrame {
+public class QueryWindow extends JFrame implements Observador {
 
 	private static QueryWindow frame4;
 	private JPanel contentPane;
@@ -96,6 +103,7 @@ public class QueryWindow extends JFrame {
 	 * Create the frame.
 	 */
 	public QueryWindow() {
+		setResizable(false);
 		posVisitas=new ArrayList<ArrayList<Integer>>(); 
 		personas=new ArrayList<Person>();
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
@@ -276,6 +284,44 @@ public class QueryWindow extends JFrame {
 					if (txtBuscarPorNombre.getText().equals("")) {
 						txtBuscarPorNombre.setText("Buscar por nombre");
 						txtBuscarPorNombre.setForeground(Color.gray);
+					}
+					if (e.getClickCount()==2) {
+						int row=tableVisitas.getSelectedRow();
+						int col=tableVisitas.getSelectedColumn();
+						
+						if (col==0) {
+							String name=(String)tableVisitas.getValueAt(row, col);
+							Person p=University.getInstance().getPersonByFullName(name);
+							String specialData="";
+							if (p instanceof Executive) {
+								Executive pc=(Executive) p;
+								specialData+="\nCargo: "+pc.getPosition();
+								specialData+="\nÁrea: "+pc.getArea();
+							}else if (p instanceof Administrative) {
+								Administrative pc= (Administrative)p;
+								specialData+="\nPlaza: "+pc.getJob();
+							}else if (p instanceof Professor) {
+								Professor pc= (Professor)p;
+								specialData+="\nDepartamento: "+pc.getDepartment();
+								specialData+="\nCategoría docente: "+pc.getTeachingCategory();
+								specialData+="\nCategoría científica: "+pc.getScientificCategory();
+								specialData+="\nTipo de contrato: "+pc.getTypeOfContract();
+							}else if (p instanceof Specialist) {
+								Specialist pc= (Specialist)p;
+								specialData+="\nProyecto: "+pc.getProject();
+							}else if (p instanceof Technical) {
+								Technical pc= (Technical)p;
+								specialData+="\nPlaza: "+pc.getJob();
+							}else if (p instanceof Student) {
+								Student pc= (Student)p;
+								specialData+="\nAño: "+pc.getYear();
+								specialData+="\nGrupo: "+pc.getGroup();
+							}
+							JOptionPane.showInternalMessageDialog(contentPane,"Tipo: "+Utils.tpEng2Spa(p.getClass().getSimpleName())+"\nCI: "+p.getIDNumber()+specialData, name, JOptionPane.INFORMATION_MESSAGE);
+						}else if(col==1) {
+							Office off=University.getInstance().getOfficeById((String)tableVisitas.getValueAt(row, col));
+							JOptionPane.showInternalMessageDialog(contentPane,"ID: "+off.getID()+"\nClasificación: "+off.getClassification()+"\nID Supervisor: "+off.getSupervisor().getIDNumber(), "Local", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 				}
 			});
@@ -498,11 +544,51 @@ public class QueryWindow extends JFrame {
 	private JButton getBtnModificar() {
 		if (btnModificar == null) {
 			btnModificar = new JButton("Modificar\r\n");
+			btnModificar.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					switch (tabbedPane.getSelectedIndex()) {
+					case 0:
+						int row=tableVisitas.getSelectedRow();
+						if (row!=-1) {
+								ArrayList<Integer> lPosVisita=posVisitas.get(row);
+								Office off=University.getInstance().getComputerFac().getOffices().get((int)lPosVisita.get(0));
+								RegisterWindow r_window = new RegisterWindow(off.getRegister().get((int)lPosVisita.get(1)),off);
+								r_window.setVisible(true);
+								r_window.setLocationRelativeTo(null);
+								r_window.enlazarObservador(outer());
+						}
+						break;
+					case 1:
+						int row1=tablePersonas.getSelectedRow();
+						if (row1!=-1) {
+							RegisterPersonWindow r_window = new RegisterPersonWindow(personas.get(row1));
+							r_window.setVisible(true);
+							r_window.setLocationRelativeTo(null);
+							r_window.enlazarObservador(outer());
+								
+						}
+						break;
+					case 2:
+						int row11=tableLocales.getSelectedRow();
+						if (row11!=-1) {
+							RegisterLocal r_window = new RegisterLocal(University.getInstance().getComputerFac().getOffices().get(row11));
+							r_window.setVisible(true);
+							r_window.setLocationRelativeTo(null);
+							r_window.enlazarObservador(outer());
+							
+						}
+						break;
+					}
+				}
+			});
 			btnModificar.setBorder(new LineBorder(new Color(240,240,240)));
 			btnModificar.setBackground(SystemColor.menu);
 			btnModificar.setBounds(526, 392, 85, 21);
 		}
 		return btnModificar;
+	}
+	private QueryWindow outer() {
+		return QueryWindow.this;
 	}
 	private JTable getTablePersonas() {
 		if (tablePersonas == null) {
@@ -520,4 +606,13 @@ public class QueryWindow extends JFrame {
 		}
 		return tableLocales;
 	}
+
+	@Override
+	public void actualizar() {
+		actualizarTabla(tableLocales);
+		actualizarTabla(tablePersonas);
+		actualizarTabla(tableVisitas);	
+	}
+
+
 }

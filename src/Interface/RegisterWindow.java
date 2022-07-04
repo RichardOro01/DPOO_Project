@@ -4,6 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import java.util.Date;
+
+import Utils.Observable;
+import Utils.Observador;
 import Utils.Utils;
 
 import javax.swing.JFrame;
@@ -50,7 +53,7 @@ import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class RegisterWindow extends JFrame {
+public class RegisterWindow extends JFrame implements Observable{
 
 	private static RegisterWindow frame3;
 	private JPanel contentPane;
@@ -84,6 +87,10 @@ public class RegisterWindow extends JFrame {
 	private JLabel lblrea;
 	private JComboBox cbAutorizador;
 	private JComboBox cbAreaVisit;
+	private Register visit;
+	private Office local;
+	
+	private ArrayList<Observador> observardores;
 
 	/**
 	 * Launch the application.
@@ -93,7 +100,9 @@ public class RegisterWindow extends JFrame {
 			public void run() {
 				try {
 					frame3 = new RegisterWindow();
+					frame3.setLocationRelativeTo(null);
 					frame3.setVisible(true);
+					
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -111,7 +120,7 @@ public class RegisterWindow extends JFrame {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 362, 463);
-
+		observardores=new ArrayList<Observador>();
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -122,6 +131,28 @@ public class RegisterWindow extends JFrame {
 		contentPane.add(getPaneDatos1());
 		contentPane.add(getPanelDatos2());
 		contentPane.add(getPanelVisitante());
+
+	}
+	public RegisterWindow(Register visit, Office off) {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Login.class.getResource("/com/images/killer-whale.png")));
+		setTitle("Modificar visita");
+		setResizable(false);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setBounds(100, 100, 362, 463);
+		this.visit=visit;
+		this.local=off;
+		observardores=new ArrayList<Observador>();
+		contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		setContentPane(contentPane);
+		contentPane.add(getPanelVisitante());
+		contentPane.setLayout(null);
+		contentPane.add(getPanelFechaEntrada());
+		contentPane.add(getPanelFechaSalida());
+		contentPane.add(getPanelBotones());
+		contentPane.add(getPaneDatos1());
+		contentPane.add(getPanelDatos2());
+		
 
 	}
 	private JLabel getLblIdLocal() {
@@ -167,10 +198,19 @@ public class RegisterWindow extends JFrame {
 					}else {
 						panelVisitante.setVisible(true);
 						cbAutorizador.setModel(new DefaultComboBoxModel(arrP));
+						if (visit!=null) {
+							VisitorRegister visitR=(VisitorRegister) visit;
+							Person autorizador=University.getInstance().getPersonByID(visitR.getID());
+							cbAutorizador.setSelectedItem(autorizador.getName()+" "+autorizador.getLastName());
+							textMotivo.setText(visitR.getMotive());
+							cbAreaVisit.setSelectedItem(visitR.getArea());
+						}
 					}
 				}
 			});
-			
+			if (visit!=null) {
+				cbPersona.setSelectedItem(visit.getPerson().getName()+" "+visit.getPerson().getLastName());
+			}
 			
 		}
 		return cbPersona;
@@ -202,6 +242,9 @@ public class RegisterWindow extends JFrame {
 			textHoraEntrada.setName("Hora de entrada");
 			textHoraEntrada.setColumns(10);
 			textHoraEntrada.setBounds(233, 24, 26, 19);
+			if (visit!=null) {
+				textHoraEntrada.setText(String.format("%02d", visit.getCheckInDate().getHours()) );
+			}
 		}
 		return textHoraEntrada;
 	}
@@ -226,6 +269,9 @@ public class RegisterWindow extends JFrame {
 			textMinutosEntrada.setName("Minutos de entrada");
 			textMinutosEntrada.setColumns(10);
 			textMinutosEntrada.setBounds(271, 24, 26, 19);
+			if (visit!=null) {
+				textMinutosEntrada.setText(String.format("%02d", visit.getCheckInDate().getMinutes()) );
+			}
 		}
 		return textMinutosEntrada;
 	}
@@ -256,6 +302,9 @@ public class RegisterWindow extends JFrame {
 			textHoraSalida.setName("Hora de salida");
 			textHoraSalida.setColumns(10);
 			textHoraSalida.setBounds(235, 24, 26, 19);
+			if (visit!=null) {
+				textHoraSalida.setText(String.format("%02d", visit.getCheckOutDate().getHours()) );
+			}
 		}
 		return textHoraSalida;
 	}
@@ -280,12 +329,15 @@ public class RegisterWindow extends JFrame {
 			textMinutosSalida.setName("Minutos de salida");
 			textMinutosSalida.setColumns(10);
 			textMinutosSalida.setBounds(271, 24, 26, 19);
+			if (visit!=null) {
+				textMinutosSalida.setText(String.format("%02d", visit.getCheckOutDate().getMinutes()) );
+			}
 		}
 		return textMinutosSalida;
 	}
 	private JButton getBtnRegistrar() {
 		if (btnRegistrar == null) {
-			btnRegistrar = new JButton("Registrar");
+			btnRegistrar = new JButton(visit==null?"Registrar":"Modificar");
 			btnRegistrar.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -314,15 +366,42 @@ public class RegisterWindow extends JFrame {
 						Checking.checkDateAfterDate(entrada, salida);
 						
 						Person person=University.getInstance().getPersonByFullName((String)cbPersona.getSelectedItem());
+						//Es de informatica
 						if (person.isInfo()){
-							University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new Register(entrada,salida,person));
+							//agregar
+							if (visit==null) {
+								University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new Register(entrada,salida,person));
+								JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+							//modificar	
+							}else {
+								visit.setPerson(person);
+								visit.setCheckInDate(entrada);
+								visit.setCheckOutDate(salida);
+								JOptionPane.showInternalMessageDialog(contentPane,"Visita modificada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+							}
+						//No es de informatica
 						}else {
 							Checking.checkEmpty(textMotivo);
 							Checking.checkNotSelected(cbAutorizador);
 							Checking.checkNotSelected(cbAreaVisit);
-							University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new VisitorRegister(entrada,salida,person,(String)cbAreaVisit.getSelectedItem(),textMotivo.getText(),person.getIDNumber()));
+							Person autorizador=University.getInstance().getPersonByFullName((String)cbAutorizador.getSelectedItem());
+							//agregar
+							if (visit==null) {
+								University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).getRegister().add(new VisitorRegister(entrada,salida,person,(String)cbAreaVisit.getSelectedItem(),textMotivo.getText(),autorizador.getIDNumber()));
+								JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+							//modificar
+							}else {
+								visit.setPerson(person);
+								visit.setCheckInDate(entrada);
+								visit.setCheckOutDate(salida);
+								VisitorRegister visitR=(VisitorRegister) visit;
+								visitR.setArea((String)cbAreaVisit.getSelectedItem());
+								visitR.setMotive(textMotivo.getText());
+								visitR.setID(autorizador.getIDNumber());
+								JOptionPane.showInternalMessageDialog(contentPane,"Visita modificada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+							}
 						}
-						JOptionPane.showInternalMessageDialog(contentPane,"Visita registrada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+						notificar();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
@@ -369,10 +448,11 @@ public class RegisterWindow extends JFrame {
 			paneDatos1 = new JPanel();
 			paneDatos1.setBounds(12, 10, 319, 66);
 			paneDatos1.setLayout(new MigLayout("", "[67.00px][228.00px,grow]", "[19px][21px]"));
+			paneDatos1.add(getLblClasificacion2(), "cell 1 1");
 			paneDatos1.add(getCbLocal(), "cell 1 0,growx");
 			paneDatos1.add(getLblClasificacion(), "cell 0 1,alignx right,aligny center");
 			paneDatos1.add(getLblIdLocal(), "cell 0 0,alignx trailing,aligny center");
-			paneDatos1.add(getLblClasificacion2(), "cell 1 1");
+			
 		}
 		return paneDatos1;
 	}
@@ -391,6 +471,9 @@ public class RegisterWindow extends JFrame {
 			dateChooserEntrada = new JDateChooser();
 			dateChooserEntrada.setName("Fecha de entrada");
 			dateChooserEntrada.setBounds(10, 24, 213, 19);
+			if (visit!=null) {
+				dateChooserEntrada.setDate(visit.getCheckInDate());
+			}
 		}
 		return dateChooserEntrada;
 	}
@@ -399,6 +482,9 @@ public class RegisterWindow extends JFrame {
 			dateChooserSalida = new JDateChooser();
 			dateChooserSalida.setName("Fecha de salida");
 			dateChooserSalida.setBounds(11, 24, 214, 19);
+		}
+		if (visit!=null) {
+			dateChooserSalida.setDate(visit.getCheckOutDate());
 		}
 		return dateChooserSalida;
 	}
@@ -425,6 +511,10 @@ public class RegisterWindow extends JFrame {
 			String arrP[]=new String[locales.size()];
 			locales.toArray(arrP);
 			cbLocal.setModel(new DefaultComboBoxModel(arrP));
+			if (visit!=null) {	
+				cbLocal.setSelectedItem(local.getID());
+				cbLocal.setEnabled(false);
+			}
 		}
 		return cbLocal;
 	}
@@ -499,5 +589,17 @@ public class RegisterWindow extends JFrame {
 			cbAreaVisit.setName("Área");
 		}
 		return cbAreaVisit;
+	}
+	
+	public void enlazarObservador(Observador o) {
+		observardores.add(o);
+	}
+	
+	@Override
+	public void notificar() {
+		for (Observador o: observardores) {
+			o.actualizar();
+		}
+		
 	}
 }
