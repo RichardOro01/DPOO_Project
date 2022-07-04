@@ -44,6 +44,7 @@ public class RegisterLocal extends JFrame implements Observable{
 	private JPanel panelBotones;
 	private ArrayList<Observador> observardores;
 	private Office local;
+	private String oldId;
 
 	/**
 	 * Launch the application.
@@ -103,6 +104,7 @@ public class RegisterLocal extends JFrame implements Observable{
 		contentPane.add(getCbResponsable());
 		contentPane.add(getCbClasificacion());
 		contentPane.add(getPanelBotones());
+		oldId=off.getID();
 		getCbResponsable().setSelectedItem(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());
 		getCbClasificacion().setSelectedItem(off.getClassification());
 		getTextField().setText(off.getID());
@@ -184,10 +186,14 @@ public class RegisterLocal extends JFrame implements Observable{
 						Checking.checkNotSelected(cbResponsable);
 						Checking.checkNotSelected(cbClasificacion);
 						if (local==null) {
+							Checking.checkExistingLocalID(textField.getText());
 							Office o= new Office(textField.getText(),(String)cbClasificacion.getSelectedItem(),University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
 							University.getInstance().getComputerFac().getOffices().add(o);
 							JOptionPane.showInternalMessageDialog(contentPane,"Local registrado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						}else {
+							if (!oldId.equals(textField.getText())) {
+								Checking.checkExistingLocalID(textField.getText());
+							}
 							local.setClassification((String)cbClasificacion.getSelectedItem());
 							local.setID(textField.getText());
 							local.setSupervisor(University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
@@ -197,6 +203,8 @@ public class RegisterLocal extends JFrame implements Observable{
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
+						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+					}catch (LocalException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}

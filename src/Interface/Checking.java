@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
+import Logic.University;
 import Utils.Utils;
 
 public class Checking {
@@ -47,6 +48,16 @@ public class Checking {
 	public static void checkCI(String CI) throws CIException {
 		if (!Utils.isNumeric(CI) || CI.length()!=11) {
 			throw new CIException("El CI debe tener 11 dígitos");
+		}
+	}
+	public static void checkExistingCI(String CI) throws CIException {
+		if (University.getInstance().getPersonByID(CI)!=null) {
+			throw new CIException("Ya existe una persona con el CI");
+		}
+	}
+	public static void checkExistingLocalID(String id) throws LocalException{
+		if (University.getInstance().getOfficeById(id)!=null) {
+			throw new LocalException("Ya existe un local con esa ID");
 		}
 	}
 }
