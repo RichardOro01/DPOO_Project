@@ -172,7 +172,7 @@ public class PrincipalWindow extends JFrame {
 	}
 	private JMenu getMnGestion() {
 		if (mnGestion == null) {
-			mnGestion = new JMenu("Gesti\u00F3n\r\n");
+			mnGestion = new JMenu("Salir");
 			mnGestion.add(getMntmCerrarSesion());
 		}
 		return mnGestion;
