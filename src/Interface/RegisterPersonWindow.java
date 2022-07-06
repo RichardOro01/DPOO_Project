@@ -32,6 +32,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
 
+import Exceptions.CIException;
+import Exceptions.Checking;
+import Exceptions.EmptyTextFormException;
+import Exceptions.NotSelectedException;
 import Logic.Administrative;
 import Logic.Executive;
 import Logic.Person;
@@ -40,6 +44,7 @@ import Logic.Specialist;
 import Logic.Student;
 import Logic.Technical;
 import Logic.University;
+import Utils.Lists;
 import Utils.Observable;
 import Utils.Observador;
 import Utils.Utils;

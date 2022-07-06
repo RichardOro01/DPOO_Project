@@ -19,7 +19,7 @@ public class Utils {
 	
 	public static String formatDate(Date date) {
 		String fDate= new String();
-		fDate=date.getDate()+"/"+date.getMonth()+"/"+(date.getYear()+1900)+" "+(date.getHours()>=10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>=10?date.getMinutes():"0"+date.getMinutes());
+		fDate=date.getDate()+"/"+(date.getMonth()+1)+"/"+(date.getYear()+1900)+" "+(date.getHours()>=10?date.getHours():"0"+date.getHours())+":"+(date.getMinutes()>=10?date.getMinutes():"0"+date.getMinutes());
 		return fDate;
 	}
 	

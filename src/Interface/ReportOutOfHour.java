@@ -15,12 +15,15 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Exceptions.Checking;
+import Exceptions.NotSelectedException;
 import Logic.AuxVisitMonth;
 import Logic.AuxVisitOutHour;
 import Logic.Office;
 import Logic.Person;
 import Logic.Register;
 import Logic.University;
+import Utils.Lists;
 import Utils.Utils;
 
 import java.awt.event.MouseAdapter;

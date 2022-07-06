@@ -1,4 +1,4 @@
-package Interface;
+package Utils;
 
 public class Lists {
 	private static String personType[]= new String[]{

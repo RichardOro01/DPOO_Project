@@ -15,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Exceptions.Checking;
+import Exceptions.DateChooserException;
 import Logic.AuxVisitMonth;
 import Logic.Office;
 import Logic.Person;

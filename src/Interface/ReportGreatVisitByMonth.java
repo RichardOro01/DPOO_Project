@@ -80,7 +80,7 @@ public class ReportGreatVisitByMonth extends JFrame {
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int month=(int)spinnerMes.getValue()+1;
+				int month=(int)spinnerMes.getValue();
 				ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
 				AuxVisitMonth aux=University.getInstance().officesWithMoreVisitByMonth(month); 
 				for (Office off: aux.getOffices()) {

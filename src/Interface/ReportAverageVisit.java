@@ -16,10 +16,14 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
 
+import Exceptions.Checking;
+import Exceptions.DateChooserException;
+import Exceptions.NotSelectedException;
 import Logic.AuxVisitMonth;
 import Logic.Office;
 import Logic.Register;
 import Logic.University;
+import Utils.Lists;
 import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
