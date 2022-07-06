@@ -1,6 +1,7 @@
 package Utils;
 
 import java.awt.event.KeyEvent;
+
 import java.util.Date;
 
 import javax.swing.JTextField;
@@ -100,8 +101,7 @@ public class Utils {
 			e.consume();
 		}
 	}
-
-
+		
 	public static boolean isNumeric(String strNum) {
 		try {
 	        Double.parseDouble(strNum);

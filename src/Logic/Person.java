@@ -19,6 +19,9 @@ public abstract class Person {
 	public String getLastName() {
 		return lastName;
 	}
+	public String getFullName() {
+		return name+" "+lastName;
+	}
 	public String getIDNumber() {
 		return IDNumber;
 	}

@@ -1,6 +1,7 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class University {
@@ -327,5 +328,27 @@ public class University {
 					University.getInstance();
 				}
 			}
-
+			
+			public ArrayList<String> orderAlphabetically(){
+				ArrayList<String> result = new ArrayList<String>();
+				for(Person p: staff) {
+					result.add(p.getFullName());
+				}
+				Collections.sort(result);
+				return result;				
+			}
+			
+			public ArrayList<Person> sortStaffAlphabetically(){
+				ArrayList<Person> temporary = new ArrayList<Person>();
+				for(String n: orderAlphabetically()) {
+					for(Person p : staff) {
+						if((p.getFullName().equalsIgnoreCase(n)) && !temporary.contains(p) ){
+							temporary.add(p);
+						}
+					}
+				}
+				staff.clear();
+				staff.addAll(temporary);
+				return staff;
+			}
 		}	
