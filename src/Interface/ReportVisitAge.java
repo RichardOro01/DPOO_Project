@@ -101,9 +101,16 @@ public class ReportVisitAge extends JFrame {
 					table.setModel(new DefaultTableModel(
 							obj,
 							new String[] {
-									"ID Local", "Clasificacion", "ID Visitante"
+									"ID Local", "Clasificaci\u00F3n", "ID Visitante"
 							}
-							));
+							) {
+						boolean[] columnEditables = new boolean[] {
+								false, false, false, false
+						};
+						public boolean isCellEditable(int row, int column) {
+							return columnEditables[column];
+						}
+					});
 				}catch (DateChooserException ex) {
 					JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
@@ -121,7 +128,7 @@ public class ReportVisitAge extends JFrame {
 				new Object[][] {
 				},
 				new String[] {
-						"ID Local", "Clasificacion", "ID Visitante"
+						"ID Local", "Clasificaci\u00F3n", "ID Visitante"
 				}
 				));
 		scrollPaneTable.setViewportView(table);

@@ -98,9 +98,16 @@ public class ReportGreatVisitByMonth extends JFrame {
 				table.setModel(new DefaultTableModel(
 						obj,
 						new String[] {
-								"ID", "Clasificacion", "Responsable"
+								"ID Local", "Clasificaci\u00F3n", "ID Responsable"
 						}
-						));
+						) {
+					boolean[] columnEditables = new boolean[] {
+							false, false, false, false
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
 				
 			}
 		});
@@ -116,7 +123,7 @@ public class ReportGreatVisitByMonth extends JFrame {
 			new Object[][] {
 			},
 			new String[] {
-				"ID Local", "Clasificacion", "ID Responsable"
+				"ID Local", "Clasificaci\u00F3n", "ID Responsable"
 			}
 		));
 		scrollPaneTable.setViewportView(table);

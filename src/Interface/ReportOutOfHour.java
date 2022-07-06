@@ -69,8 +69,7 @@ public class ReportOutOfHour extends JFrame {
 		JLabel lblTipoPersona = new JLabel("Tipo de persona");
 		lblTipoPersona.setHorizontalAlignment(SwingConstants.TRAILING);
 		lblTipoPersona.setBounds(10, 30, 94, 14);
-		contentPane.add(lblTipoPersona);
-		
+		contentPane.add(lblTipoPersona);	
 		JButton btnNewAceptar = new JButton("Aceptar");
 		btnNewAceptar.addMouseListener(new MouseAdapter() {
 			@Override
@@ -103,7 +102,14 @@ public class ReportOutOfHour extends JFrame {
 						new String[] {
 								"ID Local", "ID Visitante", "Entrada", "Salida", "Entrada permitida", "Salida permitida"
 						}
-						));
+						) {
+					boolean[] columnEditables = new boolean[] {
+							false, false, false, false, false, false
+					};
+					public boolean isCellEditable(int row, int column) {
+						return columnEditables[column];
+					}
+				});
 				}catch (NotSelectedException ex) {
 					JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 				}
