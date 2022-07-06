@@ -66,7 +66,7 @@ public class Office {
 		ArrayList<Register> temporary = new ArrayList<Register>();
 		for(Date d: sortDate()) {
 			for(Register r: register) {
-				if((r.getCheckInDate().equals(d))){
+				if((r.getCheckInDate().equals(d))&&!temporary.contains(r)){
 					temporary.add(r);
 				}
 			}
