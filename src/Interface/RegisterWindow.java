@@ -402,6 +402,7 @@ public class RegisterWindow extends JFrame implements Observable{
 							}
 						}
 						notificar();
+						dispose();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {

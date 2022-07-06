@@ -169,7 +169,7 @@ public class RegisterLocal extends JFrame implements Observable{
 	private JComboBox getCbClasificacion() {
 		if (cbClasificacion == null) {
 			cbClasificacion = new JComboBox();
-			cbClasificacion.setName("ClasificaciÃ³n");
+			cbClasificacion.setName("Clasificación");
 			cbClasificacion.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local del decano", "Local de vicedecano", "Local de jefe de departamento", "Local de servidores", "Local de \u00E1rea administrativa", "Local de profesores", "Local de especialistas", "Local de estudiantes", "Aula", "Laboratorio"}));
 			cbClasificacion.setBounds(134, 103, 204, 21);
 		}
@@ -200,6 +200,7 @@ public class RegisterLocal extends JFrame implements Observable{
 							JOptionPane.showInternalMessageDialog(contentPane,"Local modificado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						}
 						notificar();
+						dispose();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {

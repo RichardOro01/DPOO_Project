@@ -26,6 +26,7 @@ import Logic.Specialist;
 import Logic.Student;
 import Logic.Technical;
 import Logic.University;
+import Logic.VisitorRegister;
 import Utils.Observador;
 import Utils.Utils;
 
@@ -243,7 +244,7 @@ public class QueryWindow extends JFrame implements Observador {
 					ArrayList<String> list2=new ArrayList<String>();
 					list2.add(fullName);
 					list2.add(p.getIDNumber());
-					list2.add(p.getClass().getSimpleName());
+					list2.add(Utils.tpEng2Spa(p.getClass().getSimpleName()));
 					list11.add(list2);
 					personas.add(p);
 				}
@@ -318,6 +319,15 @@ public class QueryWindow extends JFrame implements Observador {
 								Student pc= (Student)p;
 								specialData+="\nAÒo: "+pc.getYear();
 								specialData+="\nGrupo: "+pc.getGroup();
+							}
+							ArrayList<Integer> lPosVisita=posVisitas.get(row);
+							Office off=University.getInstance().getComputerFac().getOffices().get((int)lPosVisita.get(0));
+							Register rr=off.getRegister().get((int)lPosVisita.get(1));
+							if (rr instanceof VisitorRegister) {
+								VisitorRegister rc= (VisitorRegister)rr;
+								specialData+="\nMotivo: "+rc.getMotive();
+								specialData+="\n¡rea: "+rc.getArea();
+								specialData+="\nID Autorizador: "+rc.getID();
 							}
 							JOptionPane.showInternalMessageDialog(contentPane,"Tipo: "+Utils.tpEng2Spa(p.getClass().getSimpleName())+"\nCI: "+p.getIDNumber()+specialData, name, JOptionPane.INFORMATION_MESSAGE);
 						}else if(col==1) {

@@ -354,6 +354,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 							
 						}
 						notificar();
+						dispose();
 					}catch(EmptyTextFormException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
 					}catch (NotSelectedException ex) {
@@ -547,7 +548,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 	private JComboBox getCbArea() {
 		if (cbArea == null) {
 			cbArea = new JComboBox();
-			cbArea.setName("Ã�rea");
+			cbArea.setName("Área");
 			cbArea.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String item=(String) cbArea.getSelectedItem();
@@ -637,7 +638,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 	private JComboBox getCbCatCientifica() {
 		if (cbCatCientifica == null) {
 			cbCatCientifica = new JComboBox();
-			cbCatCientifica.setName("CategorÃ­a cientÃ­fica");
+			cbCatCientifica.setName("Categoría científica");
 			cbCatCientifica.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Doctor", "Master"}));
 		}
 		return cbCatCientifica;
@@ -645,7 +646,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 	private JComboBox getCbCatDocente() {
 		if (cbCatDocente == null) {
 			cbCatDocente = new JComboBox();
-			cbCatDocente.setName("CategorÃ­a docente");
+			cbCatDocente.setName("Categoría docente");
 			cbCatDocente.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Titular ", "Auxiliar", "Asistente", "Instructor"}));
 		}
 		return cbCatDocente;
