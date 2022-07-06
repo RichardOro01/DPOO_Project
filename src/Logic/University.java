@@ -215,9 +215,9 @@ public class University {
 			
 			public ArrayList<ArrayList<Person>> getVisitByAgeRange(int age1, int age2){
 				ArrayList<ArrayList<Person>> list=new ArrayList<ArrayList<Person>>();
-				for(Office o: computerFac.getOffices()) {
+				for(Office o: computerFac.sortOfficeAlphabetically()) {
 					ArrayList<Person> list2 = new ArrayList<Person>();
-					for(Register r: o.getRegister()) {
+					for(Register r: o.sortRegister()) {
 						int age=r.getPerson().calculateAge();
 						if (age>=age1 && age<=age2 && !list2.contains(r.getPerson())) {
 							list2.add(r.getPerson());
@@ -327,8 +327,7 @@ public class University {
 				}else {
 					University.getInstance();
 				}
-			}
-			
+			}	
 			public ArrayList<String> orderAlphabetically(){
 				ArrayList<String> result = new ArrayList<String>();
 				for(Person p: staff) {

@@ -160,8 +160,8 @@ public class QueryWindow extends JFrame implements Observador {
 		case "Visitas":
 			posVisitas.clear();
 			ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
-			for (Office off: University.getInstance().getComputerFac().getOffices()) {				
-				for (Register r: off.getRegister()) {
+			for (Office off: University.getInstance().getComputerFac().sortOfficeAlphabetically()) {				
+				for (Register r: off.sortRegister()) {
 					String fullName=r.getPerson().getFullName();
 					if (nameToFind==null || fullName.toLowerCase().contains(nameToFind.toLowerCase())) {
 						ArrayList<String> list2=new ArrayList<String>();
@@ -201,7 +201,7 @@ public class QueryWindow extends JFrame implements Observador {
 			//////////////////////////////////
 		case "Locales":
 			ArrayList<ArrayList<String>> list1=new ArrayList<ArrayList<String>>();
-			for (Office off: University.getInstance().getComputerFac().sortStaffAlphabetically() ) {
+			for (Office off: University.getInstance().getComputerFac().sortOfficeAlphabetically()) {
 				ArrayList<String> list2=new ArrayList<String>();
 				list2.add(off.getID());
 				list2.add(off.getClassification());
@@ -365,6 +365,14 @@ public class QueryWindow extends JFrame implements Observador {
 				public void keyTyped(KeyEvent e) {
 					Utils.onlyLetters(e,txtBuscarPorNombre,49);					
 				}				
+				@Override
+				public void keyPressed(KeyEvent e) {
+					if(e.getKeyCode()==KeyEvent.VK_ENTER) {
+						nameToFind=txtBuscarPorNombre.getText().equals("Buscar por nombre")?null:txtBuscarPorNombre.getText();
+						actualizarTabla(tableVisitas);
+						actualizarTabla(tablePersonas);
+					}
+				}
 			});
 		}
 		return txtBuscarPorNombre;
@@ -528,15 +536,16 @@ public class QueryWindow extends JFrame implements Observador {
 						int row1=tablePersonas.getSelectedRow();
 						if (row1!=-1) {
 							if (JOptionPane.showConfirmDialog(contentPane, "¿Desea eliminar la persona seleccionada?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
-								University.getInstance().getStaff().remove(personas.get(row1));
+								University.getInstance().getStaff().remove(personas.get(row1));								
 								actualizarTabla(tablePersonas);
+								actualizarTabla(tableVisitas);
 							}
 						}
 						break;
 					case 2:
 						int row11=tableLocales.getSelectedRow();
 						if (row11!=-1) {
-							if (JOptionPane.showConfirmDialog(contentPane, "¿Desea eliminar el local seleccionado con todo su registro?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
+							if (JOptionPane.showConfirmDialog(contentPane, "¿Desea eliminar el local seleccionado con todos sus registro?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
 								University.getInstance().getComputerFac().getOffices().remove(row11);
 								actualizarTabla(tableLocales);
 								actualizarTabla(tableVisitas);

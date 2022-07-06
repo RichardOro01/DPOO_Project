@@ -1,6 +1,8 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 public class Office {
 	//attributes
@@ -51,4 +53,26 @@ public class Office {
 		register = new ArrayList<Register>();
 	}
 	
+	public ArrayList<Date> sortDate(){
+		ArrayList<Date> result = new ArrayList<Date>();
+		for(Register r: register) {
+			result.add(r.getCheckInDate());
+		}
+		Collections.sort(result);
+		return result;				
+	}
+	
+	public ArrayList<Register> sortRegister(){
+		ArrayList<Register> temporary = new ArrayList<Register>();
+		for(Date d: sortDate()) {
+			for(Register r: register) {
+				if((r.getCheckInDate().equals(d))){
+					temporary.add(r);
+				}
+			}
+		}
+		register.clear();
+		register.addAll(temporary);
+		return register;
+	}
 }
