@@ -1,4 +1,4 @@
-package Interface;
+package Exceptions;
 
 public class CIException extends Exception{
 

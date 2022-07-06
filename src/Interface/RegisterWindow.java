@@ -38,6 +38,10 @@ import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
 
+import Exceptions.Checking;
+import Exceptions.DateChooserException;
+import Exceptions.EmptyTextFormException;
+import Exceptions.NotSelectedException;
 import Logic.Office;
 import Logic.Person;
 import Logic.Register;

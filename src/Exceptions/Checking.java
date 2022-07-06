@@ -1,4 +1,4 @@
-package Interface;
+package Exceptions;
 
 import java.util.Date;
 
