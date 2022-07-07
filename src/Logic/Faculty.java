@@ -26,7 +26,7 @@ public class Faculty {
 		return result;				
 	}
 	
-	public ArrayList<Office> sortOfficeAlphabetically(){
+	public void sortOfficeAlphabetically(){
 		ArrayList<Office> temporary = new ArrayList<Office>();
 		for(String n: orderAlphabetically()) {
 			for(Office o : offices) {
@@ -37,6 +37,5 @@ public class Faculty {
 		}
 		offices.clear();
 		offices.addAll(temporary);
-		return offices;
 	}
 }

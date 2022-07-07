@@ -48,6 +48,11 @@ public class Checking {
 	public static void checkCI(String CI) throws CIException {
 		if (!Utils.isNumeric(CI) || CI.length()!=11) {
 			throw new CIException("El CI debe tener 11 dígitos");
+		}		
+	}
+	public static void checkFuture(String CI) throws CIException {
+		if(Utils.calculateAgeByCI(CI)<0) {
+			throw new CIException("El CI no puede ser del futuro");
 		}
 	}
 	public static void checkExistingCI(String CI) throws CIException {

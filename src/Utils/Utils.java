@@ -112,5 +112,29 @@ public class Utils {
   
 	}
 	
+	public static int calculateAgeByCI(String CI) {
+		int age=0;
+		double agems;
+		Date birth=new Date();
+		Date actual=new Date();
+		int year=Integer.parseInt(CI.substring(0, 2));
+		int month=Integer.parseInt(CI.substring(2, 4));
+		int day=Integer.parseInt(CI.substring(4, 6));
+		int century=Integer.parseInt(CI.substring(6, 7));
+		if (century==9) {
+			year+=1800;
+		}else if (century <=5) {
+			year+=1900;
+		}else {
+			year+=2000;
+		}
+		birth.setYear(year-1900);
+		birth.setMonth(month-1);
+		birth.setDate(day);
+		agems=actual.getTime()-birth.getTime();
+		agems/=31536000000L;
+		age=(int) Math.floor(agems);
+		return age;
+	}
 }
 

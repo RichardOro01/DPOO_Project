@@ -276,7 +276,8 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 						Checking.checkEmpty(textApellidos);
 						Checking.checkEmpty(textNI);
 						Checking.checkNotSelected(cbTipoVisitatne);
-						Checking.checkCI(textNI.getText());
+						Checking.checkCI(textNI.getText());						
+						Checking.checkFuture(textNI.getText());
 						for (JPanel panel: specialData) {
 							if (panel.isVisible()) {
 								for (Component c: panel.getComponents()) {
@@ -359,6 +360,7 @@ public class RegisterPersonWindow extends JFrame implements Observable{
 							
 						}
 						notificar();
+						University.getInstance().sortStaffAlphabetically();
 						dispose();
 					}catch(EmptyTextFormException ex) {
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);

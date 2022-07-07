@@ -215,9 +215,9 @@ public class University {
 			
 			public ArrayList<ArrayList<Person>> getVisitByAgeRange(int age1, int age2){
 				ArrayList<ArrayList<Person>> list=new ArrayList<ArrayList<Person>>();
-				for(Office o: computerFac.sortOfficeAlphabetically()) {
+				for(Office o: computerFac.getOffices()) {
 					ArrayList<Person> list2 = new ArrayList<Person>();
-					for(Register r: o.sortRegister()) {
+					for(Register r: o.getRegister()) {
 						int age=r.getPerson().calculateAge();
 						if (age>=age1 && age<=age2 && !list2.contains(r.getPerson())) {
 							list2.add(r.getPerson());
@@ -272,6 +272,13 @@ public class University {
 				computerFac.getOffices().add(of2);
 				computerFac.getOffices().add(of3);
 				computerFac.getOffices().add(of4);
+				
+				//ordenar
+				getComputerFac().sortOfficeAlphabetically();
+				sortStaffAlphabetically();
+				for (Office off: getComputerFac().getOffices()) {
+					off.sortRegister();
+				}
 			}
 
 			//datos automaticos para casos pruebas en JUnit
@@ -331,23 +338,24 @@ public class University {
 			public ArrayList<String> orderAlphabetically(){
 				ArrayList<String> result = new ArrayList<String>();
 				for(Person p: staff) {
-					result.add(p.getFullName());
+					String fullName=p.getFullName();
+					if (!result.contains(fullName))
+						result.add(fullName);
 				}
 				Collections.sort(result);
 				return result;				
 			}
 			
-			public ArrayList<Person> sortStaffAlphabetically(){
+			public void sortStaffAlphabetically(){
 				ArrayList<Person> temporary = new ArrayList<Person>();
 				for(String n: orderAlphabetically()) {
 					for(Person p : staff) {
-						if((p.getFullName().equalsIgnoreCase(n)) && !temporary.contains(p) ){
+						if((p.getFullName().equalsIgnoreCase(n)) ){
 							temporary.add(p);
 						}
 					}
 				}
 				staff.clear();
 				staff.addAll(temporary);
-				return staff;
 			}
 		}	

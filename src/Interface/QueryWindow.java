@@ -160,8 +160,8 @@ public class QueryWindow extends JFrame implements Observador {
 		case "Visitas":
 			posVisitas.clear();
 			ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
-			for (Office off: University.getInstance().getComputerFac().sortOfficeAlphabetically()) {				
-				for (Register r: off.sortRegister()) {
+			for (Office off: University.getInstance().getComputerFac().getOffices()) {				
+				for (Register r: off.getRegister()) {
 					String fullName=r.getPerson().getFullName();
 					if (nameToFind==null || fullName.toLowerCase().contains(nameToFind.toLowerCase())) {
 						ArrayList<String> list2=new ArrayList<String>();
@@ -201,7 +201,7 @@ public class QueryWindow extends JFrame implements Observador {
 			//////////////////////////////////
 		case "Locales":
 			ArrayList<ArrayList<String>> list1=new ArrayList<ArrayList<String>>();
-			for (Office off: University.getInstance().getComputerFac().sortOfficeAlphabetically()) {
+			for (Office off: University.getInstance().getComputerFac().getOffices()) {
 				ArrayList<String> list2=new ArrayList<String>();
 				list2.add(off.getID());
 				list2.add(off.getClassification());
@@ -237,7 +237,7 @@ public class QueryWindow extends JFrame implements Observador {
 		case "Personas":
 			personas.clear();
 			ArrayList<ArrayList<String>> list11=new ArrayList<ArrayList<String>>();
-			for (Person p: University.getInstance().sortStaffAlphabetically()) {
+			for (Person p: University.getInstance().getStaff()) {
 				String fullName=p.getName()+" "+p.getLastName();
 				if (nameToFind==null || fullName.toLowerCase().contains(nameToFind.toLowerCase())) {
 					ArrayList<String> list2=new ArrayList<String>();

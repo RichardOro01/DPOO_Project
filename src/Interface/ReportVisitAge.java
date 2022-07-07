@@ -86,7 +86,7 @@ public class ReportVisitAge extends JFrame {
 					ArrayList<ArrayList<String>> list=new ArrayList<ArrayList<String>>();
 					ArrayList<ArrayList<Person>> persons=University.getInstance().getVisitByAgeRange(minAge, maxAge);
 					for (int i=0; i<persons.size();i++) {
-						Office off=University.getInstance().getComputerFac().sortOfficeAlphabetically().get(i);
+						Office off=University.getInstance().getComputerFac().getOffices().get(i);
 						for (Person p: persons.get(i)) {
 							ArrayList<String> list2=new ArrayList<String>();		
 							list2.add(off.getID());

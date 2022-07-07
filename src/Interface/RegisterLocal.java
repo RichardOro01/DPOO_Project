@@ -206,6 +206,7 @@ public class RegisterLocal extends JFrame implements Observable{
 							JOptionPane.showInternalMessageDialog(contentPane,"Local modificado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						}
 						notificar();
+						University.getInstance().getComputerFac().sortOfficeAlphabetically();
 						dispose();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);

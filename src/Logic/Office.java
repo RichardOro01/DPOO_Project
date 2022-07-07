@@ -10,12 +10,12 @@ public class Office {
 	private String classification;
 	private Person supervisor;
 	private ArrayList<Register> register;
-	
+
 	//getters
 	public String getID() {
 		return ID;
 	}
-	
+
 	public String getClassification() {
 		return classification;
 	}
@@ -23,7 +23,7 @@ public class Office {
 	public Person getSupervisor() {
 		return supervisor;
 	}
-	
+
 	public ArrayList<Register> getRegister() {
 		return register;
 	}
@@ -44,7 +44,7 @@ public class Office {
 		this.ID = ID;
 	}
 
-	
+
 	//constructor
 	public Office(String ID, String classification, Person supervisor) {
 		setID(ID);
@@ -52,27 +52,28 @@ public class Office {
 		setSupervisor(supervisor);
 		register = new ArrayList<Register>();
 	}
-	
+
 	public ArrayList<Date> sortDate(){
 		ArrayList<Date> result = new ArrayList<Date>();
 		for(Register r: register) {
-			result.add(r.getCheckInDate());
+			Date date=r.getCheckInDate();
+			if (!result.contains(date))
+				result.add(date);
 		}
 		Collections.sort(result);
 		return result;				
 	}
-	
-	public ArrayList<Register> sortRegister(){
+
+	public void sortRegister(){
 		ArrayList<Register> temporary = new ArrayList<Register>();
 		for(Date d: sortDate()) {
 			for(Register r: register) {
-				if((r.getCheckInDate().equals(d))&&!temporary.contains(r)){
+				if((r.getCheckInDate().equals(d))){
 					temporary.add(r);
 				}
 			}
 		}
 		register.clear();
 		register.addAll(temporary);
-		return register;
 	}
 }
