@@ -160,8 +160,8 @@ public class RegisterLocal extends JFrame implements Observable{
 			ArrayList<String> personas=new ArrayList<String>();
 			personas.add("<Seleccione>");
 			for (Person p: University.getInstance().getStaff()) {
-				if (!(p instanceof Student) && !(p instanceof Technical)) {
-					personas.add(p.getName()+" "+p.getLastName());
+				if (!(p instanceof Student) && !(p instanceof Technical) && (p.isInfo())) {
+					personas.add(p.getFullName());
 				}
 			}
 			String arrP[]=new String[personas.size()];

@@ -187,7 +187,7 @@ public class RegisterWindow extends JFrame implements Observable{
 			ArrayList<String> personas=new ArrayList<String>();
 			personas.add("<Seleccione>");
 			for (Person p: University.getInstance().getStaff()) {	
-				personas.add(p.getName()+" "+p.getLastName());
+				personas.add(p.getFullName());
 			}
 			String arrP[]=new String[personas.size()];
 			personas.toArray(arrP);
