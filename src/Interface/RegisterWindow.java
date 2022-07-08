@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import java.util.Date;
@@ -15,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.border.TitledBorder;
@@ -26,16 +24,12 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.border.EtchedBorder;
 import java.awt.Color;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 
 import java.util.ArrayList;
 
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JSpinner;
 import com.toedter.calendar.JDateChooser;
 
 import Exceptions.Checking;
@@ -45,11 +39,8 @@ import Exceptions.NotSelectedException;
 import Logic.Office;
 import Logic.Person;
 import Logic.Register;
-import Logic.Student;
-import Logic.Technical;
 import Logic.University;
 import Logic.VisitorRegister;
-import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -59,12 +50,16 @@ import java.awt.event.KeyEvent;
 
 public class RegisterWindow extends JFrame implements Observable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2617698901021372472L;
 	private static RegisterWindow frame3;
 	private JPanel contentPane;
 	private JLabel lblIdLocal;
 	private JLabel lblClasificacion;
 	private JLabel lblTipoVisitante;
-	private JComboBox cbPersona;
+	private JComboBox<Object> cbPersona;
 	private JPanel panelFechaEntrada;
 	private JTextField textHoraEntrada;
 	private JLabel lblNewLabel_3_1_1;
@@ -82,15 +77,15 @@ public class RegisterWindow extends JFrame implements Observable{
 
 	private JDateChooser dateChooserEntrada;
 	private JDateChooser dateChooserSalida;
-	private JComboBox cbLocal;
+	private JComboBox<Object> cbLocal;
 	private JLabel lblClasificacion2;
 	private JPanel panelVisitante;
 	private JLabel lblMotivo;
 	private JTextField textMotivo;
 	private JLabel lblAutorizador;
 	private JLabel lblrea;
-	private JComboBox cbAutorizador;
-	private JComboBox cbAreaVisit;
+	private JComboBox<Object> cbAutorizador;
+	private JComboBox<Object> cbAreaVisit;
 	private Register visit;
 	private Office local;
 	
@@ -168,7 +163,7 @@ public class RegisterWindow extends JFrame implements Observable{
 	}
 	private JLabel getLblClasificacion() {
 		if (lblClasificacion == null) {
-			lblClasificacion = new JLabel("Clasificaci\u00F3n");
+			lblClasificacion = new JLabel("Clasificaci\u00F3n:");
 			lblClasificacion.setHorizontalAlignment(SwingConstants.RIGHT);
 		}
 		return lblClasificacion;
@@ -180,9 +175,9 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return lblTipoVisitante;
 	}
-	private JComboBox getCbPersona() {
+	private JComboBox<Object> getCbPersona() {
 		if (cbPersona == null) {
-			cbPersona = new JComboBox();
+			cbPersona = new JComboBox<Object>();
 			cbPersona.setName("Persona");
 			ArrayList<String> personas=new ArrayList<String>();
 			personas.add("<Seleccione>");
@@ -191,7 +186,7 @@ public class RegisterWindow extends JFrame implements Observable{
 			}
 			String arrP[]=new String[personas.size()];
 			personas.toArray(arrP);
-			cbPersona.setModel(new DefaultComboBoxModel(arrP));
+			cbPersona.setModel(new DefaultComboBoxModel<Object>(arrP));
 			
 			cbPersona.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -201,11 +196,11 @@ public class RegisterWindow extends JFrame implements Observable{
 						panelVisitante.setVisible(false);
 					}else {
 						panelVisitante.setVisible(true);
-						cbAutorizador.setModel(new DefaultComboBoxModel(arrP));
+						cbAutorizador.setModel(new DefaultComboBoxModel<Object>(arrP));
 						if (visit!=null) {
 							VisitorRegister visitR=(VisitorRegister) visit;
 							Person autorizador=University.getInstance().getPersonByID(visitR.getID());
-							cbAutorizador.setSelectedItem(autorizador.getName()+" "+autorizador.getLastName());
+							cbAutorizador.setSelectedItem(autorizador.getFullName());
 							textMotivo.setText(visitR.getMotive());
 							cbAreaVisit.setSelectedItem(visitR.getArea());
 						}
@@ -213,7 +208,8 @@ public class RegisterWindow extends JFrame implements Observable{
 				}
 			});
 			if (visit!=null) {
-				cbPersona.setSelectedItem(visit.getPerson().getName()+" "+visit.getPerson().getLastName());
+				cbPersona.setSelectedItem(visit.getPerson().getFullName());
+				cbPersona.setEnabled(false);
 			}
 			
 		}
@@ -232,6 +228,7 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return panelFechaEntrada;
 	}
+	@SuppressWarnings("deprecation")
 	private JTextField getTextHoraEntrada() {
 		if (textHoraEntrada == null) {
 			textHoraEntrada = new JTextField();
@@ -259,6 +256,7 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return lblNewLabel_3_1_1;
 	}
+	@SuppressWarnings("deprecation")
 	private JTextField getTextMinutosEntrada() {
 		if (textMinutosEntrada == null) {
 			textMinutosEntrada = new JTextField();
@@ -292,6 +290,7 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return panelFechaSalida;
 	}
+	@SuppressWarnings("deprecation")
 	private JTextField getTextHoraSalida() {
 		if (textHoraSalida == null) {
 			textHoraSalida = new JTextField();
@@ -319,6 +318,7 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return lblNewLabel_3_1_1_1;
 	}
+	@SuppressWarnings("deprecation")
 	private JTextField getTextMinutosSalida() {
 		if (textMinutosSalida == null) {
 			textMinutosSalida = new JTextField();
@@ -343,6 +343,7 @@ public class RegisterWindow extends JFrame implements Observable{
 		if (btnRegistrar == null) {
 			btnRegistrar = new JButton(visit==null?"Registrar":"Modificar");
 			btnRegistrar.addMouseListener(new MouseAdapter() {
+				@SuppressWarnings("deprecation")
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					try {
@@ -405,8 +406,9 @@ public class RegisterWindow extends JFrame implements Observable{
 								JOptionPane.showInternalMessageDialog(contentPane,"Visita modificada", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
-						notificar();
+						
 						University.getInstance().getOfficeById((String)cbLocal.getSelectedItem()).sortRegister();
+						notificar();
 						dispose();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
@@ -494,9 +496,9 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return dateChooserSalida;
 	}
-	private JComboBox getCbLocal() {
+	private JComboBox<Object> getCbLocal() {
 		if (cbLocal == null) {
-			cbLocal = new JComboBox();
+			cbLocal = new JComboBox<Object>();
 			cbLocal.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					String s=(String)cbLocal.getSelectedItem();
@@ -516,7 +518,7 @@ public class RegisterWindow extends JFrame implements Observable{
 			}
 			String arrP[]=new String[locales.size()];
 			locales.toArray(arrP);
-			cbLocal.setModel(new DefaultComboBoxModel(arrP));
+			cbLocal.setModel(new DefaultComboBoxModel<Object>(arrP));
 			if (visit!=null) {	
 				cbLocal.setSelectedItem(local.getID());
 				cbLocal.setEnabled(false);
@@ -581,17 +583,17 @@ public class RegisterWindow extends JFrame implements Observable{
 		}
 		return lblrea;
 	}
-	private JComboBox getCbAutorizador() {
+	private JComboBox<Object> getCbAutorizador() {
 		if (cbAutorizador == null) {
-			cbAutorizador = new JComboBox();
+			cbAutorizador = new JComboBox<Object>();
 			cbAutorizador.setName("Autorizador");
 		}
 		return cbAutorizador;
 	}
-	private JComboBox getCbAreaVisit() {
+	private JComboBox<Object> getCbAreaVisit() {
 		if (cbAreaVisit == null) {
-			cbAreaVisit = new JComboBox();
-			cbAreaVisit.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Arquitectura", "Automática", "Biomédica", "Civil", "Eléctrica", "Industrial", "Mecánica", "Química"}));
+			cbAreaVisit = new JComboBox<Object>();
+			cbAreaVisit.setModel(new DefaultComboBoxModel<Object>(new String[] {"<Seleccione>", "Arquitectura", "Automática", "Biomédica", "Civil", "Eléctrica", "Industrial", "Mecánica", "Química"}));
 			cbAreaVisit.setName("Área");
 		}
 		return cbAreaVisit;

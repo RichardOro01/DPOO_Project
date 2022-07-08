@@ -1,6 +1,4 @@
 package Interface;
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -10,18 +8,10 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.Toolkit;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.SwingConstants;
-import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import javax.swing.JTree;
-import javax.swing.JSeparator;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -30,6 +20,10 @@ import java.awt.event.ActionEvent;
 
 public class PrincipalWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5844502819907636212L;
 	private static PrincipalWindow frame2;
 	private JLabel text_CAFII;
 	private JMenuBar menuBar;
@@ -69,6 +63,11 @@ public class PrincipalWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 720, 480);
 		contentPane = new JPanel(){
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 3480668523176519627L;
+
 			public void paintComponent(Graphics g) {
 				Image img=Toolkit.getDefaultToolkit().getImage(PrincipalWindow.class.getResource("/com/images/background4.jpeg"));
 				g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);

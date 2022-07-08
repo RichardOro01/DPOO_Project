@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,7 +16,6 @@ import javax.swing.table.DefaultTableModel;
 
 import Logic.AuxVisitMonth;
 import Logic.Office;
-import Logic.Register;
 import Logic.University;
 
 import java.awt.event.MouseAdapter;
@@ -27,6 +25,10 @@ import java.awt.Toolkit;
 
 public class ReportGreatVisitByMonth extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4596444958156388396L;
 	private JPanel contentPane;
 	private JTable table;
 	private JLabel lblVisitN;
@@ -101,6 +103,10 @@ public class ReportGreatVisitByMonth extends JFrame {
 								"ID Local", "Clasificaci\u00F3n", "ID Responsable"
 						}
 						) {
+					/**
+							 * 
+							 */
+							private static final long serialVersionUID = -7284917443118787262L;
 					boolean[] columnEditables = new boolean[] {
 							false, false, false, false
 					};

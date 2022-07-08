@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -9,7 +8,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
-import javax.swing.JSpinner;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
@@ -17,11 +15,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Exceptions.Checking;
 import Exceptions.NotSelectedException;
-import Logic.AuxVisitMonth;
 import Logic.AuxVisitOutHour;
 import Logic.Office;
-import Logic.Person;
-import Logic.Register;
 import Logic.University;
 import Utils.Lists;
 import Utils.Utils;
@@ -35,9 +30,13 @@ import java.awt.Toolkit;
 
 public class ReportOutOfHour extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3143459614549403460L;
 	private JPanel contentPane;
 	private JTable table;
-	private JComboBox cbTipoPersona;
+	private JComboBox<Object> cbTipoPersona;
 
 	/**
 	 * Launch the application.
@@ -106,6 +105,10 @@ public class ReportOutOfHour extends JFrame {
 								"ID Local", "ID Visitante", "Entrada", "Salida", "Entrada permitida", "Salida permitida"
 						}
 						) {
+					/**
+							 * 
+							 */
+							private static final long serialVersionUID = 3874142482650809120L;
 					boolean[] columnEditables = new boolean[] {
 							false, false, false, false, false, false
 					};
@@ -145,9 +148,9 @@ public class ReportOutOfHour extends JFrame {
 		btnSalir.setBounds(607, 226, 89, 23);
 		contentPane.add(btnSalir);
 		
-		cbTipoPersona = new JComboBox();
+		cbTipoPersona = new JComboBox<Object>();
 		cbTipoPersona.setName("Tipo de persona");
-		cbTipoPersona.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
+		cbTipoPersona.setModel(new DefaultComboBoxModel<Object>(Utils.addSeleccioneCB(Lists.getPersonType())));
 		cbTipoPersona.setBounds(114, 26, 162, 22);
 		contentPane.add(cbTipoPersona);
 	}
