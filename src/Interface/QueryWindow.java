@@ -29,6 +29,7 @@ import Logic.Technical;
 import Logic.University;
 import Logic.VisitorRegister;
 import Utils.Observador;
+import Utils.SortByDate;
 import Utils.Utils;
 
 import javax.swing.SwingConstants;
@@ -38,6 +39,7 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -151,6 +153,9 @@ public class QueryWindow extends JFrame implements Observador {
 		return table;
 	}
 
+
+
+
 	public void actualizarTabla(JTable tabla) {
 		switch (tabla.getName()) {
 		//////////////////////////////////
@@ -161,19 +166,27 @@ public class QueryWindow extends JFrame implements Observador {
 				for (Register r: off.getRegister()) {
 					String fullName=r.getPerson().getFullName();
 					if (nameToFind==null || fullName.toLowerCase().contains(nameToFind.toLowerCase())) {
-						ArrayList<String> list2=new ArrayList<String>();
-						ArrayList<Integer> list3=new ArrayList<Integer>(); 
-						list2.add(fullName);
-						list2.add(off.getID());
-						list2.add(Utils.formatDate(r.getCheckInDate()));
-						list2.add(Utils.formatDate(r.getCheckOutDate()));
+						
+						ArrayList<Integer> list3=new ArrayList<Integer>(); 	
 						list3.add(University.getInstance().getComputerFac().getOffices().indexOf(off));
-						list3.add(University.getInstance().getComputerFac().getOffices().get(list3.get(0)).getRegister().indexOf(r));
-						list.add(list2);
+						list3.add(University.getInstance().getComputerFac().getOffices().get(list3.get(0)).getRegister().indexOf(r));		
 						posVisitas.add(list3);
 					}
 				}
 
+			}
+			Collections.sort(posVisitas,new SortByDate());
+			for (ArrayList<Integer> r: posVisitas) {
+				Office off=University.getInstance().getComputerFac().getOffices().get(r.get(0));
+				Register reg=off.getRegister().get(r.get(1));
+				String fullName=reg.getPerson().getFullName();
+				ArrayList<String> list2=new ArrayList<String>();
+				list2.add(fullName);
+				list2.add(off.getID());
+				list2.add(Utils.formatDate(reg.getCheckInDate()));
+				list2.add(Utils.formatDate(reg.getCheckOutDate()));
+				list.add(list2);
+				
 			}
 			Object obj[][]=new Object[list.size()][4];
 			for (int i=0; i<list.size(); i++) {
@@ -695,3 +708,5 @@ public class QueryWindow extends JFrame implements Observador {
 		return btnActualizar;
 	}
 }
+
+
