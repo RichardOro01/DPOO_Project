@@ -212,7 +212,8 @@ public class University {
 						}
 					}	
 				}		
-				return ((double)assis/(month2-month1+1));
+				int dif=month2-month1+1;
+				return ((dif)!=0?(double)assis/(dif):0);
 			}
 			
 			
