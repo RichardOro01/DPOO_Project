@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -16,6 +15,8 @@ import javax.swing.JTable;
 import javax.swing.border.CompoundBorder;
 import javax.swing.table.DefaultTableModel;
 
+import Exceptions.Checking;
+import Exceptions.DeletePersonException;
 import Logic.Administrative;
 import Logic.Executive;
 import Logic.Office;
@@ -32,26 +33,18 @@ import Utils.Utils;
 
 import javax.swing.SwingConstants;
 import javax.swing.JTextField;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Observable;
-import java.util.Observer;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.UIManager;
 import javax.swing.JScrollPane;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.Component;
-import javax.swing.BoxLayout;
-import java.awt.Rectangle;
 import java.awt.SystemColor;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeListener;
@@ -61,6 +54,10 @@ import java.awt.event.ActionEvent;
 
 public class QueryWindow extends JFrame implements Observador {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8010711519758135466L;
 	private static QueryWindow frame4;
 	private JPanel contentPane;
 	private JTable table;
@@ -190,6 +187,10 @@ public class QueryWindow extends JFrame implements Observador {
 							"Visitante", "Local Visitado", "Fecha entrada", "Fecha salida"
 					}
 					) {
+				/**
+						 * 
+						 */
+						private static final long serialVersionUID = -7368912137855283709L;
 				boolean[] columnEditables = new boolean[] {
 						false, false, false, false
 				};
@@ -238,7 +239,7 @@ public class QueryWindow extends JFrame implements Observador {
 			personas.clear();
 			ArrayList<ArrayList<String>> list11=new ArrayList<ArrayList<String>>();
 			for (Person p: University.getInstance().getStaff()) {
-				String fullName=p.getName()+" "+p.getLastName();
+				String fullName=p.getFullName();
 				if (nameToFind==null || fullName.toLowerCase().contains(nameToFind.toLowerCase())) {
 					ArrayList<String> list2=new ArrayList<String>();
 					list2.add(fullName);
@@ -536,9 +537,25 @@ public class QueryWindow extends JFrame implements Observador {
 						int row1=tablePersonas.getSelectedRow();
 						if (row1!=-1) {
 							if (JOptionPane.showConfirmDialog(contentPane, "¿Desea eliminar la persona seleccionada?","Advertencia",JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)==0) {
-								University.getInstance().getStaff().remove(personas.get(row1));								
-								actualizarTabla(tablePersonas);
-								actualizarTabla(tableVisitas);
+								Person p=personas.get(row1);
+								try {
+									Checking.checkDeletablePerson(p);
+									for (Office off:University.getInstance().getComputerFac().getOffices()) {
+										for (int i=0; i<off.getRegister().size(); i++) {
+											Register r=off.getRegister().get(i);
+											if (r.getPerson()==p) {
+												off.getRegister().remove(r);
+												i--;
+											}
+										}
+									}
+									University.getInstance().getStaff().remove(p);								
+									actualizarTabla(tablePersonas);
+									actualizarTabla(tableVisitas);
+								}catch(DeletePersonException ex) {
+									JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);
+								}
+								
 							}
 						}
 						break;

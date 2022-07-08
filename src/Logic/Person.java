@@ -1,7 +1,5 @@
 package Logic;
 
-import java.util.Date;
-
 public abstract class Person {
 	
 	//attributes

@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -13,21 +12,20 @@ import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.Color;
-import java.awt.Window.Type;
 import javax.swing.JTextField;
-import javax.swing.JSeparator;
-import java.awt.SystemColor;
-import javax.swing.JTextPane;
 import javax.swing.JPasswordField;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import javax.swing.JButton;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
 
 public class Login extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7989172218145832459L;
 	private static Login frame;
 	private JPanel contentPane;
 	private JLabel ballenaLogo;

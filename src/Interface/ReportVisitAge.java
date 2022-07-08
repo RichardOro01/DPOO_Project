@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -17,10 +16,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Exceptions.Checking;
 import Exceptions.DateChooserException;
-import Logic.AuxVisitMonth;
 import Logic.Office;
 import Logic.Person;
-import Logic.Register;
 import Logic.University;
 
 import java.awt.event.MouseAdapter;
@@ -31,6 +28,10 @@ import javax.swing.SpinnerNumberModel;
 
 public class ReportVisitAge extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1180727282455801651L;
 	private JPanel contentPane;
 	private JTable table;
 	private JSpinner spinnerMaxAge;
@@ -106,6 +107,10 @@ public class ReportVisitAge extends JFrame {
 									"ID Local", "Clasificaci\u00F3n", "ID Visitante"
 							}
 							) {
+						/**
+								 * 
+								 */
+								private static final long serialVersionUID = -8258061945647702409L;
 						boolean[] columnEditables = new boolean[] {
 								false, false, false, false
 						};

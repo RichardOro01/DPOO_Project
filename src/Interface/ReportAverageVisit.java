@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -11,24 +10,16 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import javax.swing.JSpinner;
 import javax.swing.JButton;
-import javax.swing.JTable;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-
 import Exceptions.Checking;
 import Exceptions.DateChooserException;
 import Exceptions.NotSelectedException;
-import Logic.AuxVisitMonth;
-import Logic.Office;
-import Logic.Register;
 import Logic.University;
 import Utils.Lists;
 import Utils.Utils;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
@@ -37,8 +28,12 @@ import java.awt.Toolkit;
 
 public class ReportAverageVisit extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9122272887630755112L;
 	private JPanel contentPane;
-	private JComboBox cbTipoPersona;
+	private JComboBox<Object> cbTipoPersona;
 	private JSpinner spinnerMonth2;
 	private JLabel lblPromedioN;
 
@@ -151,11 +146,11 @@ public class ReportAverageVisit extends JFrame {
 		contentPane.add(lblTipoDeVisitante);
 		contentPane.add(getCbTipoPersona());
 	}
-	private JComboBox getCbTipoPersona() {
+	private JComboBox<Object> getCbTipoPersona() {
 		if (cbTipoPersona == null) {
-			cbTipoPersona = new JComboBox();
+			cbTipoPersona = new JComboBox<Object>();
 			cbTipoPersona.setName("Tipo de visitante");
-			cbTipoPersona.setModel(new DefaultComboBoxModel(Utils.addSeleccioneCB(Lists.getPersonType())));
+			cbTipoPersona.setModel(new DefaultComboBoxModel<Object>(Utils.addSeleccioneCB(Lists.getPersonType())));
 			cbTipoPersona.setBounds(352, 26, 161, 22);
 		}
 		return cbTipoPersona;

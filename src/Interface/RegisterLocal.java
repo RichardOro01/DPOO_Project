@@ -1,6 +1,5 @@
 package Interface;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import Logic.Office;
@@ -38,13 +37,17 @@ import java.awt.event.KeyEvent;
 
 public class RegisterLocal extends JFrame implements Observable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3751609740263513395L;
 	private JPanel contentPane;
 	private JLabel lblId;
 	private JLabel lblResponsable;
 	private JLabel lblClasificacion;
 	private JTextField textField;
-	private JComboBox cbResponsable;
-	private JComboBox cbClasificacion;
+	private JComboBox<Object> cbResponsable;
+	private JComboBox<Object> cbClasificacion;
 	private JButton btnNewButton;
 	private JButton btnCancelar;
 	private JPanel panelBotones;
@@ -111,7 +114,7 @@ public class RegisterLocal extends JFrame implements Observable{
 		contentPane.add(getCbClasificacion());
 		contentPane.add(getPanelBotones());
 		oldId=off.getID();
-		getCbResponsable().setSelectedItem(off.getSupervisor().getName()+" "+off.getSupervisor().getLastName());
+		getCbResponsable().setSelectedItem(off.getSupervisor().getFullName());
 		getCbClasificacion().setSelectedItem(off.getClassification());
 		getTextField().setText(off.getID());
 	}
@@ -154,9 +157,9 @@ public class RegisterLocal extends JFrame implements Observable{
 		}
 		return textField;
 	}
-	private JComboBox getCbResponsable() {
+	private JComboBox<Object> getCbResponsable() {
 		if (cbResponsable == null) {
-			cbResponsable = new JComboBox();
+			cbResponsable = new JComboBox<Object>();
 			ArrayList<String> personas=new ArrayList<String>();
 			personas.add("<Seleccione>");
 			for (Person p: University.getInstance().getStaff()) {
@@ -166,17 +169,17 @@ public class RegisterLocal extends JFrame implements Observable{
 			}
 			String arrP[]=new String[personas.size()];
 			personas.toArray(arrP);
-			cbResponsable.setModel(new DefaultComboBoxModel(arrP));
+			cbResponsable.setModel(new DefaultComboBoxModel<Object>(arrP));
 			cbResponsable.setName("Responsable");
 			cbResponsable.setBounds(134, 71, 204, 21);
 		}
 		return cbResponsable;
 	}
-	private JComboBox getCbClasificacion() {
+	private JComboBox<Object> getCbClasificacion() {
 		if (cbClasificacion == null) {
-			cbClasificacion = new JComboBox();
+			cbClasificacion = new JComboBox<Object>();
 			cbClasificacion.setName("Clasificación");
-			cbClasificacion.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Local del decano", "Local de vicedecano", "Local de jefe de departamento", "Local de servidores", "Local de \u00E1rea administrativa", "Local de profesores", "Local de especialistas", "Local de estudiantes", "Aula", "Laboratorio"}));
+			cbClasificacion.setModel(new DefaultComboBoxModel<Object>(new String[] {"<Seleccione>", "Local del decano", "Local de vicedecano", "Local de jefe de departamento", "Local de servidores", "Local de \u00E1rea administrativa", "Local de profesores", "Local de especialistas", "Local de estudiantes", "Aula", "Laboratorio"}));
 			cbClasificacion.setBounds(134, 103, 204, 21);
 		}
 		return cbClasificacion;
@@ -205,8 +208,9 @@ public class RegisterLocal extends JFrame implements Observable{
 							local.setSupervisor(University.getInstance().getPersonByFullName((String)cbResponsable.getSelectedItem()));
 							JOptionPane.showInternalMessageDialog(contentPane,"Local modificado", "Éxito", JOptionPane.INFORMATION_MESSAGE);
 						}
-						notificar();
+					
 						University.getInstance().getComputerFac().sortOfficeAlphabetically();
+						notificar();
 						dispose();
 					}catch (EmptyTextFormException ex){
 						JOptionPane.showInternalMessageDialog(contentPane,ex.getMsg(), "Error", JOptionPane.ERROR_MESSAGE);

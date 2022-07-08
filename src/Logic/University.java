@@ -31,6 +31,7 @@ public class University {
 		staff=new ArrayList<Person>();
 	}
 
+	@SuppressWarnings("deprecation")
 	public AuxVisitMonth officesWithMoreVisitByMonth(int month){
 		AuxVisitMonth aux;
 		ArrayList<Office> offices=new ArrayList<Office>();
@@ -130,7 +131,7 @@ public class University {
 		Person person=null;
 		for (Person p: staff) {
 			String name=new String();
-			name=p.getName()+" "+p.getLastName();
+			name=p.getFullName();
 			if (name.equals(fullName))
 				person=p;
 		}
@@ -155,6 +156,7 @@ public class University {
 		return office;
 	}
 
+	@SuppressWarnings({ "deprecation", "unlikely-arg-type" })
 	public ArrayList<ArrayList<AuxVisitOutHour>> visitOutOfTime(String typePerson){
 		ArrayList<ArrayList<AuxVisitOutHour>> persons= new ArrayList<ArrayList<AuxVisitOutHour>>();
 		for (Office o: computerFac.getOffices()) {
@@ -199,6 +201,7 @@ public class University {
 
 
 
+			@SuppressWarnings("deprecation")
 			public double averageVisitsInMonthPerVisitor(int month1, int month2, String typePerson) {		
 				int assis=0;
 				for(Office o: computerFac.getOffices()) {
