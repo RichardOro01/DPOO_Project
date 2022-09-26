@@ -19,6 +19,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.Toolkit;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class Login extends JFrame {
 	
@@ -141,6 +143,20 @@ public class Login extends JFrame {
 	private JTextField getTxtUser() {
 		if (txtUser == null) {
 			txtUser = new JTextField();
+			txtUser.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (String.valueOf(passwordField.getPassword()).isEmpty()) {
+						passwordField.setText("***********");
+						passwordField.setForeground(Color.gray);
+					}
+					if (txtUser.getText().equals("Escriba el usuario")) {
+						txtUser.setText("");
+						txtUser.setForeground(Color.black);
+					}
+					
+				}
+			});
 			txtUser.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -155,21 +171,7 @@ public class Login extends JFrame {
 					}
 				}
 			});
-			txtUser.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mousePressed(MouseEvent e) {
-					if (String.valueOf(passwordField.getPassword()).isEmpty()) {
-						passwordField.setText("***********");
-						passwordField.setForeground(Color.gray);
-					}
-					if (txtUser.getText().equals("Escriba el usuario")) {
-						txtUser.setText("");
-						txtUser.setForeground(Color.black);
-					}
-					
-					
-				}
-			});
+			
 			txtUser.setToolTipText("");
 			txtUser.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			txtUser.setForeground(Color.gray);
@@ -183,6 +185,19 @@ public class Login extends JFrame {
 	private JPasswordField getPasswordField() {
 		if (passwordField == null) {
 			passwordField = new JPasswordField();
+			passwordField.addFocusListener(new FocusAdapter() {
+				@Override
+				public void focusGained(FocusEvent e) {
+					if (String.valueOf(passwordField.getPassword()).equals("***********")) {
+						passwordField.setText("");
+						passwordField.setForeground(Color.black);
+					}
+					if (txtUser.getText().isEmpty()) {
+						txtUser.setText("Escriba el usuario");
+						txtUser.setForeground(Color.gray);
+					}
+				}
+			});
 			passwordField.addKeyListener(new KeyAdapter() {
 				@Override
 				public void keyPressed(KeyEvent e) {
@@ -201,14 +216,7 @@ public class Login extends JFrame {
 			passwordField.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mousePressed(MouseEvent e) {
-					if (String.valueOf(passwordField.getPassword()).equals("***********")) {
-						passwordField.setText("");
-						passwordField.setForeground(Color.black);
-					}
-					if (txtUser.getText().isEmpty()) {
-						txtUser.setText("Escriba el usuario");
-						txtUser.setForeground(Color.gray);
-					}
+					
 				}
 			});
 			passwordField.setForeground(Color.gray);
